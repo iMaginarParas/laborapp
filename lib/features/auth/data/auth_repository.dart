@@ -1,0 +1,38 @@
+import '../../../core/network/dio_client.dart';
+import '../../../core/constants/api_constants.dart';
+import '../../../shared/models/user.dart';
+
+class AuthRepository {
+  final DioClient _client;
+
+  AuthRepository(this._client);
+
+  Future<String> login(String login, String password) async {
+    final response = await _client.post(ApiConstants.login, data: {
+      'phone_or_email': login,
+      'password': password,
+    });
+    
+    final token = response.data['access_token'];
+    DioClient.setToken(token);
+    return token;
+  }
+
+  Future<User> getMe() async {
+    final response = await _client.get(ApiConstants.me);
+    return User.fromJson(response.data);
+  }
+  Future<void> register({
+    required String name,
+    required String email,
+    required String phone,
+    required String password,
+  }) async {
+    await _client.post(ApiConstants.register, data: {
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'password': password,
+    });
+  }
+}
