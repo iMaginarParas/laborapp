@@ -4,8 +4,8 @@ class ApiConstants {
   static const String _ipAddress = '10.227.208.135'; // Fixed IP for physical device
   
   static String get baseUrl {
-    if (kIsWeb) return 'http://localhost:8000';
-    return 'http://$_ipAddress:8000';
+    if (kIsWeb) return 'http://localhost:8000/api/v1';
+    return 'http://$_ipAddress:8000/api/v1';
   }
 
   static const String login = '/auth/login';
