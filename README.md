@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Laborgro Mobile App 📱
 
 Laborgro is a high-fidelity, hyperlocal service marketplace mobile application built with Flutter. It connects users with skilled professionals (plumbers, painters, cleaners, etc.) in their immediate vicinity.
@@ -52,3 +53,21 @@ The app is pre-configured to communicate with the Laborgro Backend API. You can 
 
 ---
 Built with ❤️ by Laborgro Team
+=======
+# laborapp
+
+A new Flutter project.
+
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
+>>>>>>> origin/master
