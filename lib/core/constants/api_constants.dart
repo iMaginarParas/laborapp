@@ -1,12 +1,7 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiConstants {
-  static const String _ipAddress = '10.227.208.135'; // Fixed IP for physical device
-  
-  static String get baseUrl {
-    if (kIsWeb) return 'https://laborgrow-production.up.railway.app/api/v1';
-    return 'https://laborgrow-production.up.railway.app/api/v1';
-  }
+  static String get baseUrl => dotenv.get('API_BASE_URL', fallback: 'https://laborgrow-production.up.railway.app/api/v1');
 
   static const String login = '/auth/login';
   static const String register = '/auth/register';

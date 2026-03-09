@@ -5,14 +5,7 @@ allprojects {
     }
 }
 
-<<<<<<< HEAD
-val newBuildDir: Directory =
-    rootProject.layout.buildDirectory
-        .dir("../../build")
-        .get()
-=======
 val newBuildDir: Directory = rootProject.layout.buildDirectory.dir("../../build").get()
->>>>>>> origin/master
 rootProject.layout.buildDirectory.value(newBuildDir)
 
 subprojects {
@@ -21,6 +14,27 @@ subprojects {
 }
 subprojects {
     project.evaluationDependsOn(":app")
+}
+
+subprojects {
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
+    }
+    
+    tasks.withType<JavaCompile>().configureEach {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
+    }
+
+    configurations.all {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "org.jetbrains.kotlin") {
+                useVersion("2.1.10")
+            }
+        }
+    }
 }
 
 tasks.register<Delete>("clean") {
