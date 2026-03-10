@@ -29,7 +29,7 @@ class HomeScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeader(context),
+              _buildHeader(context, ref),
               const SizedBox(height: 16),
               _buildSectionHeader("Services", null),
               const SizedBox(height: 16),
@@ -48,7 +48,7 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader(BuildContext context, WidgetRef ref) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
