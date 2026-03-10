@@ -4,6 +4,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../providers/auth_providers.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -98,7 +99,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     children: [
                       Text("Don't have an account? ", style: AppTextStyles.bodyMedium),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                          );
+                        },
                         child: Text("Register Now", style: AppTextStyles.label),
                       ),
                     ],

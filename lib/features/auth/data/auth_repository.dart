@@ -27,12 +27,14 @@ class AuthRepository {
     required String email,
     required String phone,
     required String password,
+    required String role,
   }) async {
     await _client.post(ApiConstants.register, data: {
       'name': name,
       'email': email,
       'phone': phone,
       'password': password,
+      'role': role,
     });
   }
 }
