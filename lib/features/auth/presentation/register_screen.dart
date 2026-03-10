@@ -16,13 +16,15 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
+  final _cityController = TextEditingController();
   final _passwordController = TextEditingController();
   String _selectedRole = "employee";
   bool _isLoading = false;
 
   Future<void> _handleRegister() async {
     if (_nameController.text.isEmpty || _emailController.text.isEmpty || 
-        _phoneController.text.isEmpty || _passwordController.text.isEmpty) {
+        _phoneController.text.isEmpty || _passwordController.text.isEmpty ||
+        _cityController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Please fill all fields")),
       );
@@ -35,6 +37,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         name: _nameController.text,
         email: _emailController.text,
         phone: _phoneController.text,
+        city: _cityController.text,
         password: _passwordController.text,
         role: _selectedRole,
       );
@@ -105,6 +108,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     controller: _phoneController,
                     keyboardType: TextInputType.phone,
                     decoration: const InputDecoration(hintText: "Enter your phone number"),
+                  ),
+                  const SizedBox(height: 16),
+
+                  _buildLabel("City"),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: _cityController,
+                    decoration: const InputDecoration(hintText: "Enter your city (e.g. Noida)"),
                   ),
                   const SizedBox(height: 16),
 

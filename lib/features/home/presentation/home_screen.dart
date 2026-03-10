@@ -7,6 +7,7 @@ import 'package:flutter_app/shared/widgets/worker_card.dart';
 import 'package:flutter_app/features/home/providers/home_providers.dart';
 import 'package:flutter_app/features/worker_profile/presentation/worker_profile_screen.dart';
 import 'package:flutter_app/features/search/presentation/search_screen.dart';
+import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/shared/models/worker.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -69,21 +70,25 @@ class HomeScreen extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Good morning, Sunil", 
-                        style: AppTextStyles.h2.copyWith(color: AppColors.white)),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          const Icon(Icons.location_on, color: AppColors.lightBlue, size: 16),
-                          const SizedBox(width: 4),
-                          Text("Bengaluru, India", 
-                            style: AppTextStyles.bodyMedium.copyWith(color: AppColors.lightBlue)),
-                        ],
-                      ),
-                    ],
+                  ref.watch(currentUserProvider).when(
+                    data: (user) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Good morning, ${user.name.split(' ')[0]}", 
+                          style: AppTextStyles.h2.copyWith(color: AppColors.white)),
+                        const SizedBox(height: 4),
+                        Row(
+                          children: [
+                            const Icon(Icons.location_on, color: AppColors.lightBlue, size: 16),
+                            const SizedBox(width: 4),
+                            Text("${user.city ?? 'Location not set'}", 
+                              style: AppTextStyles.bodyMedium.copyWith(color: AppColors.lightBlue)),
+                          ],
+                        ),
+                      ],
+                    ),
+                    loading: () => Text("Loading...", style: AppTextStyles.h2.copyWith(color: AppColors.white)),
+                    error: (_, __) => Text("Welcome", style: AppTextStyles.h2.copyWith(color: AppColors.white)),
                   ),
                   Container(
                     height: 48,
