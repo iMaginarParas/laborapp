@@ -4,6 +4,7 @@ import 'package:flutter_app/core/theme/app_colors.dart';
 import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/shared/models/user.dart';
+import 'edit_profile_screen.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -43,7 +44,16 @@ class ProfileScreen extends ConsumerWidget {
           _buildHeader(user),
           const SizedBox(height: 24),
           _buildMenuSection([
-            _MenuItem(Icons.person_outline, "Edit Profile"),
+            _MenuItem(
+              Icons.person_outline, 
+              "Edit Profile",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EditProfileScreen(user: user)),
+                );
+              },
+            ),
             _MenuItem(Icons.notifications_none, "Notifications"),
             _MenuItem(Icons.payment, "Payments"),
           ]),

@@ -39,4 +39,9 @@ class AuthRepository {
       'role': role,
     });
   }
+
+  Future<User> updateProfile(Map<String, dynamic> updates) async {
+    final response = await _client.put(ApiConstants.me, data: updates);
+    return User.fromJson(response.data);
+  }
 }
