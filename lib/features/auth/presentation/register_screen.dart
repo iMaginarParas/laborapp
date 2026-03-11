@@ -4,6 +4,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../providers/auth_providers.dart';
+import '../../../core/utils/api_error_handler.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -18,7 +19,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _phoneController = TextEditingController();
   final _cityController = TextEditingController();
   final _passwordController = TextEditingController();
-  String _selectedRole = "employee";
+  final String _selectedRole = "employer"; // Only allowing customer signup
   bool _isLoading = false;
 
   Future<void> _handleRegister() async {
@@ -51,7 +52,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Registration failed: $e")),
+          SnackBar(content: Text(ApiErrorHandler.getErrorMessage(e))),
         );
       }
     } finally {
@@ -128,16 +129,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                   const SizedBox(height: 24),
 
-                  _buildLabel("I am a..."),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      _buildRoleOption("employee", "Worker"),
-                      const SizedBox(width: 16),
-                      _buildRoleOption("employer", "Customer"),
-                    ],
-                  ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 24),
 
                   PrimaryButton(
                     text: "Register Now", 
@@ -153,33 +145,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     );
   }
 
-  Widget _buildRoleOption(String value, String label) {
-    bool isSelected = _selectedRole == value;
-    return Expanded(
-      child: GestureDetector(
-        onTap: () => setState(() => _selectedRole = value),
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary.withOpacity(0.1) : AppColors.white,
-            border: Border.all(
-              color: isSelected ? AppColors.primary : AppColors.border,
-              width: 2,
-            ),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Center(
-            child: Text(
-              label,
-              style: AppTextStyles.label.copyWith(
-                color: isSelected ? AppColors.primary : AppColors.text,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 
   Widget _buildHeader() {
     return Container(
