@@ -209,42 +209,38 @@ class HomeScreen extends ConsumerWidget {
         ),
         borderRadius: BorderRadius.circular(28),
       ),
-      child: Stack(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "LIMITED OFFER",
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: Colors.white.withOpacity(0.8),
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "LIMITED OFFER",
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: Colors.white.withOpacity(0.8),
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.2,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                "20% off your\nfirst booking!",
-                style: AppTextStyles.h2.copyWith(color: AppColors.white, fontSize: 24),
-              ),
-            ],
+                const SizedBox(height: 8),
+                Text(
+                  "20% off your\nfirst booking!",
+                  style: AppTextStyles.h2.copyWith(color: AppColors.white, fontSize: 24),
+                ),
+              ],
+            ),
           ),
-          Positioned(
-            right: 0,
-            bottom: 0,
-            top: 0,
-            child: Center(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: Text(
-                  "Claim Now",
-                  style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue),
-                ),
-              ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Text(
+              "Claim Now",
+              style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue),
             ),
           ),
         ],

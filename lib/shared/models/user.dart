@@ -22,7 +22,7 @@ class User {
       id: json['id'],
       name: json['name'],
       email: json['email'],
-      phone: json['phone'],
+      phone: json['phone'] ?? 'Phone not provided',
       profilePicUrl: json['profile_pic_url'],
       address: json['address'],
       city: json['city'],
