@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_app/features/main_tabs/providers/navigation_providers.dart';
 import 'package:flutter_app/core/theme/app_colors.dart';
 import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/shared/widgets/primary_button.dart';
 
-class BookingSuccessScreen extends StatelessWidget {
+class BookingSuccessScreen extends ConsumerWidget {
   final String workerName;
   final String date;
   final String time;
@@ -18,7 +20,7 @@ class BookingSuccessScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
@@ -87,9 +89,10 @@ class BookingSuccessScreen extends StatelessWidget {
               const Spacer(flex: 3),
               // Action Buttons
               PrimaryButton(
-                text: "Track Worker Live 📍",
+                text: "View My Bookings 📅",
                 onPressed: () {
-                  // TODO: Implement live tracking
+                  ref.read(navigationIndexProvider.notifier).state = 2; // Switch to Bookings Tab
+                  Navigator.popUntil(context, (route) => route.isFirst);
                 },
               ),
               const SizedBox(height: 16),

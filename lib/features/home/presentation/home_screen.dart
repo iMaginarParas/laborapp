@@ -20,6 +20,7 @@ class HomeScreen extends ConsumerWidget {
     final selectedCategory = ref.watch(selectedCategoryProvider);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(categoriesProvider);
@@ -30,17 +31,17 @@ class HomeScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildHeader(context, ref),
-              const SizedBox(height: 16),
-              _buildSectionHeader("Services", null),
+              const SizedBox(height: 32),
+              _buildPromoBanner(),
+              const SizedBox(height: 32),
+              _buildSectionHeader("Browse Services", "See all →"),
               const SizedBox(height: 16),
               _buildCategories(ref, categoriesAsync, selectedCategory),
               const SizedBox(height: 24),
-              _buildPromoBanner(),
-              const SizedBox(height: 24),
-              _buildSectionHeader("Nearby Workers", "See All"),
+              _buildSectionHeader("Top Rated Nearby", "See all →"),
               const SizedBox(height: 16),
               _buildWorkersList(workersAsync),
-              const SizedBox(height: 100), // Padding for tab bar
+              const SizedBox(height: 100),
             ],
           ),
         ),
@@ -49,118 +50,120 @@ class HomeScreen extends ConsumerWidget {
   }
 
   Widget _buildHeader(BuildContext context, WidgetRef ref) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          height: 220,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            gradient: AppColors.primaryGradient,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(32),
-              bottomRight: Radius.circular(32),
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        color: AppColors.primaryBlue,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(32),
+          bottomRight: Radius.circular(32),
+        ),
+      ),
+      child: Stack(
+        children: [
+          // Background pattern
+          Positioned(
+            top: -60,
+            right: -60,
+            child: Container(
+              height: 200,
+              width: 200,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.05),
+                shape: BoxShape.circle,
+              ),
             ),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 60),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ref.watch(currentUserProvider).when(
                     data: (user) => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Good morning, ${user.name.split(' ')[0]}", 
-                          style: AppTextStyles.h2.copyWith(color: AppColors.white)),
-                        const SizedBox(height: 4),
                         Row(
                           children: [
-                            const Icon(Icons.location_on, color: AppColors.lightBlue, size: 16),
+                            Text(
+                              "Good morning",
+                              style: AppTextStyles.bodyMedium.copyWith(color: Colors.white.withOpacity(0.9)),
+                            ),
                             const SizedBox(width: 4),
-                            Text("${user.city ?? 'Location not set'}", 
-                              style: AppTextStyles.bodyMedium.copyWith(color: AppColors.lightBlue)),
+                            const Text("👋", style: TextStyle(fontSize: 16)),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          user.name,
+                          style: AppTextStyles.h1.copyWith(color: AppColors.white, fontSize: 32),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            const Icon(Icons.location_on, color: Colors.redAccent, size: 16),
+                            const SizedBox(width: 4),
+                            Text(
+                              user.city ?? "Sector 18, Noida",
+                              style: AppTextStyles.bodyMedium.copyWith(color: Colors.white.withOpacity(0.8)),
+                            ),
                           ],
                         ),
                       ],
                     ),
-                    loading: () => Text("Loading...", style: AppTextStyles.h2.copyWith(color: AppColors.white)),
-                    error: (_, __) => Text("Welcome", style: AppTextStyles.h2.copyWith(color: AppColors.white)),
+                    loading: () => const SizedBox(height: 80),
+                    error: (_, __) => Text("Welcome", style: AppTextStyles.h1.copyWith(color: AppColors.white)),
                   ),
-                  Container(
-                    height: 48,
-                    width: 48,
-                    decoration: BoxDecoration(
-                      color: AppColors.white.withOpacity(0.2),
-                      shape: BoxShape.circle,
-                      border: Border.all(color: AppColors.white.withOpacity(0.3)),
+                  const SizedBox(height: 32),
+                  // Search Bar
+                  GestureDetector(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (c) => const SearchScreen())),
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(100),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 20,
+                            offset: const Offset(0, 10),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.search, color: AppColors.primaryBlue, size: 24),
+                          const SizedBox(width: 12),
+                          Text(
+                            "Search for a service...",
+                            style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted),
+                          ),
+                        ],
+                      ),
                     ),
-                    child: const Icon(Icons.notifications_none, color: AppColors.white),
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
-        Positioned(
-          top: -50,
-          right: -50,
-          child: Container(
-            height: 150,
-            width: 150,
-            decoration: BoxDecoration(
-              color: AppColors.white.withOpacity(0.1),
-              shape: BoxShape.circle,
             ),
           ),
-        ),
-        // Search bar (tappable)
-        Positioned(
-          bottom: -28,
-          left: 24,
-          right: 24,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (c) => const SearchScreen()));
-            },
-            child: Container(
-              height: 56,
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: AppColors.primaryShadow,
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  const Icon(Icons.search, color: AppColors.muted),
-                  const SizedBox(width: 12),
-                  Text("Search for plumbing, cleaning...", 
-                    style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted)),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  Widget _buildSectionHeader(String title, String? linkText) {
+  Widget _buildSectionHeader(String title, String linkText) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: AppTextStyles.h3),
-          if (linkText != null)
-            TextButton(
-              onPressed: () {},
-              child: Text(linkText, style: AppTextStyles.label),
-            ),
+          Text(title, style: AppTextStyles.h3.copyWith(fontSize: 18)),
+          Text(
+            linkText,
+            style: AppTextStyles.label.copyWith(fontSize: 13, color: AppColors.primaryBlue),
+          ),
         ],
       ),
     );
@@ -168,7 +171,7 @@ class HomeScreen extends ConsumerWidget {
 
   Widget _buildCategories(WidgetRef ref, AsyncValue<List<Category>> asyncValue, String? selectedSlug) {
     return SizedBox(
-      height: 100,
+      height: 110,
       child: asyncValue.when(
         data: (categories) => ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -191,7 +194,7 @@ class HomeScreen extends ConsumerWidget {
           },
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, s) => Center(child: Text("Error loading categories")),
+        error: (e, s) => const Center(child: Text("Error loading categories")),
       ),
     );
   }
@@ -202,41 +205,48 @@ class HomeScreen extends ConsumerWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.darkBlue, AppColors.primaryBlue.withOpacity(0.8)],
+          colors: [AppColors.primaryBlue, AppColors.primaryBlue.withOpacity(0.8)],
         ),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(28),
       ),
-      child: Row(
+      child: Stack(
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: AppColors.white.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text("LIMITED TIME", 
-                    style: AppTextStyles.bodySmall.copyWith(color: AppColors.white, fontWeight: FontWeight.bold)),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "LIMITED OFFER",
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: Colors.white.withOpacity(0.8),
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2,
                 ),
-                const SizedBox(height: 12),
-                Text("20% off your\nfirst booking", 
-                  style: AppTextStyles.h2.copyWith(color: AppColors.white, fontSize: 20)),
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Text("Claim Now", style: AppTextStyles.label),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "20% off your\nfirst booking!",
+                style: AppTextStyles.h2.copyWith(color: AppColors.white, fontSize: 24),
+              ),
+            ],
+          ),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            top: 0,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(100),
                 ),
-              ],
+                child: Text(
+                  "Claim Now",
+                  style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue),
+                ),
+              ),
             ),
           ),
-          const Icon(Icons.celebration, size: 80, color: AppColors.white),
         ],
       ),
     );
@@ -248,6 +258,7 @@ class HomeScreen extends ConsumerWidget {
       child: asyncValue.when(
         data: (workers) => ListView.builder(
           shrinkWrap: true,
+          padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: workers.length,
           itemBuilder: (context, index) => WorkerCard(

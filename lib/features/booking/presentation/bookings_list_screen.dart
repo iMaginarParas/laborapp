@@ -6,6 +6,7 @@ import 'package:flutter_app/features/booking/providers/booking_providers.dart';
 import 'package:flutter_app/shared/models/booking.dart';
 import 'package:flutter_app/shared/widgets/primary_button.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_app/features/main_tabs/providers/navigation_providers.dart';
 
 class BookingsListScreen extends ConsumerWidget {
   const BookingsListScreen({super.key});
@@ -22,45 +23,51 @@ class BookingsListScreen extends ConsumerWidget {
         elevation: 0,
         centerTitle: true,
       ),
-      body: bookingsAsync.when(
-        data: (bookings) => bookings.isEmpty
-            ? _buildEmptyState(context)
-            : ListView.builder(
-                padding: const EdgeInsets.all(24),
-                itemCount: bookings.length,
-                itemBuilder: (context, index) => _buildBookingCard(bookings[index]),
-              ),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, s) => Center(
-          child: Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.wifi_off_rounded, size: 80, color: AppColors.muted),
-                const SizedBox(height: 24),
-                Text("Connection Error", style: AppTextStyles.h2),
-                const SizedBox(height: 12),
-                Text(
-                  "We couldn't reach the server. Please ensure the backend is running and you have an active connection.",
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted),
+      body: RefreshIndicator(
+        onRefresh: () async => ref.refresh(bookingsProvider),
+        child: bookingsAsync.when(
+          data: (bookings) => bookings.isEmpty
+              ? _buildEmptyState(context)
+              : ListView.builder(
+                  padding: const EdgeInsets.all(24),
+                  itemCount: bookings.length,
+                  itemBuilder: (context, index) => _buildBookingCard(bookings[index]),
                 ),
-                const SizedBox(height: 32),
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: PrimaryButton(
-                    text: "Retry Connection",
-                    onPressed: () => ref.invalidate(bookingsProvider),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (e, s) => SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.7,
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(32.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.wifi_off_rounded, size: 80, color: AppColors.muted),
+                  const SizedBox(height: 24),
+                  Text("Connection Error", style: AppTextStyles.h2),
+                  const SizedBox(height: 12),
+                  Text(
+                    "We couldn't reach the server. Please ensure the backend is running and you have an active connection.",
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted),
                   ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  "Debug: ${e.toString().split('\n').first}",
-                  style: const TextStyle(fontSize: 10, color: Colors.grey),
-                ),
-              ],
+                  const SizedBox(height: 32),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: PrimaryButton(
+                      text: "Retry Connection",
+                      onPressed: () => ref.invalidate(bookingsProvider),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    "Debug: ${e.toString().split('\n').first}",
+                    style: const TextStyle(fontSize: 10, color: Colors.grey),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -99,9 +106,7 @@ class BookingsListScreen extends ConsumerWidget {
               child: PrimaryButton(
                 text: "Find Workers",
                 onPressed: () {
-                  // This is a bit hacky on desktop/web without a global controller, 
-                  // but we can just pop to home or similar if needed.
-                  // For now, advising the user to use the search tab.
+                  ref.read(navigationIndexProvider.notifier).state = 1; // Switch to Search Tab
                 },
               ),
             ),
