@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/core/theme/app_colors.dart';
 import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
+import 'package:flutter_app/features/home/providers/home_providers.dart';
+import 'package:flutter_app/shared/models/worker.dart' as model;
 
 class PostJobScreen extends ConsumerStatefulWidget {
   const PostJobScreen({super.key});
@@ -21,6 +23,17 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
   final _skillsController = TextEditingController();
   
   List<String> _skills = [];
+  final List<int> _selectedCategoryIds = [];
+
+  void _toggleCategory(int categoryId) {
+    setState(() {
+      if (_selectedCategoryIds.contains(categoryId)) {
+        _selectedCategoryIds.remove(categoryId);
+      } else {
+        _selectedCategoryIds.add(categoryId);
+      }
+    });
+  }
 
   void _addSkill(String skill) {
     if (skill.trim().isNotEmpty && !_skills.contains(skill.trim())) {
@@ -81,8 +94,38 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                 validator: (v) => v == null || v.isEmpty ? "Required" : null,
               ),
               const SizedBox(height: 24),
+
+              // 2. Categories
+              _buildSectionTitle("Which category of work do you do?"),
+              const SizedBox(height: 12),
+              ref.watch(categoriesProvider).when(
+                data: (categories) => Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: categories.map((cat) {
+                    final isSelected = _selectedCategoryIds.contains(cat.id);
+                    return FilterChip(
+                      label: Text("${cat.emoji} ${cat.name}"),
+                      selected: isSelected,
+                      onSelected: (_) => _toggleCategory(cat.id),
+                      selectedColor: AppColors.primaryBlue.withOpacity(0.2),
+                      checkmarkColor: AppColors.primaryBlue,
+                      labelStyle: AppTextStyles.label.copyWith(
+                        color: isSelected ? AppColors.primaryBlue : AppColors.muted,
+                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      ),
+                      backgroundColor: AppColors.background,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      side: BorderSide(color: isSelected ? AppColors.primaryBlue : Colors.transparent),
+                    );
+                  }).toList(),
+                ),
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (_, __) => const Text("Failed to load categories"),
+              ),
+              const SizedBox(height: 24),
               
-              // 2. Skills
+              // 3. Skills
               _buildSectionTitle("Skills"),
               const SizedBox(height: 12),
               Row(
@@ -235,6 +278,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
         await repository.updateProfile({
           "bio": _aboutController.text.trim(),
           "skills": _skills,
+          "category_ids": _selectedCategoryIds,
           "city": _locationController.text.trim(),
           "experience_years": int.tryParse(_experienceController.text) ?? 1,
           "hourly_rate": double.tryParse(_wageController.text) ?? 500.0,
