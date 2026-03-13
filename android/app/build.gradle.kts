@@ -23,7 +23,7 @@ if (localPropertiesFile.exists()) {
 val googleMapsApiKey: String = localProperties.getProperty("google.maps.api.key") ?: ""
 
 android {
-    namespace = "com.example.flutter_app"
+    namespace = "com.laborgro.app"
     compileSdk = 36
     ndkVersion = "27.0.12077973"
 
@@ -37,7 +37,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.flutter_app"
+        applicationId = "com.laborgro.app"
         minSdk = flutter.minSdkVersion
         targetSdk = 36
         versionCode = 1
@@ -45,9 +45,22 @@ android {
         manifestPlaceholders["GOOGLE_MAPS_API_KEY"] = googleMapsApiKey
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String?
+            keyPassword = keystoreProperties["keyPassword"] as String?
+            storeFile = keystoreProperties["storeFile"]?.let { file(it) }
+            storePassword = keystoreProperties["storePassword"] as String?
+        }
+    }
+
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = if (keystorePropertiesFile.exists()) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

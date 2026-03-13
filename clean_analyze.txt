@@ -1,0 +1,470 @@
+Resolving dependencies...
+Downloading packages...
+  flutter_dotenv 5.2.1 (6.0.0 available)
+  flutter_riverpod 2.6.1 (3.3.1 available)
+  geocoding 3.0.0 (4.0.0 available)
+  geocoding_android 3.3.1 (5.0.0 available)
+  geocoding_platform_interface 3.2.0 (5.0.0 available)
+  geolocator 13.0.4 (14.0.2 available)
+  geolocator_android 4.6.2 (5.0.2 available)
+  google_fonts 6.3.3 (8.0.2 available)
+  intl 0.19.0 (0.20.2 available)
+  meta 1.17.0 (1.18.1 available)
+  riverpod 2.6.1 (3.2.1 available)
+Got dependencies!
+11 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Analyzing flutter_app...                                        
+
+   info - Don't invoke 'print' in production code - lib\core\network\dio_client.dart:30:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\services\location_service.dart:41:7 - avoid_print
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\core\theme\app_colors.dart:27:26 - deprecated_member_use
+   info - 'background' is deprecated and shouldn't be used. Use surface instead. This feature was deprecated after v3.18.0-0.1.pre - lib\core\theme\app_theme.dart:16:9 - deprecated_member_use
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\booking_screen.dart:4:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_colors.dart' - lib\features\booking\presentation\booking_screen.dart:4:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\booking_screen.dart:5:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_text_styles.dart' - lib\features\booking\presentation\booking_screen.dart:5:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\booking_screen.dart:6:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/models/worker.dart' - lib\features\booking\presentation\booking_screen.dart:6:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\booking_screen.dart:7:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/widgets/primary_button.dart' - lib\features\booking\presentation\booking_screen.dart:7:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\booking_screen.dart:8:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/widgets/badge_pill.dart' - lib\features\booking\presentation\booking_screen.dart:8:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\booking_screen.dart:9:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/booking/providers/booking_providers.dart' - lib\features\booking\presentation\booking_screen.dart:9:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\booking_screen.dart:10:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/booking/presentation/booking_success_screen.dart' - lib\features\booking\presentation\booking_screen.dart:10:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\booking_screen.dart:11:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/services/location_service.dart' - lib\features\booking\presentation\booking_screen.dart:11:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\booking_screen.dart:12:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/utils/api_error_handler.dart' - lib\features\booking\presentation\booking_screen.dart:12:8 - uri_does_not_exist
+  error - Undefined class 'Worker' - lib\features\booking\presentation\booking_screen.dart:16:9 - undefined_class
+   info - The private field _hours could be 'final' - lib\features\booking\presentation\booking_screen.dart:28:7 - prefer_final_fields
+  error - Undefined class 'LocationService' - lib\features\booking\presentation\booking_screen.dart:31:9 - undefined_class
+  error - The method 'LocationService' isn't defined for the type '_BookingScreenState' - lib\features\booking\presentation\booking_screen.dart:31:44 - undefined_method
+  error - Undefined name 'bookingRepositoryProvider' - lib\features\booking\presentation\booking_screen.dart:46:35 - undefined_identifier
+  error - Undefined name 'bookingsProvider' - lib\features\booking\presentation\booking_screen.dart:56:22 - undefined_identifier
+  error - The method 'BookingSuccessScreen' isn't defined for the type '_BookingScreenState' - lib\features\booking\presentation\booking_screen.dart:62:35 - undefined_method
+  error - Undefined name 'ApiErrorHandler' - lib\features\booking\presentation\booking_screen.dart:74:34 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:85:24 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:87:58 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:89:26 - undefined_identifier
+  error - Invalid constant value - lib\features\booking\presentation\booking_screen.dart:92:53 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:92:53 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:100:22 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:133:36 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:139:36 - undefined_identifier
+  error - The method 'PrimaryButton' isn't defined for the type '_BookingScreenState' - lib\features\booking\presentation\booking_screen.dart:174:19 - undefined_method
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:194:16 - undefined_identifier
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\booking\presentation\booking_screen.dart:197:41 - deprecated_member_use
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:225:34 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:225:58 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:227:53 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:227:77 - undefined_identifier
+  error - Invalid constant value - lib\features\booking\presentation\booking_screen.dart:231:48 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:231:48 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:232:46 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:233:40 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:233:58 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:238:28 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:240:30 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:240:54 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:252:27 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:252:51 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:264:28 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:287:37 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:287:61 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:289:56 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:289:80 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:295:28 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:296:43 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:296:61 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:301:28 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:302:43 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:302:61 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:333:35 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:333:59 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:335:54 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:335:78 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:340:22 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:341:37 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:341:55 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:380:18 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:389:20 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:391:44 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:391:62 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:404:28 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:412:47 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:413:64 - undefined_identifier
+  error - Invalid constant value - lib\features\booking\presentation\booking_screen.dart:416:49 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:416:49 - undefined_identifier
+  error - Invalid constant value - lib\features\booking\presentation\booking_screen.dart:417:49 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:417:49 - undefined_identifier
+  error - Invalid constant value - lib\features\booking\presentation\booking_screen.dart:418:49 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:418:49 - undefined_identifier
+  error - Invalid constant value - lib\features\booking\presentation\booking_screen.dart:419:49 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:419:49 - undefined_identifier
+  error - Invalid constant value - lib\features\booking\presentation\booking_screen.dart:420:49 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:420:49 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:422:72 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:433:22 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:436:42 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:436:82 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:458:33 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:467:11 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_screen.dart:468:11 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:468:52 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:477:33 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_screen.dart:477:58 - undefined_identifier
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\booking_success_screen.dart:3:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/main_tabs/providers/navigation_providers.dart' - lib\features\booking\presentation\booking_success_screen.dart:3:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\booking_success_screen.dart:4:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_colors.dart' - lib\features\booking\presentation\booking_success_screen.dart:4:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\booking_success_screen.dart:5:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_text_styles.dart' - lib\features\booking\presentation\booking_success_screen.dart:5:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\booking_success_screen.dart:6:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/widgets/primary_button.dart' - lib\features\booking\presentation\booking_success_screen.dart:6:8 - uri_does_not_exist
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_success_screen.dart:25:24 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_success_screen.dart:37:26 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_success_screen.dart:48:24 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_success_screen.dart:56:24 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_success_screen.dart:57:26 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_success_screen.dart:67:26 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_success_screen.dart:69:45 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_success_screen.dart:75:30 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_success_screen.dart:75:70 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_success_screen.dart:80:30 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_success_screen.dart:81:32 - undefined_identifier
+  error - The method 'PrimaryButton' isn't defined for the type 'BookingSuccessScreen' - lib\features\booking\presentation\booking_success_screen.dart:91:15 - undefined_method
+  error - Undefined name 'navigationIndexProvider' - lib\features\booking\presentation\booking_success_screen.dart:94:28 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_success_screen.dart:105:28 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_success_screen.dart:107:47 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\booking_success_screen.dart:112:28 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\booking_success_screen.dart:112:64 - undefined_identifier
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\bookings_list_screen.dart:3:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_colors.dart' - lib\features\booking\presentation\bookings_list_screen.dart:3:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\bookings_list_screen.dart:4:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_text_styles.dart' - lib\features\booking\presentation\bookings_list_screen.dart:4:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\bookings_list_screen.dart:5:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/booking/providers/booking_providers.dart' - lib\features\booking\presentation\bookings_list_screen.dart:5:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\bookings_list_screen.dart:6:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/models/booking.dart' - lib\features\booking\presentation\bookings_list_screen.dart:6:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\bookings_list_screen.dart:7:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/widgets/primary_button.dart' - lib\features\booking\presentation\bookings_list_screen.dart:7:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\booking\presentation\bookings_list_screen.dart:9:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/main_tabs/providers/navigation_providers.dart' - lib\features\booking\presentation\bookings_list_screen.dart:9:8 - uri_does_not_exist
+  error - Undefined name 'bookingsProvider' - lib\features\booking\presentation\bookings_list_screen.dart:16:37 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\bookings_list_screen.dart:19:24 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\bookings_list_screen.dart:21:43 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\bookings_list_screen.dart:22:26 - undefined_identifier
+  error - Undefined name 'bookingsProvider' - lib\features\booking\presentation\bookings_list_screen.dart:27:44 - undefined_identifier
+  error - Invalid constant value - lib\features\booking\presentation\bookings_list_screen.dart:46:71 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\bookings_list_screen.dart:46:71 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\bookings_list_screen.dart:48:51 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\bookings_list_screen.dart:53:28 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\bookings_list_screen.dart:53:69 - undefined_identifier
+  error - The method 'PrimaryButton' isn't defined for the type 'BookingsListScreen' - lib\features\booking\presentation\bookings_list_screen.dart:59:28 - undefined_method
+  error - Undefined name 'bookingsProvider' - lib\features\booking\presentation\bookings_list_screen.dart:61:55 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\bookings_list_screen.dart:89:24 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\bookings_list_screen.dart:95:45 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\bookings_list_screen.dart:100:22 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\bookings_list_screen.dart:100:63 - undefined_identifier
+  error - The method 'PrimaryButton' isn't defined for the type 'BookingsListScreen' - lib\features\booking\presentation\bookings_list_screen.dart:106:22 - undefined_method
+  error - Undefined name 'navigationIndexProvider' - lib\features\booking\presentation\bookings_list_screen.dart:109:28 - undefined_identifier
+  error - Undefined class 'Booking' - lib\features\booking\presentation\bookings_list_screen.dart:119:28 - undefined_class
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\bookings_list_screen.dart:124:16 - undefined_identifier
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\booking\presentation\bookings_list_screen.dart:127:41 - deprecated_member_use
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\bookings_list_screen.dart:136:34 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\bookings_list_screen.dart:144:54 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\bookings_list_screen.dart:145:71 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\bookings_list_screen.dart:175:17 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\bookings_list_screen.dart:176:19 - undefined_identifier
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\booking\presentation\bookings_list_screen.dart:180:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\booking\presentation\bookings_list_screen.dart:184:30 - deprecated_member_use
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\bookings_list_screen.dart:187:17 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\bookings_list_screen.dart:188:19 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\bookings_list_screen.dart:199:16 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\booking\presentation\bookings_list_screen.dart:207:37 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\booking\presentation\bookings_list_screen.dart:209:27 - undefined_identifier
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\home\presentation\home_screen.dart:3:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_colors.dart' - lib\features\home\presentation\home_screen.dart:3:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\home\presentation\home_screen.dart:4:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_text_styles.dart' - lib\features\home\presentation\home_screen.dart:4:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\home\presentation\home_screen.dart:5:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/widgets/category_chip.dart' - lib\features\home\presentation\home_screen.dart:5:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\home\presentation\home_screen.dart:6:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/widgets/worker_card.dart' - lib\features\home\presentation\home_screen.dart:6:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\home\presentation\home_screen.dart:7:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/home/providers/home_providers.dart' - lib\features\home\presentation\home_screen.dart:7:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\home\presentation\home_screen.dart:8:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/worker_profile/presentation/worker_profile_screen.dart' - lib\features\home\presentation\home_screen.dart:8:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\home\presentation\home_screen.dart:9:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/search/presentation/search_screen.dart' - lib\features\home\presentation\home_screen.dart:9:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\home\presentation\home_screen.dart:10:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/auth/providers/auth_providers.dart' - lib\features\home\presentation\home_screen.dart:10:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\home\presentation\home_screen.dart:11:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/models/worker.dart' - lib\features\home\presentation\home_screen.dart:11:8 - uri_does_not_exist
+  error - Undefined name 'categoriesProvider' - lib\features\home\presentation\home_screen.dart:18:39 - undefined_identifier
+  error - Undefined name 'workersProvider' - lib\features\home\presentation\home_screen.dart:19:36 - undefined_identifier
+  error - Undefined name 'selectedCategoryProvider' - lib\features\home\presentation\home_screen.dart:20:40 - undefined_identifier
+  error - Undefined name 'categoriesProvider' - lib\features\home\presentation\home_screen.dart:26:26 - undefined_identifier
+  error - Undefined name 'workersProvider' - lib\features\home\presentation\home_screen.dart:27:26 - undefined_identifier
+  error - Invalid constant value - lib\features\home\presentation\home_screen.dart:56:16 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\home\presentation\home_screen.dart:56:16 - undefined_identifier
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\home_screen.dart:72:37 - deprecated_member_use
+  error - Undefined name 'currentUserProvider' - lib\features\home\presentation\home_screen.dart:83:29 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\home\presentation\home_screen.dart:91:38 - undefined_identifier
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\home_screen.dart:91:92 - deprecated_member_use
+  error - Undefined name 'AppTextStyles' - lib\features\home\presentation\home_screen.dart:100:34 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\home\presentation\home_screen.dart:100:67 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\home\presentation\home_screen.dart:109:38 - undefined_identifier
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\home_screen.dart:109:92 - deprecated_member_use
+   info - Unnecessary use of multiple underscores - lib\features\home\presentation\home_screen.dart:116:32 - unnecessary_underscores
+  error - Undefined name 'AppTextStyles' - lib\features\home\presentation\home_screen.dart:116:62 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\home\presentation\home_screen.dart:116:95 - undefined_identifier
+  error - The name 'SearchScreen' isn't a class - lib\features\home\presentation\home_screen.dart:121:98 - creation_with_non_type
+  error - Undefined name 'AppColors' - lib\features\home\presentation\home_screen.dart:125:32 - undefined_identifier
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\home_screen.dart:129:49 - deprecated_member_use
+  error - Invalid constant value - lib\features\home\presentation\home_screen.dart:137:59 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\home\presentation\home_screen.dart:137:59 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\home\presentation\home_screen.dart:141:36 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\home\presentation\home_screen.dart:141:77 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\home\presentation\home_screen.dart:162:30 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\home\presentation\home_screen.dart:165:20 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\home\presentation\home_screen.dart:165:70 - undefined_identifier
+  error - The name 'Category' isn't a type, so it can't be used as a type argument - lib\features\home\presentation\home_screen.dart:172:58 - non_type_as_type_argument
+  error - The method 'CategoryChip' isn't defined for the type 'HomeScreen' - lib\features\home\presentation\home_screen.dart:182:20 - undefined_method
+  error - Undefined name 'selectedCategoryProvider' - lib\features\home\presentation\home_screen.dart:188:28 - undefined_identifier
+  error - Undefined name 'selectedCategoryProvider' - lib\features\home\presentation\home_screen.dart:190:28 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\home\presentation\home_screen.dart:208:20 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\home\presentation\home_screen.dart:208:43 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\home\presentation\home_screen.dart:219:24 - undefined_identifier
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\home\presentation\home_screen.dart:220:39 - deprecated_member_use
+  error - Undefined name 'AppTextStyles' - lib\features\home\presentation\home_screen.dart:228:24 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\home\presentation\home_screen.dart:228:57 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\home\presentation\home_screen.dart:240:26 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\home\presentation\home_screen.dart:245:26 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\home\presentation\home_screen.dart:245:62 - undefined_identifier
+  error - The name 'Worker' isn't a type, so it can't be used as a type argument - lib\features\home\presentation\home_screen.dart:255:44 - non_type_as_type_argument
+  error - The method 'WorkerCard' isn't defined for the type 'HomeScreen' - lib\features\home\presentation\home_screen.dart:264:44 - undefined_method
+  error - The method 'WorkerProfileScreen' isn't defined for the type 'HomeScreen' - lib\features\home\presentation\home_screen.dart:270:41 - undefined_method
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\home\providers\home_providers.dart:2:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/network/dio_client.dart' - lib\features\home\providers\home_providers.dart:2:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\home\providers\home_providers.dart:3:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/home/data/home_repository.dart' - lib\features\home\providers\home_providers.dart:3:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\home\providers\home_providers.dart:4:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/models/worker.dart' - lib\features\home\providers\home_providers.dart:4:8 - uri_does_not_exist
+  error - The function 'DioClient' isn't defined - lib\features\home\providers\home_providers.dart:6:45 - undefined_function
+  error - The function 'HomeRepository' isn't defined - lib\features\home\providers\home_providers.dart:10:10 - undefined_function
+  error - The name 'Category' isn't a type, so it can't be used as a type argument - lib\features\home\providers\home_providers.dart:13:48 - non_type_as_type_argument
+  error - The name 'Worker' isn't a type, so it can't be used as a type argument - lib\features\home\providers\home_providers.dart:19:45 - non_type_as_type_argument
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\main_tabs\presentation\main_tabs_screen.dart:3:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/home/presentation/home_screen.dart' - lib\features\main_tabs\presentation\main_tabs_screen.dart:3:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\main_tabs\presentation\main_tabs_screen.dart:4:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/search/presentation/search_screen.dart' - lib\features\main_tabs\presentation\main_tabs_screen.dart:4:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\main_tabs\presentation\main_tabs_screen.dart:5:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/booking/presentation/bookings_list_screen.dart' - lib\features\main_tabs\presentation\main_tabs_screen.dart:5:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\main_tabs\presentation\main_tabs_screen.dart:6:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/profile/presentation/profile_screen.dart' - lib\features\main_tabs\presentation\main_tabs_screen.dart:6:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\main_tabs\presentation\main_tabs_screen.dart:7:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/widgets/bottom_nav_bar.dart' - lib\features\main_tabs\presentation\main_tabs_screen.dart:7:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\main_tabs\presentation\main_tabs_screen.dart:8:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/main_tabs/providers/navigation_providers.dart' - lib\features\main_tabs\presentation\main_tabs_screen.dart:8:8 - uri_does_not_exist
+  error - Can't define the 'const' constructor because the field '_screens' is initialized with a non-constant value - lib\features\main_tabs\presentation\main_tabs_screen.dart:11:3 - const_constructor_with_field_initialized_by_non_const
+  error - The method 'HomeScreen' isn't defined for the type 'MainTabsScreen' - lib\features\main_tabs\presentation\main_tabs_screen.dart:14:5 - undefined_method
+  error - The values in a const list literal must be constants - lib\features\main_tabs\presentation\main_tabs_screen.dart:14:5 - non_constant_list_element
+  error - The method 'SearchScreen' isn't defined for the type 'MainTabsScreen' - lib\features\main_tabs\presentation\main_tabs_screen.dart:15:5 - undefined_method
+  error - The values in a const list literal must be constants - lib\features\main_tabs\presentation\main_tabs_screen.dart:15:5 - non_constant_list_element
+  error - The method 'BookingsListScreen' isn't defined for the type 'MainTabsScreen' - lib\features\main_tabs\presentation\main_tabs_screen.dart:16:5 - undefined_method
+  error - The values in a const list literal must be constants - lib\features\main_tabs\presentation\main_tabs_screen.dart:16:5 - non_constant_list_element
+  error - The method 'ProfileScreen' isn't defined for the type 'MainTabsScreen' - lib\features\main_tabs\presentation\main_tabs_screen.dart:17:5 - undefined_method
+  error - The values in a const list literal must be constants - lib\features\main_tabs\presentation\main_tabs_screen.dart:17:5 - non_constant_list_element
+  error - Undefined name 'navigationIndexProvider' - lib\features\main_tabs\presentation\main_tabs_screen.dart:22:36 - undefined_identifier
+  error - The method 'AppBottomNavBar' isn't defined for the type 'MainTabsScreen' - lib\features\main_tabs\presentation\main_tabs_screen.dart:29:28 - undefined_method
+  error - Undefined name 'navigationIndexProvider' - lib\features\main_tabs\presentation\main_tabs_screen.dart:31:36 - undefined_identifier
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\profile\presentation\profile_screen.dart:3:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_colors.dart' - lib\features\profile\presentation\profile_screen.dart:3:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\profile\presentation\profile_screen.dart:4:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_text_styles.dart' - lib\features\profile\presentation\profile_screen.dart:4:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\profile\presentation\profile_screen.dart:5:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/auth/providers/auth_providers.dart' - lib\features\profile\presentation\profile_screen.dart:5:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\profile\presentation\profile_screen.dart:6:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/models/user.dart' - lib\features\profile\presentation\profile_screen.dart:6:8 - uri_does_not_exist
+  error - Undefined name 'currentUserProvider' - lib\features\profile\presentation\profile_screen.dart:14:33 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:17:24 - undefined_identifier
+  error - Invalid constant value - lib\features\profile\presentation\profile_screen.dart:25:70 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:25:70 - undefined_identifier
+  error - Undefined name 'currentUserProvider' - lib\features\profile\presentation\profile_screen.dart:30:49 - undefined_identifier
+  error - Undefined class 'User' - lib\features\profile\presentation\profile_screen.dart:40:61 - undefined_class
+  error - Undefined name 'authStateProvider' - lib\features\profile\presentation\profile_screen.dart:72:26 - undefined_identifier
+  error - Undefined class 'User' - lib\features\profile\presentation\profile_screen.dart:82:23 - undefined_class
+  error - Invalid constant value - lib\features\profile\presentation\profile_screen.dart:87:16 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:87:16 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:99:22 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:101:41 - undefined_identifier
+  error - Invalid constant value - lib\features\profile\presentation\profile_screen.dart:105:32 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:105:32 - undefined_identifier
+  error - Invalid constant value - lib\features\profile\presentation\profile_screen.dart:106:58 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:106:58 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\profile\presentation\profile_screen.dart:110:34 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\profile\presentation\profile_screen.dart:112:35 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:112:76 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:117:22 - undefined_identifier
+  error - Invalid constant value - lib\features\profile\presentation\profile_screen.dart:123:54 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:123:54 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\profile\presentation\profile_screen.dart:125:62 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:125:102 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:138:16 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:153:33 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:156:53 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\profile\presentation\profile_screen.dart:158:38 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:160:30 - undefined_identifier
+  error - Invalid constant value - lib\features\profile\presentation\profile_screen.dart:162:56 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\profile\presentation\profile_screen.dart:162:56 - undefined_identifier
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\search\presentation\search_screen.dart:3:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_colors.dart' - lib\features\search\presentation\search_screen.dart:3:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\search\presentation\search_screen.dart:4:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_text_styles.dart' - lib\features\search\presentation\search_screen.dart:4:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\search\presentation\search_screen.dart:5:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/models/worker.dart' - lib\features\search\presentation\search_screen.dart:5:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\search\presentation\search_screen.dart:6:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/widgets/badge_pill.dart' - lib\features\search\presentation\search_screen.dart:6:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\search\presentation\search_screen.dart:7:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/widgets/primary_button.dart' - lib\features\search\presentation\search_screen.dart:7:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\search\presentation\search_screen.dart:8:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/worker_profile/presentation/worker_profile_screen.dart' - lib\features\search\presentation\search_screen.dart:8:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\search\presentation\search_screen.dart:9:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/booking/presentation/booking_screen.dart' - lib\features\search\presentation\search_screen.dart:9:8 - uri_does_not_exist
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:21:24 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:49:45 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\search\presentation\search_screen.dart:57:39 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:69:18 - undefined_identifier
+  error - Invalid constant value - lib\features\search\presentation\search_screen.dart:75:45 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:75:45 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\search\presentation\search_screen.dart:82:30 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:82:71 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:119:29 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:119:53 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:121:48 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:121:72 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\search\presentation\search_screen.dart:125:18 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:126:31 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:126:49 - undefined_identifier
+  error - The name 'Worker' isn't a type, so it can't be used as a type argument - lib\features\search\presentation\search_screen.dart:134:44 - non_type_as_type_argument
+  error - Invalid constant value - lib\features\search\presentation\search_screen.dart:153:57 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:153:57 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\search\presentation\search_screen.dart:155:43 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\search\presentation\search_screen.dart:156:61 - undefined_identifier
+  error - Undefined class 'Worker' - lib\features\search\presentation\search_screen.dart:164:9 - undefined_class
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:174:16 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:176:35 - undefined_identifier
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\search\presentation\search_screen.dart:179:33 - deprecated_member_use
+  error - The method 'WorkerProfileScreen' isn't defined for the type '_SearchWorkerCard' - lib\features\search\presentation\search_screen.dart:190:37 - undefined_method
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:202:28 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\search\presentation\search_screen.dart:213:48 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\search\presentation\search_screen.dart:216:32 - undefined_identifier
+  error - The name 'BadgePill' isn't a class - lib\features\search\presentation\search_screen.dart:221:35 - creation_with_non_type
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:224:38 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:225:48 - undefined_identifier
+  error - The name 'BadgePill' isn't a class - lib\features\search\presentation\search_screen.dart:229:35 - creation_with_non_type
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:232:38 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:233:48 - undefined_identifier
+  error - The method 'BadgePill' isn't defined for the type '_SearchWorkerCard' - lib\features\search\presentation\search_screen.dart:237:27 - undefined_method
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:240:36 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:241:46 - undefined_identifier
+  error - Invalid constant value - lib\features\search\presentation\search_screen.dart:251:45 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:251:45 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\search\presentation\search_screen.dart:261:85 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:261:118 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\search\presentation\search_screen.dart:262:55 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\search\presentation\search_screen.dart:266:49 - undefined_identifier
+  error - Invalid constant value - lib\features\search\presentation\search_screen.dart:274:55 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:274:55 - undefined_identifier
+  error - Invalid constant value - lib\features\search\presentation\search_screen.dart:275:55 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:275:55 - undefined_identifier
+  error - Invalid constant value - lib\features\search\presentation\search_screen.dart:276:55 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:276:55 - undefined_identifier
+  error - Invalid constant value - lib\features\search\presentation\search_screen.dart:277:55 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:277:55 - undefined_identifier
+  error - Invalid constant value - lib\features\search\presentation\search_screen.dart:278:55 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:278:55 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\search\presentation\search_screen.dart:281:48 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\search\presentation\search_screen.dart:281:88 - undefined_identifier
+  error - The method 'PrimaryButton' isn't defined for the type '_SearchWorkerCard' - lib\features\search\presentation\search_screen.dart:288:26 - undefined_method
+  error - The method 'BookingScreen' isn't defined for the type '_SearchWorkerCard' - lib\features\search\presentation\search_screen.dart:291:81 - undefined_method
+warning - This default clause is covered by the previous cases - lib\features\search\providers\search_providers.dart:37:5 - unreachable_switch_default
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\worker_profile\presentation\worker_profile_screen.dart:3:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_colors.dart' - lib\features\worker_profile\presentation\worker_profile_screen.dart:3:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\worker_profile\presentation\worker_profile_screen.dart:4:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_text_styles.dart' - lib\features\worker_profile\presentation\worker_profile_screen.dart:4:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\worker_profile\presentation\worker_profile_screen.dart:5:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/models/worker.dart' - lib\features\worker_profile\presentation\worker_profile_screen.dart:5:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\worker_profile\presentation\worker_profile_screen.dart:6:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/widgets/badge_pill.dart' - lib\features\worker_profile\presentation\worker_profile_screen.dart:6:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\worker_profile\presentation\worker_profile_screen.dart:7:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/shared/widgets/primary_button.dart' - lib\features\worker_profile\presentation\worker_profile_screen.dart:7:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\features\worker_profile\presentation\worker_profile_screen.dart:8:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/booking/presentation/booking_screen.dart' - lib\features\worker_profile\presentation\worker_profile_screen.dart:8:8 - uri_does_not_exist
+  error - Undefined class 'Worker' - lib\features\worker_profile\presentation\worker_profile_screen.dart:11:9 - undefined_class
+  error - Invalid constant value - lib\features\worker_profile\presentation\worker_profile_screen.dart:37:16 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:37:16 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:50:28 - undefined_identifier
+  error - Invalid constant value - lib\features\worker_profile\presentation\worker_profile_screen.dart:53:62 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:53:62 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:63:22 - undefined_identifier
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\worker_profile\presentation\worker_profile_screen.dart:66:47 - deprecated_member_use
+  error - Undefined name 'AppTextStyles' - lib\features\worker_profile\presentation\worker_profile_screen.dart:75:20 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:75:53 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\worker_profile\presentation\worker_profile_screen.dart:80:20 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:80:61 - undefined_identifier
+  error - Invalid constant value - lib\features\worker_profile\presentation\worker_profile_screen.dart:86:82 - invalid_constant
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:86:82 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:107:18 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:111:22 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\worker_profile\presentation\worker_profile_screen.dart:134:30 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:134:63 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\worker_profile\presentation\worker_profile_screen.dart:136:30 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:136:70 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:146:14 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\worker_profile\presentation\worker_profile_screen.dart:156:32 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\worker_profile\presentation\worker_profile_screen.dart:160:20 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:161:22 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\worker_profile\presentation\worker_profile_screen.dart:167:33 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:175:24 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:177:43 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\worker_profile\presentation\worker_profile_screen.dart:179:47 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:179:87 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:191:16 - undefined_identifier
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\features\worker_profile\presentation\worker_profile_screen.dart:193:41 - deprecated_member_use
+  error - Undefined name 'AppTextStyles' - lib\features\worker_profile\presentation\worker_profile_screen.dart:208:32 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:208:79 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\worker_profile\presentation\worker_profile_screen.dart:213:45 - undefined_identifier
+  error - The method 'PrimaryButton' isn't defined for the type 'WorkerProfileScreen' - lib\features\worker_profile\presentation\worker_profile_screen.dart:220:22 - undefined_method
+  error - The method 'BookingScreen' isn't defined for the type 'WorkerProfileScreen' - lib\features\worker_profile\presentation\worker_profile_screen.dart:226:45 - undefined_method
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:251:16 - undefined_identifier
+  error - Undefined name 'AppTextStyles' - lib\features\worker_profile\presentation\worker_profile_screen.dart:259:30 - undefined_identifier
+  error - Undefined name 'AppColors' - lib\features\worker_profile\presentation\worker_profile_screen.dart:259:70 - undefined_identifier
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\main.dart:3:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/core/theme/app_theme.dart' - lib\main.dart:3:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\main.dart:4:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/auth/providers/auth_providers.dart' - lib\main.dart:4:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\main.dart:5:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/auth/presentation/login_screen.dart' - lib\main.dart:5:8 - uri_does_not_exist
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - lib\main.dart:6:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/features/main_tabs/presentation/main_tabs_screen.dart' - lib\main.dart:6:8 - uri_does_not_exist
+  error - Undefined name 'authStateProvider' - lib\main.dart:25:29 - undefined_identifier
+  error - Undefined name 'AppTheme' - lib\main.dart:30:14 - undefined_identifier
+  error - The name 'LoginScreen' isn't a class - lib\main.dart:31:35 - creation_with_non_type
+  error - The name 'MainTabsScreen' isn't a class - lib\main.dart:31:57 - creation_with_non_type
+warning - Unused import: 'package:flutter/foundation.dart' - lib\shared\models\worker.dart:1:8 - unused_import
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\shared\widgets\category_chip.dart:32:80 - deprecated_member_use
+warning - Unused import: '../../core/theme/app_text_styles.dart' - lib\shared\widgets\primary_button.dart:3:8 - unused_import
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\shared\widgets\worker_card.dart:25:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\shared\widgets\worker_card.dart:45:49 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\shared\widgets\worker_card.dart:92:75 - deprecated_member_use
+   info - The imported package 'flutter_app' isn't a dependency of the importing package - test\widget_test.dart:2:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:flutter_app/main.dart' - test\widget_test.dart:2:8 - uri_does_not_exist
+  error - Invalid constant value - test\widget_test.dart:8:56 - invalid_constant
+  error - The function 'LaborgroApp' isn't defined - test\widget_test.dart:8:56 - undefined_function
+  error - Undefined name 'LaborgroApp' - test\widget_test.dart:10:24 - undefined_identifier
+

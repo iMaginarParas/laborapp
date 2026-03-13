@@ -1,4 +1,4 @@
-package com.example.laborapp
+package com.laborgro.app
 
 import io.flutter.embedding.android.FlutterActivity
 

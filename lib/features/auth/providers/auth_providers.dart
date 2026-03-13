@@ -14,3 +14,7 @@ final currentUserProvider = FutureProvider<User>((ref) async {
   final repository = ref.watch(authRepositoryProvider);
   return repository.getMe();
 });
+
+enum UserRole { hire, work }
+
+final currentRoleProvider = StateProvider<UserRole>((ref) => UserRole.hire);

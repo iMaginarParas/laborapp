@@ -81,35 +81,43 @@ class HomeScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ref.watch(currentUserProvider).when(
-                    data: (user) => Column(
+                    data: (user) => Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Good morning",
-                              style: AppTextStyles.bodyMedium.copyWith(color: Colors.white.withOpacity(0.9)),
+                            Row(
+                              children: [
+                                Text(
+                                  "Good morning",
+                                  style: AppTextStyles.bodyMedium.copyWith(color: Colors.white.withOpacity(0.9)),
+                                ),
+                                const SizedBox(width: 4),
+                                const Text("👋", style: TextStyle(fontSize: 16)),
+                              ],
                             ),
-                            const SizedBox(width: 4),
-                            const Text("👋", style: TextStyle(fontSize: 16)),
+                            const SizedBox(height: 4),
+                            Text(
+                              user.name,
+                              style: AppTextStyles.h1.copyWith(color: AppColors.white, fontSize: 32),
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Icon(Icons.location_on, color: Colors.redAccent, size: 16),
+                                const SizedBox(width: 4),
+                                Text(
+                                  user.city ?? "Sector 18, Noida",
+                                  style: AppTextStyles.bodyMedium.copyWith(color: Colors.white.withOpacity(0.8)),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          user.name,
-                          style: AppTextStyles.h1.copyWith(color: AppColors.white, fontSize: 32),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(Icons.location_on, color: Colors.redAccent, size: 16),
-                            const SizedBox(width: 4),
-                            Text(
-                              user.city ?? "Sector 18, Noida",
-                              style: AppTextStyles.bodyMedium.copyWith(color: Colors.white.withOpacity(0.8)),
-                            ),
-                          ],
-                        ),
+                        // Role Toggle
+                        _buildRoleToggle(ref),
                       ],
                     ),
                     loading: () => const SizedBox(height: 80),
@@ -142,6 +150,70 @@ class HomeScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRoleToggle(WidgetRef ref) {
+    final currentRole = ref.watch(currentRoleProvider);
+    final isHire = currentRole == UserRole.hire;
+
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GestureDetector(
+            onTap: () => ref.read(currentRoleProvider.notifier).state = UserRole.hire,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: isHire ? Colors.white : Colors.transparent,
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: Row(
+                children: [
+                   const Text("🏠", style: TextStyle(fontSize: 12)),
+                  const SizedBox(width: 4),
+                  Text(
+                    "Hire",
+                    style: AppTextStyles.label.copyWith(
+                      color: isHire ? AppColors.primaryBlue : Colors.white,
+                      fontWeight: isHire ? FontWeight.bold : FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => ref.read(currentRoleProvider.notifier).state = UserRole.work,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: !isHire ? Colors.white : Colors.transparent,
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: Row(
+                children: [
+                   const Text("👷", style: TextStyle(fontSize: 12)),
+                  const SizedBox(width: 4),
+                  Text(
+                    "Work",
+                    style: AppTextStyles.label.copyWith(
+                      color: !isHire ? AppColors.primaryBlue : Colors.white,
+                      fontWeight: !isHire ? FontWeight.bold : FontWeight.normal,
                     ),
                   ),
                 ],

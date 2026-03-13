@@ -4,11 +4,13 @@ import '../../core/theme/app_text_styles.dart';
 
 class AppBottomNavBar extends StatelessWidget {
   final int currentIndex;
+  final bool showPostJob;
   final Function(int) onTap;
 
   const AppBottomNavBar({
     super.key,
     required this.currentIndex,
+    this.showPostJob = false,
     required this.onTap,
   });
 
@@ -29,11 +31,12 @@ class AppBottomNavBar extends StatelessWidget {
         selectedLabelStyle: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.bold, fontSize: 10),
         unselectedLabelStyle: AppTextStyles.bodySmall.copyWith(fontSize: 10),
         elevation: 0,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.search), activeIcon: Icon(Icons.search), label: "Search"),
-          BottomNavigationBarItem(icon: Icon(Icons.assignment_outlined), activeIcon: Icon(Icons.assignment), label: "Bookings"),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), activeIcon: Icon(Icons.person), label: "Profile"),
+        items: [
+          const BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: "Home"),
+          const BottomNavigationBarItem(icon: Icon(Icons.search), activeIcon: Icon(Icons.search), label: "Search"),
+          if (showPostJob) const BottomNavigationBarItem(icon: Icon(Icons.post_add), activeIcon: Icon(Icons.post_add), label: "Post Job"),
+          const BottomNavigationBarItem(icon: Icon(Icons.assignment_outlined), activeIcon: Icon(Icons.assignment), label: "Bookings"),
+          const BottomNavigationBarItem(icon: Icon(Icons.person_outline), activeIcon: Icon(Icons.person), label: "Profile"),
         ],
       ),
     );

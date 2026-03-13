@@ -22,12 +22,21 @@ class BookingsListScreen extends ConsumerWidget {
         backgroundColor: AppColors.white,
         elevation: 0,
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.chat_bubble_outline, color: AppColors.primaryBlue),
+            onPressed: () {
+              // TODO: Navigate to messages screen
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () async => ref.refresh(bookingsProvider),
         child: bookingsAsync.when(
           data: (bookings) => bookings.isEmpty
-              ? _buildEmptyState(context)
+              ? _buildEmptyState(context, ref)
               : ListView.builder(
                   padding: const EdgeInsets.all(24),
                   itemCount: bookings.length,
@@ -75,7 +84,7 @@ class BookingsListScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildEmptyState(BuildContext context) {
+  Widget _buildEmptyState(BuildContext context, WidgetRef ref) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32.0),

@@ -12,8 +12,8 @@
 }
 
 # Preserve GSON/JSON models if needed (we use Dio/JSON)
--keep class com.example.flutter_app.shared.models.** { *; }
--keep class com.example.flutter_app.features.**.models.** { *; }
+-keep class com.laborgro.app.shared.models.** { *; }
+-keep class com.laborgro.app.features.**.models.** { *; }
 
 # Google Play Store Core Library (for deferred components)
 -dontwarn com.google.android.play.core.**

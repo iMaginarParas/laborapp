@@ -9,6 +9,7 @@ import 'package:flutter_app/shared/widgets/badge_pill.dart';
 import 'package:flutter_app/features/booking/providers/booking_providers.dart';
 import 'package:flutter_app/features/booking/presentation/booking_success_screen.dart';
 import 'package:flutter_app/core/services/location_service.dart';
+import 'package:flutter_app/core/utils/api_error_handler.dart';
 import 'package:geolocator/geolocator.dart';
 
 class BookingScreen extends ConsumerStatefulWidget {
@@ -69,7 +70,9 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Booking failed: $e")));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(ApiErrorHandler.getErrorMessage(e))),
+        );
       }
     } finally {
       if (mounted) setState(() => _isSubmitting = false);

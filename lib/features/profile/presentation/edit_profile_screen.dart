@@ -5,6 +5,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../../shared/models/user.dart';
+import '../../../core/utils/api_error_handler.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
   final User user;
@@ -57,7 +58,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Update failed: $e")),
+          SnackBar(content: Text(ApiErrorHandler.getErrorMessage(e))),
         );
       }
     } finally {
