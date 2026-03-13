@@ -21,6 +21,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _passwordController = TextEditingController();
   final String _selectedRole = "employer"; // Only allowing customer signup
   bool _isLoading = false;
+  bool _obscurePassword = true; // Added for eye toggle
 
   Future<void> _handleRegister() async {
     if (_nameController.text.isEmpty || _emailController.text.isEmpty || 
@@ -124,8 +125,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   const SizedBox(height: 8),
                   TextField(
                     controller: _passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(hintText: "Create a password"),
+                    obscureText: _obscurePassword,
+                    decoration: InputDecoration(
+                      hintText: "Create a password",
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                          size: 20,
+                        ),
+                        onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 24),
 

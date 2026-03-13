@@ -15,9 +15,10 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  final _phoneController = TextEditingController(text: "9999999999");
-  final _passwordController = TextEditingController(text: "test1234");
+  final _phoneController = TextEditingController(); // Cleared initial value
+  final _passwordController = TextEditingController(); // Cleared initial value
   bool _isLoading = false;
+  bool _obscurePassword = true; // Added for eye toggle
 
   Future<void> _handleLogin() async {
     setState(() => _isLoading = true);
@@ -73,11 +74,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(height: 8),
                   TextField(
                     controller: _passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
+                    obscureText: _obscurePassword,
+                    decoration: InputDecoration(
                       hintText: "Enter your password",
-                      prefixIcon: Icon(Icons.lock_outline, size: 20),
-                      suffixIcon: Icon(Icons.visibility_off_outlined, size: 20),
+                      prefixIcon: const Icon(Icons.lock_outline, size: 20),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                          size: 20,
+                        ),
+                        onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 12),
