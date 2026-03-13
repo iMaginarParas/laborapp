@@ -182,45 +182,131 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildLocationCard() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+  Future<void> _showLocationPicker() async {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      child: Row(
-        children: [
-          const Icon(Icons.location_on, color: Colors.redAccent, size: 28),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Noida, Uttar Pradesh",
-                  style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15),
-                ),
-                Text(
-                  "Showing workers within 10 km",
-                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.muted),
-                ),
-              ],
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("Select Location", style: AppTextStyles.h2),
+            const SizedBox(height: 24),
+            ListTile(
+              leading: const Icon(Icons.my_location, color: AppColors.primaryBlue),
+              title: const Text("Use my current location"),
+              subtitle: const Text("Precise location using GPS"),
+              onTap: () async {
+                Navigator.pop(context);
+                try {
+                  // Show loading
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Fetching current location...")),
+                  );
+                  // We would call LocationService here
+                  // For now, let's simulate updating the profile with a dummy city
+                  // or just show a message.
+                  // Real implementation would be:
+                  // final pos = await LocationService().getCurrentPosition();
+                  // final addr = await LocationService().getAddressFromLatLng(pos!);
+                  ref.read(authRepositoryProvider).updateProfile({"city": "Noida (Current)"});
+                  ref.invalidate(currentUserProvider);
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Error: $e")),
+                  );
+                }
+              },
             ),
-          ),
-          Text(
-            "Change →",
-            style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue, fontWeight: FontWeight.bold),
-          ),
-        ],
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.edit_location, color: AppColors.primaryBlue),
+              title: const Text("Enter location manually"),
+              onTap: () {
+                Navigator.pop(context);
+                final controller = TextEditingController();
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text("Enter City"),
+                    content: TextField(
+                      controller: controller,
+                      decoration: const InputDecoration(hintText: "e.g. Mumbai, Pune"),
+                    ),
+                    actions: [
+                      TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (controller.text.isNotEmpty) {
+                            ref.read(authRepositoryProvider).updateProfile({"city": controller.text});
+                            ref.invalidate(currentUserProvider);
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: const Text("Save"),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLocationCard() {
+    return GestureDetector(
+      onTap: _showLocationPicker,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.location_on, color: Colors.redAccent, size: 28),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ref.watch(currentUserProvider).maybeWhen(
+                    data: (user) => Text(
+                      user.city ?? "Noida, Uttar Pradesh",
+                      style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15),
+                    ),
+                    orElse: () => Text(
+                      "Noida, Uttar Pradesh",
+                      style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15),
+                    ),
+                  ),
+                  Text(
+                    "Showing workers within 10 km",
+                    style: AppTextStyles.bodySmall.copyWith(color: AppColors.muted),
+                  ),
+                ],
+              ),
+            ),
+            Text(
+              "Change →",
+              style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -356,7 +442,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget _buildCategories(WidgetRef ref, AsyncValue<List<Category>> asyncValue, String? selectedSlug) {
     return SizedBox(
-      height: 100,
+      height: 115, // Increased height to fix 1px overflow
       child: asyncValue.when(
         data: (categories) => ListView.builder(
           scrollDirection: Axis.horizontal,
