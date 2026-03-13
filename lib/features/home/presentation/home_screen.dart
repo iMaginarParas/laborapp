@@ -9,6 +9,7 @@ import 'package:flutter_app/features/worker_profile/presentation/worker_profile_
 import 'package:flutter_app/features/search/presentation/search_screen.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/shared/models/worker.dart';
+import 'package:flutter_app/features/home/presentation/role_selection_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -399,7 +400,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget _toggleButton(WidgetRef ref, String label, String emoji, bool isActive, UserRole role) {
     return GestureDetector(
-      onTap: () => ref.read(currentRoleProvider.notifier).state = role,
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const RoleSelectionScreen()),
+      ),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
