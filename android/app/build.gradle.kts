@@ -1,4 +1,4 @@
-import java.util.Properties
+                                                                        import java.util.Properties
 import java.io.FileInputStream
 
 plugins {
@@ -22,7 +22,7 @@ if (localPropertiesFile.exists()) {
 val googleMapsApiKey: String = localProperties.getProperty("google.maps.api.key") ?: ""
 
 android {
-    namespace = "com.laborgro.app"
+    namespace = "com.laborgro.laborapp"
     compileSdk = 36
     ndkVersion = "27.0.12077973"
 
@@ -36,11 +36,11 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.laborgro.app"
+        applicationId = "com.laborgro.laborapp"
         minSdk = flutter.minSdkVersion
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.0.1"
         manifestPlaceholders["GOOGLE_MAPS_API_KEY"] = googleMapsApiKey
     }
 
