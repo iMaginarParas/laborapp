@@ -50,6 +50,12 @@ class AppTheme {
           textStyle: AppTextStyles.button,
         ),
       ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        },
+      ),
     );
   }
 }

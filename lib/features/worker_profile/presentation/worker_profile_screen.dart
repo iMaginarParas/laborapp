@@ -67,7 +67,13 @@ class WorkerProfileScreen extends ConsumerWidget {
               ],
             ),
             alignment: Alignment.center,
-            child: Text(worker.categories.first.emoji, style: const TextStyle(fontSize: 44)),
+            child: Hero(
+              tag: 'worker_emoji_${worker.id}',
+              child: Material(
+                color: Colors.transparent,
+                child: Text(worker.categories.first.emoji, style: const TextStyle(fontSize: 44)),
+              ),
+            ),
           ),
           const SizedBox(height: 20),
           Text(

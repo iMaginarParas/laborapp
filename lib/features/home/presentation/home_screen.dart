@@ -10,6 +10,8 @@ import 'package:flutter_app/features/search/presentation/search_screen.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/shared/models/worker.dart';
 import 'package:flutter_app/features/home/presentation/role_selection_screen.dart';
+import 'package:flutter_app/providers/language_provider.dart';
+import 'package:flutter_app/core/services/storage_service.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -19,8 +21,18 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  String _selectedLanguage = "English";
-  final List<String> _languages = ["English", "हिन्दी", "मराठी", "தமிழ்", "తెలుగు", "বাংলা"];
+  final List<String> _languages = ["English", "हिन्दी"];
+
+  void _showWorkingOnIt() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(Strings.of(context, 'working_on_it')),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        backgroundColor: AppColors.primaryBlue,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +57,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               const SizedBox(height: 16),
               _buildLanguageSelector(),
               const SizedBox(height: 24),
-              _buildSectionHeader("Services", "See all →"),
+              _buildSectionHeader(Strings.of(context, 'services'), Strings.of(context, 'see_all') + " →"),
               const SizedBox(height: 12),
               _buildCategories(ref, categoriesAsync, selectedCategory),
               const SizedBox(height: 24),
-              _buildNearbyHeader("Nearby Workers", "12 online", "Map →"),
+              _buildNearbyHeader(Strings.of(context, 'nearby_workers'), "12 online", "Map →"),
               const SizedBox(height: 16),
               _buildWorkersList(workersAsync),
               const SizedBox(height: 100),
@@ -87,7 +99,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         Row(
                           children: [
                             Text(
-                              "Good morning",
+                              Strings.of(context, 'good_morning'),
                               style: AppTextStyles.bodyMedium.copyWith(color: Colors.white.withOpacity(0.9), fontSize: 13),
                             ),
                             const SizedBox(width: 4),
@@ -138,9 +150,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             const Icon(Icons.search, color: AppColors.muted, size: 22),
                             const SizedBox(width: 10),
                             Expanded(
-                              child: Text(
-                                "Search painter, cleaner...",
-                                style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted.withOpacity(0.7), fontSize: 14),
+                                child: Text(
+                                  Strings.of(context, 'search_placeholder'),
+                                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted.withOpacity(0.7), fontSize: 14),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -172,7 +184,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       color: const Color(0xFF6C9BD8), // Lighter blue for the mic pill
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: const Icon(Icons.mic, color: Colors.white),
+                    child: InkWell(
+                      onTap: _showWorkingOnIt,
+                      borderRadius: BorderRadius.circular(16),
+                      child: const Icon(Icons.mic, color: Colors.white),
+                    ),
                   ),
                 ],
               ),
@@ -303,7 +319,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             ),
             Text(
-              "Change →",
+              Strings.of(context, 'change') + " →",
               style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue, fontWeight: FontWeight.bold),
             ),
           ],
@@ -321,11 +337,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         itemCount: _languages.length,
         itemBuilder: (context, index) {
           final lang = _languages[index];
-          final isSelected = _selectedLanguage == lang;
+          final isSelected = ref.watch(localeProvider).languageCode == (lang == 'हिन्दी' ? 'hi' : 'en');
           return Padding(
             padding: const EdgeInsets.only(right: 10),
             child: GestureDetector(
-              onTap: () => setState(() => _selectedLanguage = lang),
+              onTap: () {
+                final newLocale = Locale(lang == 'हिन्दी' ? 'hi' : 'en');
+                ref.read(localeProvider.notifier).state = newLocale;
+                StorageService.setLanguage(lang);
+              },
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 decoration: BoxDecoration(
@@ -369,9 +389,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ),
           const Spacer(),
-          Text(
-            link,
-            style: AppTextStyles.label.copyWith(fontSize: 13, color: AppColors.primaryBlue),
+          GestureDetector(
+            onTap: _showWorkingOnIt,
+            child: Text(
+              link,
+              style: AppTextStyles.label.copyWith(fontSize: 13, color: AppColors.primaryBlue),
+            ),
           ),
         ],
       ),
@@ -402,9 +425,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const RoleSelectionScreen()),
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => const RoleSelectionScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+        ),
       ),
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
           color: isActive ? Colors.white : Colors.transparent,
@@ -414,13 +443,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           children: [
             Text(emoji, style: const TextStyle(fontSize: 14)),
             const SizedBox(width: 4),
-            Text(
-              label,
+            AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 200),
               style: AppTextStyles.label.copyWith(
                 color: isActive ? AppColors.primaryBlue : Colors.white,
                 fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
                 fontSize: 13,
               ),
+              child: Text(label),
             ),
           ],
         ),
@@ -435,9 +465,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title, style: AppTextStyles.h3.copyWith(fontSize: 18)),
-          Text(
-            linkText,
-            style: AppTextStyles.label.copyWith(fontSize: 13, color: AppColors.primaryBlue),
+          GestureDetector(
+            onTap: _showWorkingOnIt,
+            child: Text(
+              linkText,
+              style: AppTextStyles.label.copyWith(fontSize: 13, color: AppColors.primaryBlue),
+            ),
           ),
         ],
       ),

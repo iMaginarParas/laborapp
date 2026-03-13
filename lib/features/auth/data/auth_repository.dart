@@ -1,6 +1,7 @@
 import '../../../core/network/dio_client.dart';
 import '../../../core/constants/api_constants.dart';
 import '../../../shared/models/user.dart';
+import '../../../core/services/storage_service.dart';
 
 class AuthRepository {
   final DioClient _client;
@@ -15,6 +16,7 @@ class AuthRepository {
     
     final token = response.data['access_token'];
     DioClient.setToken(token);
+    await StorageService.setToken(token);
     return token;
   }
 

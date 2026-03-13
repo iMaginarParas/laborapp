@@ -20,7 +20,10 @@ class CategoryChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Padding(
+      child: AnimatedScale(
+        scale: isSelected ? 1.05 : 1.0,
+        duration: const Duration(milliseconds: 200),
+        child: Padding(
         padding: const EdgeInsets.only(right: 20),
         child: Column(
           children: [
@@ -48,6 +51,7 @@ class CategoryChip extends StatelessWidget {
               ),
             ),
           ],
+        ),
         ),
       ),
     );

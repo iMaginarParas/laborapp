@@ -48,9 +48,12 @@ class WorkerCard extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     alignment: Alignment.center,
-                    child: Text(
-                      worker.categories.isNotEmpty ? worker.categories.first.emoji : "👷",
-                      style: const TextStyle(fontSize: 34),
+                    child: Hero(
+                      tag: 'worker_emoji_${worker.id}',
+                      child: Text(
+                        worker.categories.isNotEmpty ? worker.categories.first.emoji : "👷",
+                        style: const TextStyle(fontSize: 34),
+                      ),
                     ),
                   ),
                   if (worker.isAvailable)

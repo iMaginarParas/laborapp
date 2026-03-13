@@ -49,75 +49,89 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         child: Column(
           children: [
             _buildHero(),
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-                  Text("Welcome Back", style: AppTextStyles.h1),
-                  const SizedBox(height: 8),
-                  Text("Sign in to continue booking your favorite services.", 
-                    style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted)),
-                  const SizedBox(height: 32),
-                  _buildLabel("Phone Number or Email"),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: _phoneController,
-                    decoration: const InputDecoration(
-                      hintText: "Enter your phone or email",
-                      prefixIcon: Icon(Icons.phone_outlined, size: 20),
-                    ),
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0.0, end: 1.0),
+              duration: const Duration(milliseconds: 800),
+              curve: Curves.easeOutCubic,
+              builder: (context, value, child) {
+                return Opacity(
+                  opacity: value,
+                  child: Transform.translate(
+                    offset: Offset(0, 30 * (1 - value)),
+                    child: child,
                   ),
-                  const SizedBox(height: 24),
-                  _buildLabel("Password"),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: _passwordController,
-                    obscureText: _obscurePassword,
-                    decoration: InputDecoration(
-                      hintText: "Enter your password",
-                      prefixIcon: const Icon(Icons.lock_outline, size: 20),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                          size: 20,
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 20),
+                    Text("Welcome Back", style: AppTextStyles.h1),
+                    const SizedBox(height: 8),
+                    Text("Sign in to continue booking your favorite services.", 
+                      style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted)),
+                    const SizedBox(height: 32),
+                    _buildLabel("Phone Number or Email"),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _phoneController,
+                      decoration: const InputDecoration(
+                        hintText: "Enter your phone or email",
+                        prefixIcon: Icon(Icons.phone_outlined, size: 20),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    _buildLabel("Password"),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _passwordController,
+                      obscureText: _obscurePassword,
+                      decoration: InputDecoration(
+                        hintText: "Enter your password",
+                        prefixIcon: const Icon(Icons.lock_outline, size: 20),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                            size: 20,
+                          ),
+                          onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                         ),
-                        onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text("Forgot Password?", style: AppTextStyles.label.copyWith(fontSize: 12)),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  PrimaryButton(
-                    text: "Sign In", 
-                    isLoading: _isLoading,
-                    onPressed: _handleLogin,
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Don't have an account? ", style: AppTextStyles.bodyMedium),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const RegisterScreen()),
-                          );
-                        },
-                        child: Text("Register Now", style: AppTextStyles.label),
+                    const SizedBox(height: 12),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Text("Forgot Password?", style: AppTextStyles.label.copyWith(fontSize: 12)),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    const SizedBox(height: 24),
+                    PrimaryButton(
+                      text: "Sign In", 
+                      isLoading: _isLoading,
+                      onPressed: _handleLogin,
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Don't have an account? ", style: AppTextStyles.bodyMedium),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                            );
+                          },
+                          child: Text("Register Now", style: AppTextStyles.label),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

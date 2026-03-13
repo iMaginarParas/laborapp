@@ -31,9 +31,15 @@ class MainTabsScreen extends ConsumerWidget {
     final safeIndex = currentIndex >= screens.length ? screens.length - 1 : currentIndex;
 
     return Scaffold(
-      body: IndexedStack(
-        index: safeIndex,
-        children: screens,
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        child: screens[safeIndex],
+        transitionBuilder: (child, animation) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
       ),
       bottomNavigationBar: AppBottomNavBar(
         currentIndex: safeIndex,

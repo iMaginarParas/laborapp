@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_app/providers/language_provider.dart';
 import 'package:flutter_app/core/theme/app_colors.dart';
 import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/shared/models/user.dart';
+import 'package:flutter_app/core/services/storage_service.dart';
 import 'edit_profile_screen.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -38,6 +40,17 @@ class ProfileScreen extends ConsumerWidget {
   }
 
   Widget _buildProfile(BuildContext context, WidgetRef ref, User user) {
+    void showWorkingOnIt() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(Strings.of(context, 'working_on_it')),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          backgroundColor: AppColors.primaryBlue,
+        ),
+      );
+    }
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -54,21 +67,22 @@ class ProfileScreen extends ConsumerWidget {
                 );
               },
             ),
-            _MenuItem(Icons.notifications_none, "Notifications"),
-            _MenuItem(Icons.payment, "Payments"),
+            _MenuItem(Icons.notifications_none, "Notifications", onTap: showWorkingOnIt),
+            _MenuItem(Icons.payment, "Payments", onTap: showWorkingOnIt),
           ]),
           const SizedBox(height: 16),
           _buildMenuSection([
-            _MenuItem(Icons.help_outline, "Help Center"),
-            _MenuItem(Icons.privacy_tip_outlined, "Privacy Policy"),
+            _MenuItem(Icons.help_outline, "Help Center", onTap: showWorkingOnIt),
+            _MenuItem(Icons.privacy_tip_outlined, "Privacy Policy", onTap: showWorkingOnIt),
           ]),
           const SizedBox(height: 16),
           _buildMenuSection([
             _MenuItem(
               Icons.logout, 
-              "Logout", 
+              Strings.of(context, 'logout'), 
               color: Colors.red,
-              onTap: () {
+              onTap: () async {
+                await StorageService.removeToken();
                 ref.read(authStateProvider.notifier).state = null;
               },
             ),
