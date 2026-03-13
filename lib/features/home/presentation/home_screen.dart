@@ -10,11 +10,19 @@ import 'package:flutter_app/features/search/presentation/search_screen.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/shared/models/worker.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  String _selectedLanguage = "English";
+  final List<String> _languages = ["English", "हिन्दी", "मराठी", "தமிழ்", "తెలుగు", "বাংলা"];
+
+  @override
+  Widget build(BuildContext context) {
     final categoriesAsync = ref.watch(categoriesProvider);
     final workersAsync = ref.watch(workersProvider);
     final selectedCategory = ref.watch(selectedCategoryProvider);
@@ -31,14 +39,16 @@ class HomeScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildHeader(context, ref),
-              const SizedBox(height: 32),
-              _buildPromoBanner(),
-              const SizedBox(height: 32),
-              _buildSectionHeader("Browse Services", "See all →"),
+              const SizedBox(height: 20),
+              _buildLocationCard(),
               const SizedBox(height: 16),
+              _buildLanguageSelector(),
+              const SizedBox(height: 24),
+              _buildSectionHeader("Services", "See all →"),
+              const SizedBox(height: 12),
               _buildCategories(ref, categoriesAsync, selectedCategory),
               const SizedBox(height: 24),
-              _buildSectionHeader("Top Rated Nearby", "See all →"),
+              _buildNearbyHeader("Nearby Workers", "12 online", "Map →"),
               const SizedBox(height: 16),
               _buildWorkersList(workersAsync),
               const SizedBox(height: 100),
@@ -59,102 +69,222 @@ class HomeScreen extends ConsumerWidget {
           bottomRight: Radius.circular(32),
         ),
       ),
-      child: Stack(
-        children: [
-          // Background pattern
-          Positioned(
-            top: -60,
-            right: -60,
-            child: Container(
-              height: 200,
-              width: 200,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 10, 24, 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Greeting and Role Toggle
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ref.watch(currentUserProvider).when(
-                    data: (user) => Row(
+                    data: (user) => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "Good morning",
-                                  style: AppTextStyles.bodyMedium.copyWith(color: Colors.white.withOpacity(0.9)),
-                                ),
-                                const SizedBox(width: 4),
-                                const Text("👋", style: TextStyle(fontSize: 16)),
-                              ],
-                            ),
-                            const SizedBox(height: 4),
                             Text(
-                              user.name,
-                              style: AppTextStyles.h1.copyWith(color: AppColors.white, fontSize: 32),
+                              "Good morning",
+                              style: AppTextStyles.bodyMedium.copyWith(color: Colors.white.withOpacity(0.9), fontSize: 13),
                             ),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                const Icon(Icons.location_on, color: Colors.redAccent, size: 16),
-                                const SizedBox(width: 4),
-                                Text(
-                                  user.city ?? "Sector 18, Noida",
-                                  style: AppTextStyles.bodyMedium.copyWith(color: Colors.white.withOpacity(0.8)),
-                                ),
-                              ],
+                            const SizedBox(width: 4),
+                            const Text("👋", style: TextStyle(fontSize: 14)),
+                          ],
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          user.name,
+                          style: AppTextStyles.h2.copyWith(color: AppColors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 4),
+                        Row(
+                          children: [
+                            const Icon(Icons.location_on, color: Colors.redAccent, size: 14),
+                            const SizedBox(width: 4),
+                            Text(
+                              user.city ?? "Sector 18, Noida",
+                              style: AppTextStyles.bodySmall.copyWith(color: Colors.white.withOpacity(0.8)),
                             ),
                           ],
                         ),
-                        // Role Toggle
-                        _buildRoleToggle(ref),
                       ],
                     ),
-                    loading: () => const SizedBox(height: 80),
-                    error: (_, __) => Text("Welcome", style: AppTextStyles.h1.copyWith(color: AppColors.white)),
+                    loading: () => const SizedBox(height: 50, width: 100),
+                    error: (_, __) => Text("Welcome", style: AppTextStyles.h2.copyWith(color: AppColors.white)),
                   ),
-                  const SizedBox(height: 32),
-                  // Search Bar
-                  GestureDetector(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (c) => const SearchScreen())),
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(100),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 20,
-                            offset: const Offset(0, 10),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.search, color: AppColors.primaryBlue, size: 24),
-                          const SizedBox(width: 12),
-                          Text(
-                            "Search for a service...",
-                            style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted),
-                          ),
-                        ],
+                  _buildRoleToggle(ref),
+                ],
+              ),
+              const SizedBox(height: 24),
+              
+              // Search Bar Group
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (c) => const SearchScreen())),
+                      child: Container(
+                        height: 54,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.search, color: AppColors.muted, size: 22),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                "Search painter, cleaner...",
+                                style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted.withOpacity(0.7), fontSize: 14),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: AppColors.background,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.location_on, color: Colors.redAccent, size: 14),
+                                  const SizedBox(width: 4),
+                                  Text("Noida", style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.bold, fontSize: 12)),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                  ),
+                  const SizedBox(width: 12),
+                  // Voice Input Pill
+                  Container(
+                    height: 54,
+                    width: 54,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF6C9BD8), // Lighter blue for the mic pill
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: const Icon(Icons.mic, color: Colors.white),
                   ),
                 ],
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLocationCard() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.location_on, color: Colors.redAccent, size: 28),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Noida, Uttar Pradesh",
+                  style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+                Text(
+                  "Showing workers within 10 km",
+                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.muted),
+                ),
+              ],
             ),
+          ),
+          Text(
+            "Change →",
+            style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLanguageSelector() {
+    return SizedBox(
+      height: 48,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.only(left: 24),
+        itemCount: _languages.length,
+        itemBuilder: (context, index) {
+          final lang = _languages[index];
+          final isSelected = _selectedLanguage == lang;
+          return Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: GestureDetector(
+              onTap: () => setState(() => _selectedLanguage = lang),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: BoxDecoration(
+                  color: isSelected ? AppColors.primaryBlue : Colors.white,
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(
+                    color: isSelected ? AppColors.primaryBlue : Colors.grey.shade300,
+                  ),
+                ),
+                child: Text(
+                  lang,
+                  style: AppTextStyles.label.copyWith(
+                    color: isSelected ? Colors.white : Colors.black87,
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildNearbyHeader(String title, String badge, String link) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Row(
+        children: [
+          Text(title, style: AppTextStyles.h3.copyWith(fontSize: 18)),
+          const SizedBox(width: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: AppColors.successGreen.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Text(
+              badge,
+              style: AppTextStyles.bodySmall.copyWith(color: AppColors.successGreen, fontSize: 11, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const Spacer(),
+          Text(
+            link,
+            style: AppTextStyles.label.copyWith(fontSize: 13, color: AppColors.primaryBlue),
           ),
         ],
       ),
@@ -168,59 +298,42 @@ class HomeScreen extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.white.withOpacity(0.3),
         borderRadius: BorderRadius.circular(30),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          GestureDetector(
-            onTap: () => ref.read(currentRoleProvider.notifier).state = UserRole.hire,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              decoration: BoxDecoration(
-                color: isHire ? Colors.white : Colors.transparent,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Row(
-                children: [
-                   const Text("🏠", style: TextStyle(fontSize: 12)),
-                  const SizedBox(width: 4),
-                  Text(
-                    "Hire",
-                    style: AppTextStyles.label.copyWith(
-                      color: isHire ? AppColors.primaryBlue : Colors.white,
-                      fontWeight: isHire ? FontWeight.bold : FontWeight.normal,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () => ref.read(currentRoleProvider.notifier).state = UserRole.work,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              decoration: BoxDecoration(
-                color: !isHire ? Colors.white : Colors.transparent,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Row(
-                children: [
-                   const Text("👷", style: TextStyle(fontSize: 12)),
-                  const SizedBox(width: 4),
-                  Text(
-                    "Work",
-                    style: AppTextStyles.label.copyWith(
-                      color: !isHire ? AppColors.primaryBlue : Colors.white,
-                      fontWeight: !isHire ? FontWeight.bold : FontWeight.normal,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          _toggleButton(ref, "Hire", "🏠", isHire, UserRole.hire),
+          _toggleButton(ref, "Work", "👷", !isHire, UserRole.work),
         ],
+      ),
+    );
+  }
+
+  Widget _toggleButton(WidgetRef ref, String label, String emoji, bool isActive, UserRole role) {
+    return GestureDetector(
+      onTap: () => ref.read(currentRoleProvider.notifier).state = role,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        decoration: BoxDecoration(
+          color: isActive ? Colors.white : Colors.transparent,
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Row(
+          children: [
+            Text(emoji, style: const TextStyle(fontSize: 14)),
+            const SizedBox(width: 4),
+            Text(
+              label,
+              style: AppTextStyles.label.copyWith(
+                color: isActive ? AppColors.primaryBlue : Colors.white,
+                fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+                fontSize: 13,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -243,7 +356,7 @@ class HomeScreen extends ConsumerWidget {
 
   Widget _buildCategories(WidgetRef ref, AsyncValue<List<Category>> asyncValue, String? selectedSlug) {
     return SizedBox(
-      height: 110,
+      height: 100,
       child: asyncValue.when(
         data: (categories) => ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -267,55 +380,6 @@ class HomeScreen extends ConsumerWidget {
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, s) => const Center(child: Text("Error loading categories")),
-      ),
-    );
-  }
-
-  Widget _buildPromoBanner() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24),
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.primaryBlue, AppColors.primaryBlue.withOpacity(0.8)],
-        ),
-        borderRadius: BorderRadius.circular(28),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "LIMITED OFFER",
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white.withOpacity(0.8),
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  "20% off your\nfirst booking!",
-                  style: AppTextStyles.h2.copyWith(color: AppColors.white, fontSize: 24),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(100),
-            ),
-            child: Text(
-              "Claim Now",
-              style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue),
-            ),
-          ),
-        ],
       ),
     );
   }
