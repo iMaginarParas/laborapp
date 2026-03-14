@@ -216,7 +216,7 @@ class WorkerProfileScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                Text("Min. 2 hours", style: AppTextStyles.bodySmall.copyWith(fontSize: 11)),
+                Text("Min. ${worker.minHours} hours", style: AppTextStyles.bodySmall.copyWith(fontSize: 11)),
               ],
             ),
             const Spacer(),

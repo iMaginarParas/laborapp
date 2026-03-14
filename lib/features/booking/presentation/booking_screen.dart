@@ -64,6 +64,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
               date: DateFormat('MMM dd, yyyy').format(_selectedDate),
               time: _selectedTime!,
               reference: booking.bookingRef,
+              message: booking.message,
             ),
           ),
         );

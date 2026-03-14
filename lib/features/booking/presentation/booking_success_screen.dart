@@ -10,6 +10,7 @@ class BookingSuccessScreen extends ConsumerWidget {
   final String date;
   final String time;
   final String reference;
+  final String? message;
 
   const BookingSuccessScreen({
     super.key,
@@ -17,6 +18,7 @@ class BookingSuccessScreen extends ConsumerWidget {
     required this.date,
     required this.time,
     required this.reference,
+    this.message,
   });
 
   @override
@@ -34,24 +36,29 @@ class BookingSuccessScreen extends ConsumerWidget {
                 height: 120,
                 width: 120,
                 decoration: BoxDecoration(
-                  color: AppColors.greenBG.withOpacity(0.5),
+                  color: (message != null && message!.contains("SIM")) 
+                      ? Colors.orange.withOpacity(0.1) 
+                      : AppColors.greenBG.withOpacity(0.5),
                   shape: BoxShape.circle,
                 ),
-                child: const Center(
-                  child: Text("🥳", style: TextStyle(fontSize: 60)),
+                child: Center(
+                  child: Text(
+                    (message != null && message!.contains("SIM")) ? "🚧" : "🥳", 
+                    style: const TextStyle(fontSize: 60)
+                  ),
                 ),
               ),
               const SizedBox(height: 40),
               // Title
               Text(
-                "Booking Confirmed!",
+                message != null ? "Request Received" : "Booking Confirmed!",
                 style: AppTextStyles.h1.copyWith(fontSize: 32),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 12),
               // Description
               Text(
-                "$workerName will arrive at your address\non $date at $time",
+                message ?? "$workerName will arrive at your address\non $date at $time",
                 textAlign: TextAlign.center,
                 style: AppTextStyles.bodyMedium.copyWith(
                   color: AppColors.muted,

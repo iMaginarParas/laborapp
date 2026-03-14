@@ -44,6 +44,7 @@ class Worker {
   final double rating;
   final bool isVerified;
   final bool isAvailable;
+  final int minHours;
   final List<Category> categories;
   final List<WorkerSkill> skills;
 
@@ -58,23 +59,25 @@ class Worker {
     required this.rating,
     required this.isVerified,
     required this.isAvailable,
+    required this.minHours,
     required this.categories,
     required this.skills,
   });
 
   factory Worker.fromJson(Map<String, dynamic> json) {
-    final userData = json['user'];
+    final userData = json['user'] ?? {};
     return Worker(
       id: json['id'],
-      name: userData['name'],
+      name: userData['name'] ?? 'Worker',
       profilePicUrl: userData['profile_pic_url'],
       bio: json['bio'] ?? "",
-      city: json['city'],
-      hourlyRate: (json['hourly_rate'] as num).toDouble(),
-      experienceYears: json['experience_years'],
-      rating: (json['rating'] as num).toDouble(),
-      isVerified: json['is_verified'],
-      isAvailable: json['is_available'],
+      city: json['city'] ?? "",
+      hourlyRate: (json['hourly_rate'] as num?)?.toDouble() ?? 0.0,
+      experienceYears: json['experience_years'] ?? 0,
+      rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
+      isVerified: json['is_verified'] ?? false,
+      isAvailable: json['is_available'] ?? true,
+      minHours: json['min_hours'] ?? 1,
       categories: (json['categories'] as List?)
           ?.map((c) => Category.fromJson(c))
           .toList() ?? [],
