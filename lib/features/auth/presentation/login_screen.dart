@@ -21,6 +21,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool _obscurePassword = true; // Added for eye toggle
 
   Future<void> _handleLogin() async {
+    if (_phoneController.text.trim().isEmpty || _passwordController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter both phone/email and password")),
+      );
+      return;
+    }
+    
     setState(() => _isLoading = true);
     try {
       final token = await ref.read(authRepositoryProvider).login(
