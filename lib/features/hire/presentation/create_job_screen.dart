@@ -6,6 +6,7 @@ import 'package:flutter_app/features/home/providers/home_providers.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/shared/widgets/primary_button.dart';
 import 'package:flutter_app/features/jobs/providers/job_providers.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_app/core/constants/api_constants.dart';
 
 class CreateJobScreen extends ConsumerStatefulWidget {
@@ -52,7 +53,9 @@ class _CreateJobScreenState extends ConsumerState<CreateJobScreen> {
     setState(() => _isLoading = true);
     try {
       final client = ref.read(dioClientProvider);
-      await client.post(ApiConstants.jobs, data: {
+      final url = ApiConstants.jobs;
+      debugPrint("DEBUG: Posting to $url with data...");
+      await client.post(url, data: {
         'title': _titleController.text.trim(),
         'description': _descriptionController.text.trim(),
         'job_city': _cityController.text.trim(),
@@ -74,8 +77,18 @@ class _CreateJobScreenState extends ConsumerState<CreateJobScreen> {
       }
     } catch (e) {
       if (mounted) {
+        String errorMsg = "Failed to post job: $e";
+        if (e is DioException && e.response?.data != null) {
+          final data = e.response?.data;
+          if (data is Map) {
+            errorMsg = data['detail'] ?? data['message'] ?? "Validation failed";
+          }
+        }
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Failed to post job: $e")),
+          SnackBar(
+            content: Text(errorMsg),
+            backgroundColor: Colors.red.shade800,
+          ),
         );
       }
     } finally {
