@@ -7,7 +7,7 @@ import 'package:flutter_app/features/profile/presentation/profile_screen.dart';
 import 'package:flutter_app/shared/widgets/bottom_nav_bar.dart';
 import 'package:flutter_app/features/main_tabs/providers/navigation_providers.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
-import 'package:flutter_app/features/post_job/presentation/post_job_screen.dart';
+import 'package:flutter_app/features/hire/presentation/create_job_screen.dart';
 class MainTabsScreen extends ConsumerWidget {
   const MainTabsScreen({super.key});
 
@@ -16,13 +16,13 @@ class MainTabsScreen extends ConsumerWidget {
     final currentIndex = ref.watch(navigationIndexProvider);
     final currentRole = ref.watch(currentRoleProvider);
     
-    // As requested: the post job option should be available only for worker.
-    final showPostJob = currentRole == UserRole.work;
+    // Worker can't post a job. Post job is only for Hire role.
+    final showPostJob = currentRole == UserRole.hire;
 
     final List<Widget> screens = [
       const HomeScreen(),
       const SearchScreen(),
-      if (showPostJob) const PostJobScreen(),
+      if (showPostJob) const CreateJobScreen(),
       const BookingsListScreen(),
       const ProfileScreen(),
     ];

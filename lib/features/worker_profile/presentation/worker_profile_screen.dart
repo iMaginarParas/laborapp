@@ -6,6 +6,7 @@ import 'package:flutter_app/shared/models/worker.dart';
 import 'package:flutter_app/shared/widgets/badge_pill.dart';
 import 'package:flutter_app/shared/widgets/primary_button.dart';
 import 'package:flutter_app/features/booking/presentation/booking_screen.dart';
+import 'package:flutter_app/features/reviews/presentation/worker_reviews_screen.dart';
 
 class WorkerProfileScreen extends ConsumerWidget {
   final Worker worker;
@@ -21,7 +22,7 @@ class WorkerProfileScreen extends ConsumerWidget {
           children: [
             _buildHero(context),
             _buildStatsRow(),
-            _buildContent(),
+            _buildContent(context),
             const SizedBox(height: 120), // Space for bottom bar
           ],
         ),
@@ -71,7 +72,7 @@ class WorkerProfileScreen extends ConsumerWidget {
               tag: 'worker_emoji_${worker.id}',
               child: Material(
                 color: Colors.transparent,
-                child: Text(worker.categories.first.emoji, style: const TextStyle(fontSize: 44)),
+                child: Text(worker.categories.isEmpty ? "👷" : worker.categories.first.emoji, style: const TextStyle(fontSize: 44)),
               ),
             ),
           ),
@@ -153,7 +154,7 @@ class WorkerProfileScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -185,6 +186,29 @@ class WorkerProfileScreen extends ConsumerWidget {
               child: Text(s.skillName, style: AppTextStyles.bodySmall.copyWith(color: AppColors.primaryBlue)),
             )).toList(),
           ),
+          const SizedBox(height: 32),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("User Reviews", style: AppTextStyles.h3),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WorkerReviewsScreen(
+                        workerId: worker.id, 
+                        workerName: worker.name
+                      ),
+                    ),
+                  );
+                },
+                child: Text("See all →", style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          const _MiniReviewCard(),
         ],
       ),
     );
@@ -237,6 +261,42 @@ class WorkerProfileScreen extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _MiniReviewCard extends StatelessWidget {
+  const _MiniReviewCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.background,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Anjali Sharma", style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.bold)),
+              Row(
+                children: List.generate(5, (i) => const Icon(Icons.star, size: 12, color: Colors.orange)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "Excellent work! Very professional and punctual. Highly recommended for painting jobs.",
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.bodySmall.copyWith(color: AppColors.muted),
+          ),
+        ],
       ),
     );
   }

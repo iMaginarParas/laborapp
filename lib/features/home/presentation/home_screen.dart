@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_app/providers/language_provider.dart';
 import 'package:flutter_app/core/theme/app_colors.dart';
 import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/shared/widgets/category_chip.dart';
@@ -8,10 +9,12 @@ import 'package:flutter_app/features/home/providers/home_providers.dart';
 import 'package:flutter_app/features/worker_profile/presentation/worker_profile_screen.dart';
 import 'package:flutter_app/features/search/presentation/search_screen.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
-import 'package:flutter_app/shared/models/worker.dart';
-import 'package:flutter_app/features/home/presentation/role_selection_screen.dart';
-import 'package:flutter_app/providers/language_provider.dart';
 import 'package:flutter_app/core/services/storage_service.dart';
+import 'package:flutter_app/shared/models/job.dart';
+import 'package:flutter_app/shared/models/worker.dart';
+import 'package:flutter_app/shared/widgets/job_card.dart';
+import 'package:flutter_app/features/home/presentation/role_selection_screen.dart';
+import 'package:flutter_app/features/jobs/presentation/job_detail_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -38,7 +41,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final categoriesAsync = ref.watch(categoriesProvider);
     final workersAsync = ref.watch(workersProvider);
+    final jobsAsync = ref.watch(jobsProvider);
     final selectedCategory = ref.watch(selectedCategoryProvider);
+    final currentRole = ref.watch(currentRoleProvider);
+    final isWorker = currentRole == UserRole.work;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -46,6 +52,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         onRefresh: () async {
           ref.invalidate(categoriesProvider);
           ref.invalidate(workersProvider);
+          ref.invalidate(jobsProvider);
         },
         child: SingleChildScrollView(
           child: Column(
@@ -61,9 +68,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               const SizedBox(height: 12),
               _buildCategories(ref, categoriesAsync, selectedCategory),
               const SizedBox(height: 24),
-              _buildNearbyHeader(Strings.of(context, 'nearby_workers'), "12 online", "Map →"),
+              _buildNearbyHeader(
+                isWorker ? "Latest Jobs" : Strings.of(context, 'nearby_workers'), 
+                isWorker ? "New" : "12 online", 
+                "See all →"
+              ),
               const SizedBox(height: 16),
-              _buildWorkersList(workersAsync),
+              isWorker ? _buildJobsList(jobsAsync) : _buildWorkersList(workersAsync),
               const SizedBox(height: 100),
             ],
           ),
@@ -92,41 +103,60 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ref.watch(currentUserProvider).when(
-                    data: (user) => Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              Strings.of(context, 'good_morning'),
-                              style: AppTextStyles.bodyMedium.copyWith(color: Colors.white.withOpacity(0.9), fontSize: 13),
+                  Expanded(
+                    child: ref.watch(currentUserProvider).when(
+                      data: (user) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Good morning", // Simplified for clean look
+                                style: AppTextStyles.bodyMedium.copyWith(
+                                  color: Colors.white.withOpacity(0.9),
+                                  fontSize: 12,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              const Text("👋", style: TextStyle(fontSize: 12)),
+                            ],
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            user.name.toUpperCase(),
+                            style: AppTextStyles.h2.copyWith(
+                              color: AppColors.white,
+                              fontSize: 18, // Reduced from 24
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: 0.5,
                             ),
-                            const SizedBox(width: 4),
-                            const Text("👋", style: TextStyle(fontSize: 14)),
-                          ],
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          user.name,
-                          style: AppTextStyles.h2.copyWith(color: AppColors.white, fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            const Icon(Icons.location_on, color: Colors.redAccent, size: 14),
-                            const SizedBox(width: 4),
-                            Text(
-                              user.city ?? "Sector 18, Noida",
-                              style: AppTextStyles.bodySmall.copyWith(color: Colors.white.withOpacity(0.8)),
-                            ),
-                          ],
-                        ),
-                      ],
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Icon(Icons.location_on, color: Colors.white.withOpacity(0.7), size: 12),
+                              const SizedBox(width: 4),
+                              Text(
+                                (user.city ?? "Noida").toUpperCase(),
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  color: Colors.white.withOpacity(0.7),
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      loading: () => const SizedBox(height: 50, width: 100),
+                      error: (_, __) => Text("WELCOME", style: AppTextStyles.h2.copyWith(color: AppColors.white, fontSize: 18)),
                     ),
-                    loading: () => const SizedBox(height: 50, width: 100),
-                    error: (_, __) => Text("Welcome", style: AppTextStyles.h2.copyWith(color: AppColors.white)),
                   ),
+                  const SizedBox(width: 16),
                   _buildRoleToggle(ref),
                 ],
               ),
@@ -166,7 +196,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 children: [
                                   const Icon(Icons.location_on, color: Colors.redAccent, size: 14),
                                   const SizedBox(width: 4),
-                                  Text("Noida", style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.bold, fontSize: 12)),
+                                  ref.watch(currentUserProvider).maybeWhen(
+                                    data: (user) => Text(
+                                      (user.city ?? "Noida").toUpperCase(), 
+                                      style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.bold, fontSize: 12)
+                                    ),
+                                    orElse: () => Text("Noida", style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.bold, fontSize: 12)),
+                                  ),
                                 ],
                               ),
                             ),
@@ -295,7 +331,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         child: Row(
           children: [
-            const Icon(Icons.location_on, color: Colors.redAccent, size: 28),
+            const Icon(Icons.my_location, color: AppColors.primaryBlue, size: 24),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -303,24 +339,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 children: [
                   ref.watch(currentUserProvider).maybeWhen(
                     data: (user) => Text(
-                      user.city ?? "Noida, Uttar Pradesh",
-                      style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15),
+                      (user.city ?? "Noida").toUpperCase(),
+                      style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 0.5),
                     ),
                     orElse: () => Text(
-                      "Noida, Uttar Pradesh",
-                      style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15),
+                      "NOIDA",
+                      style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w900, fontSize: 13, letterSpacing: 0.5),
                     ),
                   ),
+                  const SizedBox(height: 2),
                   Text(
-                    "Showing workers within 10 km",
-                    style: AppTextStyles.bodySmall.copyWith(color: AppColors.muted),
+                    isWorker ? "Showing all jobs posted" : "Showing all available workers", 
+                    style: AppTextStyles.bodySmall.copyWith(color: AppColors.muted, fontSize: 11),
                   ),
                 ],
               ),
             ),
             Text(
-              Strings.of(context, 'change') + " →",
-              style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue, fontWeight: FontWeight.bold),
+              "CHANGE →",
+              style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue, fontWeight: FontWeight.w900, fontSize: 11),
             ),
           ],
         ),
@@ -329,17 +366,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _buildLanguageSelector() {
-    return SizedBox(
-      height: 48,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.only(left: 24),
-        itemCount: _languages.length,
-        itemBuilder: (context, index) {
-          final lang = _languages[index];
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Row(
+        children: _languages.map((lang) {
           final isSelected = ref.watch(localeProvider).languageCode == (lang == 'हिन्दी' ? 'hi' : 'en');
           return Padding(
-            padding: const EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(right: 12),
             child: GestureDetector(
               onTap: () {
                 final newLocale = Locale(lang == 'हिन्दी' ? 'hi' : 'en');
@@ -347,25 +380,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 StorageService.setLanguage(lang);
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  color: isSelected ? AppColors.primaryBlue : Colors.white,
-                  borderRadius: BorderRadius.circular(100),
+                  color: isSelected ? AppColors.primaryBlue.withOpacity(0.1) : Colors.transparent,
+                  borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: isSelected ? AppColors.primaryBlue : Colors.grey.shade300,
+                    width: 1.5,
                   ),
                 ),
                 child: Text(
                   lang,
                   style: AppTextStyles.label.copyWith(
-                    color: isSelected ? Colors.white : Colors.black87,
-                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    color: isSelected ? AppColors.primaryBlue : AppColors.muted,
+                    fontSize: 12,
+                    fontWeight: isSelected ? FontWeight.w900 : FontWeight.w500,
                   ),
                 ),
               ),
             ),
           );
-        },
+        }).toList(),
       ),
     );
   }
@@ -511,25 +546,69 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: asyncValue.when(
-        data: (workers) => ListView.builder(
-          shrinkWrap: true,
-          padding: EdgeInsets.zero,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: workers.length,
-          itemBuilder: (context, index) => WorkerCard(
-            worker: workers[index],
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WorkerProfileScreen(worker: workers[index]),
-                ),
-              );
-            },
-          ),
-        ),
+        data: (workers) => workers.isEmpty 
+          ? _buildEmptyState("No workers found")
+          : ListView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: workers.length,
+              itemBuilder: (context, index) => WorkerCard(
+                worker: workers[index],
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WorkerProfileScreen(worker: workers[index]),
+                    ),
+                  );
+                },
+              ),
+            ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, s) => Center(child: Text("Error: $e")),
+      ),
+    );
+  }
+
+  Widget _buildJobsList(AsyncValue<List<Job>> asyncValue) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: asyncValue.when(
+        data: (jobs) => jobs.isEmpty 
+          ? _buildEmptyState("No jobs found")
+          : ListView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: jobs.length,
+              itemBuilder: (context, index) => JobCard(
+                job: jobs[index],
+                onTap: () {
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(builder: (c) => JobDetailScreen(job: jobs[index]))
+                  );
+                },
+              ),
+            ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, s) => Center(child: Text("Error: $e")),
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(String message) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40),
+        child: Column(
+          children: [
+            const Icon(Icons.search_off, size: 48, color: AppColors.border),
+            const SizedBox(height: 16),
+            Text(message, style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted)),
+          ],
+        ),
       ),
     );
   }

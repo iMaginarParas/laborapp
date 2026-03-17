@@ -32,8 +32,19 @@ class CategoryChip extends StatelessWidget {
               height: 72,
               width: 72,
               decoration: BoxDecoration(
-                color: isSelected ? AppColors.primaryBlue : AppColors.paleBlue.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(20),
+                color: isSelected ? AppColors.primaryBlue : AppColors.white,
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(
+                  color: isSelected ? AppColors.primaryBlue : Colors.grey.shade100,
+                  width: 1.5,
+                ),
+                boxShadow: isSelected ? [
+                  BoxShadow(
+                    color: AppColors.primaryBlue.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  )
+                ] : null,
               ),
               alignment: Alignment.center,
               child: Text(

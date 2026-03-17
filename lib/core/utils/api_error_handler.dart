@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+
 
 /// Translates [DioException]s and raw errors into user-friendly messages.
 class ApiErrorHandler {
@@ -44,7 +46,11 @@ class ApiErrorHandler {
         case DioExceptionType.cancel:
           return 'Request was cancelled.';
         case DioExceptionType.connectionError:
-          return 'No internet connection.';
+          String msg = 'Unable to connect to the server. Please check your internet.';
+          if (error.requestOptions.baseUrl.isNotEmpty) {
+            msg += '\n(Target: ${error.requestOptions.baseUrl}${error.requestOptions.path})';
+          }
+          return msg;
         default:
           return 'Something went wrong. Please try again.';
       }

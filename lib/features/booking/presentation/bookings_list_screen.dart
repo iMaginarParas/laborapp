@@ -7,6 +7,9 @@ import 'package:flutter_app/shared/models/booking.dart';
 import 'package:flutter_app/shared/widgets/primary_button.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_app/features/main_tabs/providers/navigation_providers.dart';
+import 'package:flutter_app/features/auth/providers/auth_providers.dart';
+import 'package:flutter_app/features/home/providers/home_providers.dart';
+import 'package:flutter_app/core/constants/api_constants.dart';
 
 class BookingsListScreen extends ConsumerWidget {
   const BookingsListScreen({super.key});
@@ -40,7 +43,7 @@ class BookingsListScreen extends ConsumerWidget {
               : ListView.builder(
                   padding: const EdgeInsets.all(24),
                   itemCount: bookings.length,
-                  itemBuilder: (context, index) => _buildBookingCard(bookings[index]),
+                  itemBuilder: (context, index) => _buildBookingCard(context, ref, bookings[index]),
                 ),
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (e, s) => SingleChildScrollView(
@@ -125,7 +128,7 @@ class BookingsListScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildBookingCard(Booking booking) {
+  Widget _buildBookingCard(BuildContext context, WidgetRef ref, Booking booking) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
@@ -170,7 +173,112 @@ class BookingsListScreen extends ConsumerWidget {
               _buildInfoItem(Icons.payments_outlined, "₹${booking.totalAmount.toInt()}"),
             ],
           ),
+          if (booking.status.toLowerCase() == 'completed' && ref.read(currentRoleProvider) == UserRole.hire) ...[
+            const SizedBox(height: 16),
+            const Divider(height: 1),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              height: 44,
+              child: OutlinedButton.icon(
+                onPressed: () => _showRatingDialog(context, ref, booking),
+                icon: const Icon(Icons.star_outline, size: 18),
+                label: const Text("Rate Service"),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColors.primaryBlue,
+                  side: const BorderSide(color: AppColors.primaryBlue),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+              ),
+            ),
+          ],
         ],
+      ),
+    );
+  }
+
+  void _showRatingDialog(BuildContext context, WidgetRef ref, Booking booking) {
+    int rating = 5;
+    final commentController = TextEditingController();
+    bool isSubmitting = false;
+
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          title: const Text("Rate the Service"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("How was your experience with ${booking.worker.name}?"),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(5, (index) => IconButton(
+                  onPressed: () => setDialogState(() => rating = index + 1),
+                  icon: Icon(
+                    index < rating ? Icons.star : Icons.star_border,
+                    color: Colors.orange,
+                    size: 32,
+                  ),
+                )),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: commentController,
+                maxLines: 3,
+                decoration: InputDecoration(
+                  hintText: "Write a comment (optional)",
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  filled: true,
+                  fillColor: AppColors.background,
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: isSubmitting ? null : () async {
+                setDialogState(() => isSubmitting = true);
+                try {
+                  final client = ref.read(dioClientProvider);
+                  await client.post(ApiConstants.reviews, data: {
+                    'booking_id': booking.id,
+                    'worker_id': booking.worker.id,
+                    'rating': rating,
+                    'comment': commentController.text,
+                  });
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Thank you for your review!")),
+                    );
+                  }
+                } catch (e) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Failed to submit review")),
+                    );
+                  }
+                } finally {
+                  setDialogState(() => isSubmitting = false);
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primaryBlue,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              child: isSubmitting 
+                ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                : const Text("Submit", style: TextStyle(color: Colors.white)),
+            ),
+          ],
+        ),
       ),
     );
   }

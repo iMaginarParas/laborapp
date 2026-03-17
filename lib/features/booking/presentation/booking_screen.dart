@@ -46,7 +46,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
       final repository = ref.read(bookingRepositoryProvider);
       final booking = await repository.createBooking(
         workerId: widget.worker.id,
-        categoryId: widget.worker.categories.first.id,
+        categoryId: widget.worker.categories.isNotEmpty ? widget.worker.categories.first.id : 0,
         date: DateFormat('yyyy-MM-dd').format(_selectedDate),
         timeSlot: _selectedTime!,
         hours: _hours,
@@ -403,7 +403,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
         CircleAvatar(
           radius: 24,
           backgroundColor: AppColors.paleBlue,
-          child: Text(widget.worker.categories.first.emoji, style: const TextStyle(fontSize: 24)),
+          child: Text(widget.worker.categories.isNotEmpty ? widget.worker.categories.first.emoji : "👷", style: const TextStyle(fontSize: 24)),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -411,7 +411,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(widget.worker.name, style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-              Text(widget.worker.categories.first.name, style: AppTextStyles.bodySmall.copyWith(fontSize: 11)),
+              Text(widget.worker.categories.isNotEmpty ? widget.worker.categories.first.name : "Professional", style: AppTextStyles.bodySmall.copyWith(fontSize: 11)),
               Row(
                 children: [
                   const Icon(Icons.star, color: AppColors.orangeWarning, size: 12),

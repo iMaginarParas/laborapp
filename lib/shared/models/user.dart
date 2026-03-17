@@ -7,6 +7,8 @@ class User {
   final String? profilePicUrl;
   final String? address;
   final String? city;
+  final bool isAvailable;
+  final String? role;
 
   const User({
     required this.id,
@@ -16,6 +18,8 @@ class User {
     this.profilePicUrl,
     this.address,
     this.city,
+    this.isAvailable = true,
+    this.role,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -27,6 +31,8 @@ class User {
       profilePicUrl: json['profile_pic_url'] as String?,
       address:       json['address'] as String?,
       city:          json['city'] as String?,
+      isAvailable:   json['is_available'] as bool? ?? true,
+      role:          json['role'] as String?,
     );
   }
 
@@ -38,6 +44,8 @@ class User {
     'profile_pic_url': profilePicUrl,
     'address':         address,
     'city':            city,
+    'is_available':    isAvailable,
+    'role':            role,
   };
 
   /// Returns a new [User] with the specified fields replaced.
@@ -49,6 +57,8 @@ class User {
     String? profilePicUrl,
     String? address,
     String? city,
+    bool? isAvailable,
+    String? role,
   }) {
     return User(
       id:            id            ?? this.id,
@@ -58,6 +68,8 @@ class User {
       profilePicUrl: profilePicUrl ?? this.profilePicUrl,
       address:       address       ?? this.address,
       city:          city          ?? this.city,
+      isAvailable:   isAvailable   ?? this.isAvailable,
+      role:          role          ?? this.role,
     );
   }
 }
