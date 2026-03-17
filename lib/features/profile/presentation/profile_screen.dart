@@ -10,7 +10,7 @@ import 'package:flutter_app/features/post_job/presentation/post_job_screen.dart'
 import 'package:flutter_app/features/jobs/presentation/my_applications_screen.dart';
 import 'package:flutter_app/features/hire/presentation/my_job_posts_screen.dart';
 import 'package:flutter_app/features/hire/presentation/create_job_screen.dart';
-import 'package:flutter_app/features/profile/presentation/profile_edit_screen.dart';
+import 'package:flutter_app/features/profile/presentation/edit_profile_screen.dart';
 import 'package:flutter_app/features/profile/presentation/notification_screen.dart';
 import 'package:flutter_app/features/profile/providers/notification_providers.dart';
 

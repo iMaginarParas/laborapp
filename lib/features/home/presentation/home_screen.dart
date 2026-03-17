@@ -313,6 +313,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _buildLocationCard() {
+    final currentRole = ref.watch(currentRoleProvider);
+    final isWorker = currentRole == UserRole.work;
     return GestureDetector(
       onTap: _showLocationPicker,
       child: Container(
