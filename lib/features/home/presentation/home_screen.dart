@@ -15,6 +15,7 @@ import 'package:flutter_app/shared/models/worker.dart';
 import 'package:flutter_app/shared/widgets/job_card.dart';
 import 'package:flutter_app/features/home/presentation/role_selection_screen.dart';
 import 'package:flutter_app/features/jobs/presentation/job_detail_screen.dart';
+import 'package:flutter_app/core/services/location_service.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -259,18 +260,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Fetching current location...")),
                   );
-                  // We would call LocationService here
-                  // For now, let's simulate updating the profile with a dummy city
-                  // or just show a message.
-                  // Real implementation would be:
-                  // final pos = await LocationService().getCurrentPosition();
-                  // final addr = await LocationService().getAddressFromLatLng(pos!);
-                  ref.read(authRepositoryProvider).updateProfile({"city": "Noida (Current)"});
-                  ref.invalidate(currentUserProvider);
+                  final service = LocationService();
+                  final pos = await service.getCurrentPosition();
+                  if (pos != null) {
+                    final placemarks = await service.getAddressFromLatLng(pos);
+                    // Extract a useful city/locality name
+                    final city = (placemarks?.split(',').isNotEmpty ?? false) 
+                      ? placemarks!.split(',').last.trim() 
+                      : "Noida";
+                    
+                    await ref.read(authRepositoryProvider).updateProfile({"city": city});
+                    ref.invalidate(currentUserProvider);
+                    
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Location updated to $city")),
+                      );
+                    }
+                  }
                 } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Error: $e")),
-                  );
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Error: $e")),
+                    );
+                  }
                 }
               },
             ),
