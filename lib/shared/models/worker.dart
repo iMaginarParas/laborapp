@@ -15,10 +15,10 @@ class Category {
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
-      id: json['id'],
-      name: json['name'],
-      emoji: json['emoji'],
-      slug: json['slug'],
+      id: int.tryParse(json['id'].toString()) ?? 0,
+      name: json['name'] ?? 'General',
+      emoji: json['emoji'] ?? '💼',
+      slug: json['slug'] ?? 'general',
     );
   }
 }
@@ -67,7 +67,7 @@ class Worker {
   factory Worker.fromJson(Map<String, dynamic> json) {
     final userData = json['user'] ?? {};
     return Worker(
-      id: json['id'],
+      id: json['id'].toString(),
       name: userData['name'] ?? 'Worker',
       profilePicUrl: userData['profile_pic_url'],
       bio: json['bio'] ?? "",
@@ -78,9 +78,9 @@ class Worker {
       isVerified: json['is_verified'] ?? false,
       isAvailable: json['is_available'] ?? true,
       minHours: json['min_hours'] ?? 1,
-      categories: (json['categories'] as List?)
-          ?.map((c) => Category.fromJson(c))
-          .toList() ?? [],
+      categories: (json['categories'] is List)
+          ? (json['categories'] as List).map((c) => Category.fromJson(c)).toList()
+          : [],
       skills: (json['skills'] as List?)
           ?.map((s) => WorkerSkill.fromJson(s))
           .toList() ?? [],

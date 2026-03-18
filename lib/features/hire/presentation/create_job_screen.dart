@@ -8,6 +8,7 @@ import 'package:flutter_app/shared/widgets/primary_button.dart';
 import 'package:flutter_app/features/jobs/providers/job_providers.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_app/core/constants/api_constants.dart';
+import 'package:flutter_app/features/main_tabs/providers/navigation_providers.dart';
 
 class CreateJobScreen extends ConsumerStatefulWidget {
   const CreateJobScreen({super.key});

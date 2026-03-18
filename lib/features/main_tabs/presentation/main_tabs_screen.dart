@@ -10,15 +10,32 @@ import 'package:flutter_app/features/main_tabs/providers/navigation_providers.da
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/features/hire/presentation/create_job_screen.dart';
 
-class MainTabsScreen extends ConsumerWidget {
+class MainTabsScreen extends ConsumerStatefulWidget {
   const MainTabsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MainTabsScreen> createState() => _MainTabsScreenState();
+}
+
+class _MainTabsScreenState extends ConsumerState<MainTabsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Reset navigation when role changes to avoid index mismatch
+    // (e.g. index 2 is Applications for worker, but CreateJob for employer)
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Watch role and reset index if it changes
+    ref.listen(currentRoleProvider, (previous, next) {
+      if (previous != null && previous != next) {
+        ref.read(navigationIndexProvider.notifier).state = 0;
+      }
+    });
+
     final currentIndex = ref.watch(navigationIndexProvider);
     final currentRole = ref.watch(currentRoleProvider);
-    
-    // Worker can't post a job. Post job is only for Hire role.
     final showPostJob = currentRole == UserRole.hire;
 
     final List<Widget> screens = [
@@ -29,18 +46,14 @@ class MainTabsScreen extends ConsumerWidget {
       const ProfileScreen(),
     ];
 
-    // Ensure currentIndex doesn't exceed bounds when toggling
-    final safeIndex = currentIndex >= screens.length ? screens.length - 1 : currentIndex;
+    final safeIndex = currentIndex >= screens.length ? 0 : currentIndex;
 
     return Scaffold(
       body: AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
         child: screens[safeIndex],
         transitionBuilder: (child, animation) {
-          return FadeTransition(
-            opacity: animation,
-            child: child,
-          );
+          return FadeTransition(opacity: animation, child: child);
         },
       ),
       bottomNavigationBar: AppBottomNavBar(
