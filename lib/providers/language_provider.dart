@@ -38,6 +38,7 @@ class Strings {
       'change': 'Change',
       'logout': 'Logout',
       'working_on_it': 'We are working on this!',
+      'applied': 'Applied',
       'search_placeholder': 'Search painter, cleaner...',
     },
     'hi': {
@@ -52,6 +53,7 @@ class Strings {
       'change': 'बदलें',
       'logout': 'लॉग आउट',
       'working_on_it': 'हम इस पर काम कर रहे हैं!',
+      'applied': 'आवेदन किया (Applied)',
       'search_placeholder': 'पेंटर, क्लीनर खोजें...',
     },
   };
