@@ -69,9 +69,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               _buildCategories(ref, categoriesAsync, selectedCategory),
               const SizedBox(height: 24),
               _buildNearbyHeader(
-                isWorker ? "Latest Jobs" : Strings.of(context, 'nearby_workers'), 
+                isWorker ? Strings.of(context, 'latest_jobs') : Strings.of(context, 'nearby_workers'), 
                 isWorker ? "New" : "12 online", 
-                "See all →"
+                Strings.of(context, 'see_all') + " →"
               ),
               const SizedBox(height: 16),
               isWorker ? _buildJobsList(jobsAsync) : _buildWorkersList(workersAsync),

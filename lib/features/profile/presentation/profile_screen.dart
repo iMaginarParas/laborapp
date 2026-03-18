@@ -57,12 +57,14 @@ class ProfileScreen extends ConsumerWidget {
       );
     }
 
+    final isWorker = ref.watch(currentRoleProvider) == UserRole.work;
+
     return SingleChildScrollView(
       child: Column(
         children: [
           _buildHeader(user),
           const SizedBox(height: 24),
-          if (ref.watch(currentRoleProvider) == UserRole.work) ...[
+          if (isWorker) ...[
              _buildAvailabilityToggle(context, ref, user),
              const SizedBox(height: 16),
           ],
@@ -77,7 +79,7 @@ class ProfileScreen extends ConsumerWidget {
                 );
               },
             ),
-            if (ref.watch(currentRoleProvider) == UserRole.work)
+            if (isWorker)
               _MenuItem(
                 Icons.work_outline, 
                 "Professional Profile",
@@ -91,7 +93,7 @@ class ProfileScreen extends ConsumerWidget {
             else
               _MenuItem(
                 Icons.add_box_outlined, 
-                "Post a Job",
+                Strings.of(context, 'post_job'), 
                 onTap: () {
                   Navigator.push(
                     context,
@@ -101,9 +103,9 @@ class ProfileScreen extends ConsumerWidget {
               ),
             _MenuItem(
               Icons.assignment_outlined, 
-              ref.watch(currentRoleProvider) == UserRole.work ? "My Applications" : "My Job Posts", 
+              isWorker ? Strings.of(context, 'my_applications') : Strings.of(context, 'my_job_posts'), 
               onTap: () {
-                if (ref.read(currentRoleProvider) == UserRole.work) {
+                if (isWorker) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (c) => const MyApplicationsScreen())
@@ -118,7 +120,7 @@ class ProfileScreen extends ConsumerWidget {
             ),
             _MenuItem(
               Icons.notifications_none, 
-              "Notifications", 
+              Strings.of(context, 'notifications'), 
               onTap: () {
                 Navigator.push(
                   context,
@@ -213,9 +215,6 @@ class ProfileScreen extends ConsumerWidget {
   }
 
   Widget _buildAvailabilityToggle(BuildContext context, WidgetRef ref, User user) {
-    // Note: User model might need isAvailable field, but for now we rely on a default or local state
-    // Let's assume for now we use a simple local toggle or refetch
-    // In a real app, this would be a separate provider or field in User
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -240,7 +239,7 @@ class ProfileScreen extends ConsumerWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Available Now", style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+                  Text(Strings.of(context, 'available_now'), style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold)),
                   Text("Visible to employers", style: AppTextStyles.bodySmall.copyWith(color: AppColors.muted)),
                 ],
               ),

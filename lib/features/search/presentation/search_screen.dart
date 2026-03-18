@@ -11,6 +11,7 @@ import 'package:flutter_app/features/worker_profile/presentation/worker_profile_
 import 'package:flutter_app/features/booking/presentation/booking_screen.dart';
 import 'package:flutter_app/features/jobs/presentation/job_detail_screen.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
+import 'package:flutter_app/providers/language_provider.dart';
 import '../providers/search_providers.dart';
 
 class SearchScreen extends ConsumerWidget {
@@ -31,8 +32,8 @@ class SearchScreen extends ConsumerWidget {
         child: Column(
           children: [
             _buildHeader(context, isHireRole),
-            _buildSearchBar(ref, isHireRole),
-            _buildFilterChips(ref, selectedFilter, isHireRole),
+            _buildSearchBar(context, ref, isHireRole),
+            _buildFilterChips(context, ref, selectedFilter, isHireRole),
             Expanded(
               child: isHireRole 
                   ? _buildWorkersList(workersAsync!) 
@@ -64,13 +65,16 @@ class SearchScreen extends ConsumerWidget {
             ),
             const SizedBox(width: 16),
           ],
-          Text(isHireRole ? "Find Workers" : "Available Jobs", style: AppTextStyles.h2),
+          Text(
+            isHireRole ? Strings.of(context, 'find_workers') : Strings.of(context, 'available_jobs'), 
+            style: AppTextStyles.h2
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildSearchBar(WidgetRef ref, bool isHireRole) {
+  Widget _buildSearchBar(BuildContext context, WidgetRef ref, bool isHireRole) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Container(
@@ -88,7 +92,7 @@ class SearchScreen extends ConsumerWidget {
               child: TextField(
                 onChanged: (val) => ref.read(searchQueryProvider.notifier).state = val,
                 decoration: InputDecoration(
-                  hintText: isHireRole ? "Painter, cleaner, guard..." : "Design, plumber, security...",
+                  hintText: isHireRole ? Strings.of(context, 'find_workers_hint') : Strings.of(context, 'find_jobs_hint'),
                   hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted),
                   border: InputBorder.none,
                   enabledBorder: InputBorder.none,
@@ -104,7 +108,7 @@ class SearchScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildFilterChips(WidgetRef ref, SearchFilter selected, bool isHireRole) {
+  Widget _buildFilterChips(BuildContext context, WidgetRef ref, SearchFilter selected, bool isHireRole) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -112,12 +116,12 @@ class SearchScreen extends ConsumerWidget {
         children: [
           _buildChip(ref, "All", SearchFilter.all, selected == SearchFilter.all),
           if (isHireRole) ...[
-            _buildChip(ref, "Available Now", SearchFilter.availableNow, selected == SearchFilter.availableNow),
-            _buildChip(ref, "Top Rated", SearchFilter.topRated, selected == SearchFilter.topRated),
-            _buildChip(ref, "Lowest Price", SearchFilter.lowestPrice, selected == SearchFilter.lowestPrice),
+            _buildChip(ref, Strings.of(context, 'available_now'), SearchFilter.availableNow, selected == SearchFilter.availableNow),
+            _buildChip(ref, Strings.of(context, 'top_rated'), SearchFilter.topRated, selected == SearchFilter.topRated),
+            _buildChip(ref, Strings.of(context, 'lowest_price'), SearchFilter.lowestPrice, selected == SearchFilter.lowestPrice),
           ] else ...[
-            _buildChip(ref, "Highest Paying", SearchFilter.topRated, selected == SearchFilter.topRated),
-            _buildChip(ref, "Latest Posts", SearchFilter.recentlyPosted, selected == SearchFilter.recentlyPosted),
+            _buildChip(ref, Strings.of(context, 'highest_paying'), SearchFilter.topRated, selected == SearchFilter.topRated),
+            _buildChip(ref, Strings.of(context, 'latest_posts'), SearchFilter.recentlyPosted, selected == SearchFilter.recentlyPosted),
           ],
         ],
       ),
@@ -255,16 +259,16 @@ class _SearchWorkerCard extends StatelessWidget {
                       Row(
                         children: [
                           if (worker.isVerified)
-                            const BadgePill(
-                              label: "Verified", 
+                             BadgePill(
+                              label: Strings.of(context, 'verified'), 
                               icon: Icons.check_circle, 
                               color: AppColors.successGreen,
                               backgroundColor: AppColors.greenBG,
                             ),
                           if (worker.isAvailable) ...[
                             const SizedBox(width: 8),
-                            const BadgePill(
-                              label: "Available Now", 
+                             BadgePill(
+                              label: Strings.of(context, 'available_now'), 
                               icon: Icons.bolt, 
                               color: AppColors.primaryBlue,
                               backgroundColor: AppColors.paleBlue,
