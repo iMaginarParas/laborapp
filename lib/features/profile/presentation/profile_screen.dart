@@ -136,7 +136,6 @@ class ProfileScreen extends ConsumerWidget {
                   )
                 : null,
             ),
-            _MenuItem(Icons.payment, "Payments", onTap: showWorkingOnIt),
           ]),
           const SizedBox(height: 16),
           _buildMenuSection([

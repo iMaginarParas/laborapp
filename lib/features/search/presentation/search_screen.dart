@@ -3,10 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/core/theme/app_colors.dart';
 import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/shared/models/worker.dart';
+import 'package:flutter_app/shared/models/job.dart';
 import 'package:flutter_app/shared/widgets/badge_pill.dart';
 import 'package:flutter_app/shared/widgets/primary_button.dart';
+import 'package:flutter_app/shared/widgets/job_card.dart';
 import 'package:flutter_app/features/worker_profile/presentation/worker_profile_screen.dart';
 import 'package:flutter_app/features/booking/presentation/booking_screen.dart';
+import 'package:flutter_app/features/jobs/presentation/job_detail_screen.dart';
+import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import '../providers/search_providers.dart';
 
 class SearchScreen extends ConsumerWidget {
@@ -14,19 +18,25 @@ class SearchScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final workersAsync = ref.watch(searchWorkersProvider);
-    final selectedFilter = ref.watch(workerFilterProvider);
+    final currentRole = ref.watch(currentRoleProvider);
+    final selectedFilter = ref.watch(searchFilterProvider);
+    final isHireRole = currentRole == UserRole.hire;
+
+    final workersAsync = isHireRole ? ref.watch(searchWorkersProvider) : null;
+    final jobsAsync = !isHireRole ? ref.watch(searchJobsProvider) : null;
 
     return Scaffold(
       backgroundColor: AppColors.white,
       body: SafeArea(
         child: Column(
           children: [
-            _buildHeader(context),
-            _buildSearchBar(ref),
-            _buildFilterChips(ref, selectedFilter),
+            _buildHeader(context, isHireRole),
+            _buildSearchBar(ref, isHireRole),
+            _buildFilterChips(ref, selectedFilter, isHireRole),
             Expanded(
-              child: _buildWorkersList(workersAsync),
+              child: isHireRole 
+                  ? _buildWorkersList(workersAsync!) 
+                  : _buildJobsList(jobsAsync!),
             ),
           ],
         ),
@@ -34,7 +44,7 @@ class SearchScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader(BuildContext context, bool isHireRole) {
     final canPop = Navigator.canPop(context);
     return Padding(
       padding: const EdgeInsets.all(24.0),
@@ -54,13 +64,13 @@ class SearchScreen extends ConsumerWidget {
             ),
             const SizedBox(width: 16),
           ],
-          Text("Find Workers", style: AppTextStyles.h2),
+          Text(isHireRole ? "Find Workers" : "Available Jobs", style: AppTextStyles.h2),
         ],
       ),
     );
   }
 
-  Widget _buildSearchBar(WidgetRef ref) {
+  Widget _buildSearchBar(WidgetRef ref, bool isHireRole) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Container(
@@ -78,7 +88,7 @@ class SearchScreen extends ConsumerWidget {
               child: TextField(
                 onChanged: (val) => ref.read(searchQueryProvider.notifier).state = val,
                 decoration: InputDecoration(
-                  hintText: "Painter, cleaner, guard...",
+                  hintText: isHireRole ? "Painter, cleaner, guard..." : "Design, plumber, security...",
                   hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted),
                   border: InputBorder.none,
                   enabledBorder: InputBorder.none,
@@ -94,24 +104,29 @@ class SearchScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildFilterChips(WidgetRef ref, WorkerFilter selected) {
+  Widget _buildFilterChips(WidgetRef ref, SearchFilter selected, bool isHireRole) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       child: Row(
         children: [
-          _buildChip(ref, "All", WorkerFilter.all, selected == WorkerFilter.all),
-          _buildChip(ref, "Available Now", WorkerFilter.availableNow, selected == WorkerFilter.availableNow),
-          _buildChip(ref, "Top Rated", WorkerFilter.topRated, selected == WorkerFilter.topRated),
-          _buildChip(ref, "Lowest Price", WorkerFilter.lowestPrice, selected == WorkerFilter.lowestPrice),
+          _buildChip(ref, "All", SearchFilter.all, selected == SearchFilter.all),
+          if (isHireRole) ...[
+            _buildChip(ref, "Available Now", SearchFilter.availableNow, selected == SearchFilter.availableNow),
+            _buildChip(ref, "Top Rated", SearchFilter.topRated, selected == SearchFilter.topRated),
+            _buildChip(ref, "Lowest Price", SearchFilter.lowestPrice, selected == SearchFilter.lowestPrice),
+          ] else ...[
+            _buildChip(ref, "Highest Paying", SearchFilter.topRated, selected == SearchFilter.topRated),
+            _buildChip(ref, "Latest Posts", SearchFilter.recentlyPosted, selected == SearchFilter.recentlyPosted),
+          ],
         ],
       ),
     );
   }
 
-  Widget _buildChip(WidgetRef ref, String label, WorkerFilter filter, bool isActive) {
+  Widget _buildChip(WidgetRef ref, String label, SearchFilter filter, bool isActive) {
     return GestureDetector(
-      onTap: () => ref.read(workerFilterProvider.notifier).state = filter,
+      onTap: () => ref.read(searchFilterProvider.notifier).state = filter,
       child: Container(
         margin: const EdgeInsets.only(right: 12),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -134,7 +149,7 @@ class SearchScreen extends ConsumerWidget {
   Widget _buildWorkersList(AsyncValue<List<Worker>> asyncValue) {
     return asyncValue.when(
       data: (workers) => workers.isEmpty 
-        ? _buildEmptyState()
+        ? _buildEmptyState("No workers found", "Try keywords like 'Painter'")
         : ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             itemCount: workers.length,
@@ -145,15 +160,37 @@ class SearchScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildJobsList(AsyncValue<List<Job>> asyncValue) {
+    return asyncValue.when(
+      data: (jobs) => jobs.isEmpty 
+        ? _buildEmptyState("No jobs found", "Try keywords like 'Cleaning'")
+        : ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            itemCount: jobs.length,
+            itemBuilder: (context, index) => JobCard(
+              job: jobs[index],
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (c) => JobDetailScreen(job: jobs[index])),
+                );
+              },
+            ),
+          ),
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (e, s) => Center(child: Text("Error: $e")),
+    );
+  }
+
+  Widget _buildEmptyState(String title, String subtitle) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(Icons.search_off, size: 64, color: AppColors.border),
           const SizedBox(height: 16),
-          Text("No workers found", style: AppTextStyles.h3),
-          Text("Try common keywords like 'Painter'", style: AppTextStyles.bodySmall),
+          Text(title, style: AppTextStyles.h3),
+          Text(subtitle, style: AppTextStyles.bodySmall),
         ],
       ),
     );
@@ -203,7 +240,7 @@ class _SearchWorkerCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   alignment: Alignment.center,
-                  child: Text(worker.categories.first.emoji, style: const TextStyle(fontSize: 32)),
+                  child: Text(worker.categories.isEmpty ? "👷" : worker.categories.first.emoji, style: const TextStyle(fontSize: 32)),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -212,7 +249,7 @@ class _SearchWorkerCard extends StatelessWidget {
                     children: [
                       Text(worker.name, style: AppTextStyles.h3.copyWith(fontSize: 18)),
                       const SizedBox(height: 4),
-                      Text("${worker.categories.first.name} • ${worker.experienceYears}+ yrs experience", 
+                      Text("${worker.categories.isEmpty ? 'Worker' : worker.categories.first.name} • ${worker.experienceYears}+ yrs experience", 
                         style: AppTextStyles.bodySmall),
                       const SizedBox(height: 8),
                       Row(

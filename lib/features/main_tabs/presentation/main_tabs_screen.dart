@@ -3,11 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/features/home/presentation/home_screen.dart';
 import 'package:flutter_app/features/search/presentation/search_screen.dart';
 import 'package:flutter_app/features/booking/presentation/bookings_list_screen.dart';
+import 'package:flutter_app/features/jobs/presentation/my_applications_screen.dart';
 import 'package:flutter_app/features/profile/presentation/profile_screen.dart';
 import 'package:flutter_app/shared/widgets/bottom_nav_bar.dart';
 import 'package:flutter_app/features/main_tabs/providers/navigation_providers.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/features/hire/presentation/create_job_screen.dart';
+
 class MainTabsScreen extends ConsumerWidget {
   const MainTabsScreen({super.key});
 
@@ -23,7 +25,7 @@ class MainTabsScreen extends ConsumerWidget {
       const HomeScreen(),
       const SearchScreen(),
       if (showPostJob) const CreateJobScreen(),
-      const BookingsListScreen(),
+      showPostJob ? const BookingsListScreen() : const MyApplicationsScreen(),
       const ProfileScreen(),
     ];
 
@@ -43,6 +45,7 @@ class MainTabsScreen extends ConsumerWidget {
       ),
       bottomNavigationBar: AppBottomNavBar(
         currentIndex: safeIndex,
+        currentRole: currentRole,
         showPostJob: showPostJob,
         onTap: (index) => ref.read(navigationIndexProvider.notifier).state = index,
       ),
