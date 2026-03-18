@@ -117,7 +117,13 @@ class _CreateJobScreenState extends ConsumerState<CreateJobScreen> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.close, color: AppColors.text),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              ref.read(navigationIndexProvider.notifier).state = 0;
+            }
+          },
         ),
       ),
       body: SingleChildScrollView(

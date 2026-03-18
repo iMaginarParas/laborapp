@@ -98,7 +98,9 @@ class BookingSuccessScreen extends ConsumerWidget {
               PrimaryButton(
                 text: "View My Bookings 📅",
                 onPressed: () {
-                  ref.read(navigationIndexProvider.notifier).state = 2; // Switch to Bookings Tab
+                  // For Hire/Employer role, index 2 is Post Job, index 3 is Bookings.
+                  // We set it to 3 to reach Bookings correctly.
+                  ref.read(navigationIndexProvider.notifier).state = 3; 
                   Navigator.popUntil(context, (route) => route.isFirst);
                 },
               ),
