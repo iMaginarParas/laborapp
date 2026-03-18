@@ -29,7 +29,7 @@ class Job {
 
   factory Job.fromJson(Map<String, dynamic> json) {
     return Job(
-      id: json['id'],
+      id: json['id'].toString(),
       title: json['title'] ?? '',
       description: json['description'] ?? '',
       jobCity: json['job_city'] ?? '',
@@ -38,7 +38,7 @@ class Job {
       openings: json['openings'] ?? 1,
       status: json['status'] ?? 'open',
       createdAt: DateTime.parse(json['created_at']),
-      employerId: json['employer_id'],
+      employerId: json['employer_id']?.toString(),
       category: json['category'] != null ? Category.fromJson(json['category']) : null,
     );
   }
