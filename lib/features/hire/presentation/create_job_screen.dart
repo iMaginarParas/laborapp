@@ -71,9 +71,18 @@ class _CreateJobScreenState extends ConsumerState<CreateJobScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Job posted successfully!")),
         );
+        // Refresh all job lists immediately
         ref.invalidate(jobsProvider);
         ref.invalidate(myPostedJobsProvider);
-        Navigator.pop(context);
+        
+        // Safety: If this screen is a Tab, pop will kill the app. 
+        // We check if it's a modal/pushed route first.
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        } else {
+          // Switch to home tab
+          ref.read(navigationIndexProvider.notifier).state = 0;
+        }
       }
     } catch (e) {
       if (mounted) {
