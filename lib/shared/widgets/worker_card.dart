@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_layout.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../models/worker.dart';
 
@@ -16,10 +17,10 @@ class WorkerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: AppLayout.space16),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppLayout.borderRadius20,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
@@ -30,9 +31,9 @@ class WorkerCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppLayout.borderRadius20,
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: AppLayout.screenPaddingAll,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -72,7 +73,7 @@ class WorkerCard extends StatelessWidget {
                     ),
                 ],
               ),
-              const SizedBox(width: 16),
+              AppLayout.width16,
               // Content
               Expanded(
                 child: Column(
@@ -111,7 +112,7 @@ class WorkerCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
+                    AppLayout.height12,
                     // Bottom Row: Rating, Distance, Chat
                     Row(
                       children: [
@@ -119,19 +120,19 @@ class WorkerCard extends StatelessWidget {
                         Row(
                           children: [
                             const Icon(Icons.location_on, color: Colors.redAccent, size: 14),
-                            const SizedBox(width: 2),
+                            AppLayout.width4,
                             Text(
                               "1.2 km",
                               style: AppTextStyles.bodySmall.copyWith(fontSize: 12, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
-                        const SizedBox(width: 12),
+                        AppLayout.width12,
                         // Rating
                         Row(
                           children: [
                             const Icon(Icons.star, color: Colors.orange, size: 14),
-                            const SizedBox(width: 2),
+                            AppLayout.width4,
                             Text(
                               worker.rating.toString(),
                               style: AppTextStyles.bodySmall.copyWith(fontSize: 12, fontWeight: FontWeight.bold),
@@ -141,16 +142,16 @@ class WorkerCard extends StatelessWidget {
                         const Spacer(),
                         // Chat Button
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                          padding: const EdgeInsets.symmetric(horizontal: AppLayout.space12, vertical: AppLayout.space8),
                           decoration: BoxDecoration(
                             color: AppColors.paleBlue.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(100),
+                            borderRadius: AppLayout.borderRadiusMax,
                             border: Border.all(color: AppColors.primaryBlue.withOpacity(0.1)),
                           ),
                           child: Row(
                             children: [
                               const Icon(Icons.chat_bubble_outline, color: AppColors.primaryBlue, size: 14),
-                              const SizedBox(width: 6),
+                              AppLayout.width8,
                               Text(
                                 "Chat",
                                 style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue, fontSize: 12, fontWeight: FontWeight.bold),

@@ -5,6 +5,7 @@ import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/shared/models/job_application.dart';
 import 'package:flutter_app/shared/widgets/badge_pill.dart';
 import '../providers/job_providers.dart';
+import '../../chat/presentation/chat_screen.dart';
 
 class MyApplicationsScreen extends ConsumerWidget {
   const MyApplicationsScreen({super.key});
@@ -107,6 +108,16 @@ class _ApplicationCard extends StatelessWidget {
                 label: application.status.toUpperCase(),
                 color: statusColor,
                 backgroundColor: statusColor.withOpacity(0.1),
+              ),
+              const SizedBox(width: 8),
+              IconButton(
+                icon: const Icon(Icons.chat_outlined, color: AppColors.primaryBlue, size: 20),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (c) => ChatScreen(userName: job.title)), // Use job title or mock employer
+                  );
+                },
               ),
             ],
           ),

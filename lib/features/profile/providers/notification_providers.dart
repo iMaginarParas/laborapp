@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_app/core/network/dio_client.dart';
 import 'package:flutter_app/core/constants/api_constants.dart';
 import 'package:flutter_app/shared/models/notification.dart';
 import 'package:flutter_app/features/home/providers/home_providers.dart';

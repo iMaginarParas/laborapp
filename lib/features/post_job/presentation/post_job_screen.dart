@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/core/theme/app_colors.dart';
+import 'package:flutter_app/core/theme/app_layout.dart';
 import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/features/home/providers/home_providers.dart';
-import 'package:flutter_app/shared/models/worker.dart' as model;
+import 'package:flutter_app/shared/widgets/city_autocomplete_field.dart';
 
 class PostJobScreen extends ConsumerStatefulWidget {
   const PostJobScreen({super.key});
@@ -90,7 +91,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
               TextFormField(
                 controller: _aboutController,
                 maxLines: 4,
-                decoration: _inputDecoration("E.g., Professional painter with 5+ years experience..."),
+                decoration: AppLayout.commonInputDecoration(hintText: "E.g., Professional painter with 5+ years experience..."),
                 validator: (v) => v == null || v.isEmpty ? "Required" : null,
               ),
               const SizedBox(height: 24),
@@ -133,7 +134,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                   Expanded(
                     child: TextFormField(
                       controller: _skillsController,
-                      decoration: _inputDecoration("Add a skill (e.g., Interior Painting)"),
+                      decoration: AppLayout.commonInputDecoration(hintText: "Add a skill (e.g., Interior Painting)"),
                       onFieldSubmitted: _addSkill,
                     ),
                   ),
@@ -161,12 +162,13 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
               // 3. Location
               _buildSectionTitle("Location"),
               const SizedBox(height: 12),
-              TextFormField(
+              CityAutocompleteField(
                 controller: _locationController,
-                decoration: _inputDecoration("E.g., Noida, Uttar Pradesh").copyWith(
-                  prefixIcon: const Icon(Icons.location_on, color: AppColors.muted),
-                ),
+                hintText: "E.g., Noida, Uttar Pradesh",
                 validator: (v) => v == null || v.isEmpty ? "Required" : null,
+                onCitySelected: (city) {
+                  _locationController.text = city;
+                },
               ),
               const SizedBox(height: 24),
               
@@ -182,7 +184,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                         TextFormField(
                           controller: _experienceController,
                           keyboardType: TextInputType.number,
-                          decoration: _inputDecoration("Years (e.g., 5)"),
+                          decoration: AppLayout.commonInputDecoration(hintText: "Years (e.g., 5)"),
                           validator: (v) => v == null || v.isEmpty ? "Required" : null,
                         ),
                       ],
@@ -200,7 +202,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                         TextFormField(
                           controller: _wageController,
                           keyboardType: TextInputType.number,
-                          decoration: _inputDecoration("₹/hr (e.g., 450)"),
+                          decoration: AppLayout.commonInputDecoration(hintText: "₹/hr (e.g., 450)"),
                           validator: (v) => v == null || v.isEmpty ? "Required" : null,
                         ),
                       ],
@@ -241,20 +243,6 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
     return Text(
       title,
       style: AppTextStyles.h3.copyWith(fontSize: 16),
-    );
-  }
-
-  InputDecoration _inputDecoration(String hint) {
-    return InputDecoration(
-      hintText: hint,
-      hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted),
-      filled: true,
-      fillColor: AppColors.background,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
     );
   }
 

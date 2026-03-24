@@ -120,7 +120,9 @@ class RoleSelectionScreen extends ConsumerWidget {
     return GestureDetector(
       onTap: () {
         ref.read(currentRoleProvider.notifier).state = role;
-        Navigator.pop(context);
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
       },
       child: Container(
         width: double.infinity,

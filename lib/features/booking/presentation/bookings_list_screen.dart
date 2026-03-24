@@ -10,6 +10,7 @@ import 'package:flutter_app/features/main_tabs/providers/navigation_providers.da
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/features/home/providers/home_providers.dart';
 import 'package:flutter_app/core/constants/api_constants.dart';
+import 'package:flutter_app/features/chat/presentation/chat_screen.dart';
 
 class BookingsListScreen extends ConsumerWidget {
   const BookingsListScreen({super.key});
@@ -159,6 +160,16 @@ class BookingsListScreen extends ConsumerWidget {
                 ),
               ),
               _buildStatusBadge(booking.status),
+              const SizedBox(width: 8),
+              IconButton(
+                icon: const Icon(Icons.chat_outlined, color: AppColors.primaryBlue, size: 20),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (c) => ChatScreen(userName: booking.worker.name)),
+                  );
+                },
+              ),
             ],
           ),
           const Padding(

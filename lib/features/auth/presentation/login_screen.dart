@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_layout.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../providers/auth_providers.dart';
@@ -70,18 +71,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 );
               },
               child: Padding(
-                padding: const EdgeInsets.all(24),
+                padding: AppLayout.screenPaddingAll,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20),
+                    AppLayout.height16,
                     Text("Welcome Back", style: AppTextStyles.h1),
-                    const SizedBox(height: 8),
+                    AppLayout.height8,
                     Text("Sign in to continue booking your favorite services.", 
                       style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted)),
-                    const SizedBox(height: 32),
+                    AppLayout.height32,
                     _buildLabel("Phone Number or Email"),
-                    const SizedBox(height: 8),
+                    AppLayout.height8,
                     TextField(
                       controller: _phoneController,
                       decoration: const InputDecoration(
@@ -89,9 +90,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         prefixIcon: Icon(Icons.phone_outlined, size: 20),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    AppLayout.height24,
                     _buildLabel("Password"),
-                    const SizedBox(height: 8),
+                    AppLayout.height8,
                     TextField(
                       controller: _passwordController,
                       obscureText: _obscurePassword,
@@ -107,33 +108,40 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    AppLayout.height8,
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () {},
+                        style: TextButton.styleFrom(
+                          minimumSize: const Size(0, AppLayout.touchTargetSize),
+                        ),
                         child: Text("Forgot Password?", style: AppTextStyles.label.copyWith(fontSize: 12)),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    AppLayout.height24,
                     PrimaryButton(
                       text: "Sign In", 
                       isLoading: _isLoading,
                       onPressed: _handleLogin,
                     ),
-                    const SizedBox(height: 24),
+                    AppLayout.height24,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Don't have an account? ", style: AppTextStyles.bodyMedium),
                         GestureDetector(
+                          behavior: HitTestBehavior.opaque,
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => const RegisterScreen()),
                             );
                           },
-                          child: Text("Register Now", style: AppTextStyles.label),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                            child: Text("Register Now", style: AppTextStyles.label),
+                          ),
                         ),
                       ],
                     ),
@@ -161,7 +169,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text("🛠️", style: TextStyle(fontSize: 50)),
-          const SizedBox(height: 16),
+          AppLayout.height16,
           Text("Laborgro", 
             style: AppTextStyles.h1.copyWith(color: AppColors.white, fontSize: 40, letterSpacing: 1)),
           Text("Hyperlocal Service Marketplace", 

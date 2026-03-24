@@ -58,7 +58,7 @@ class _MainTabsScreenState extends ConsumerState<MainTabsScreen> {
       ),
       bottomNavigationBar: AppBottomNavBar(
         currentIndex: safeIndex,
-        currentRole: currentRole,
+        currentRole: currentRole ?? UserRole.hire,
         showPostJob: showPostJob,
         onTap: (index) => ref.read(navigationIndexProvider.notifier).state = index,
       ),

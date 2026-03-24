@@ -152,6 +152,7 @@ class ProfileScreen extends ConsumerWidget {
               color: Colors.red,
               onTap: () async {
                 await StorageService.removeToken();
+                ref.read(currentRoleProvider.notifier).state = null;
                 ref.read(authStateProvider.notifier).state = null;
               },
             ),

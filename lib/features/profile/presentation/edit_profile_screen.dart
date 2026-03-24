@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_layout.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../../../shared/models/user.dart';
 import '../../../core/utils/api_error_handler.dart';
+import '../../../shared/widgets/city_autocomplete_field.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
   final User user;
@@ -81,7 +83,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
+        padding: AppLayout.screenPaddingAll,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -113,29 +115,32 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 32),
+            AppLayout.height32,
             _buildLabel("Full Name"),
-            const SizedBox(height: 8),
+            AppLayout.height8,
             TextField(
               controller: _nameController,
               decoration: const InputDecoration(hintText: "Enter your name"),
             ),
-            const SizedBox(height: 20),
+            AppLayout.height20,
             _buildLabel("Phone Number"),
-            const SizedBox(height: 8),
+            AppLayout.height8,
             TextField(
               controller: _phoneController,
               keyboardType: TextInputType.phone,
               decoration: const InputDecoration(hintText: "Enter your phone number"),
             ),
-            const SizedBox(height: 20),
+            AppLayout.height20,
             _buildLabel("City"),
-            const SizedBox(height: 8),
-            TextField(
+            AppLayout.height8,
+            CityAutocompleteField(
               controller: _cityController,
-              decoration: const InputDecoration(hintText: "Enter your city"),
+              hintText: "Enter your city",
+              onCitySelected: (city) {
+                _cityController.text = city;
+              },
             ),
-            const SizedBox(height: 40),
+            AppLayout.height40,
             PrimaryButton(
               text: "Save Changes", 
               isLoading: _isLoading,

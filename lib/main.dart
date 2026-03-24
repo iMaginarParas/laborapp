@@ -4,6 +4,7 @@ import 'package:flutter_app/core/theme/app_theme.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/features/auth/presentation/login_screen.dart';
 import 'package:flutter_app/features/main_tabs/presentation/main_tabs_screen.dart';
+import 'package:flutter_app/features/home/presentation/role_selection_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_app/core/services/storage_service.dart';
 import 'package:flutter_app/core/network/dio_client.dart';
@@ -50,7 +51,11 @@ class LaborgroApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: token == null ? const LoginScreen() : const MainTabsScreen(),
+      home: token == null 
+          ? const LoginScreen() 
+          : (ref.watch(currentRoleProvider) == null 
+              ? const RoleSelectionScreen() 
+              : const MainTabsScreen()),
     );
   }
 }

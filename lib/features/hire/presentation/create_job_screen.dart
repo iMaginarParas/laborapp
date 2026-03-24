@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/core/theme/app_colors.dart';
+import 'package:flutter_app/core/theme/app_layout.dart';
 import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/features/home/providers/home_providers.dart';
-import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/shared/widgets/primary_button.dart';
 import 'package:flutter_app/features/jobs/providers/job_providers.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_app/core/constants/api_constants.dart';
 import 'package:flutter_app/features/main_tabs/providers/navigation_providers.dart';
+import 'package:flutter_app/shared/widgets/city_autocomplete_field.dart';
 
 class CreateJobScreen extends ConsumerStatefulWidget {
   const CreateJobScreen({super.key});
@@ -133,23 +134,23 @@ class _CreateJobScreenState extends ConsumerState<CreateJobScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Describe the job you're hiring for. Workers will see this in their 'Latest Jobs' feed.",
-                style: AppTextStyles.bodySmall.copyWith(color: AppColors.muted),
+                style: TextStyle(fontSize: 11, color: AppColors.muted),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
               
               _buildLabel("Job Title"),
-              const SizedBox(height: 8),
+              const SizedBox(height: 4),
               TextFormField(
                 controller: _titleController,
-                decoration: _inputDecoration("e.g. Need House Painter for 2 Days"),
+                decoration: AppLayout.commonInputDecoration(hintText: "e.g. Need House Painter for 2 Days"),
                 validator: (v) => v == null || v.isEmpty ? "Required" : null,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
 
               _buildLabel("Category"),
-              const SizedBox(height: 12),
+              const SizedBox(height: 6),
               ref.watch(categoriesProvider).when(
                 data: (cats) => Wrap(
                   spacing: 8,
@@ -168,26 +169,29 @@ class _CreateJobScreenState extends ConsumerState<CreateJobScreen> {
                 loading: () => const LinearProgressIndicator(),
                 error: (_, __) => const Text("Error loading categories"),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
 
               _buildLabel("Description"),
-              const SizedBox(height: 8),
+              const SizedBox(height: 4),
               TextFormField(
                 controller: _descriptionController,
                 maxLines: 4,
-                decoration: _inputDecoration("Detail the work, hours, and requirements..."),
+                decoration: AppLayout.commonInputDecoration(hintText: "Detail the work, hours, and requirements..."),
                 validator: (v) => v == null || v.isEmpty ? "Required" : null,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
 
               _buildLabel("City"),
-              const SizedBox(height: 8),
-              TextFormField(
+              const SizedBox(height: 4),
+              CityAutocompleteField(
                 controller: _cityController,
-                decoration: _inputDecoration("e.g. Noida, Sector 62"),
+                hintText: "e.g. Noida, Sector 62",
                 validator: (v) => v == null || v.isEmpty ? "Required" : null,
+                onCitySelected: (city) {
+                  _cityController.text = city;
+                },
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
 
               Row(
                 children: [
@@ -196,11 +200,13 @@ class _CreateJobScreenState extends ConsumerState<CreateJobScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildLabel("Min Salary (₹)"),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 4),
                         TextFormField(
                           controller: _salaryMinController,
                           keyboardType: TextInputType.number,
-                          decoration: _inputDecoration("0"),
+                          decoration: AppLayout.commonInputDecoration(hintText: "0").copyWith(
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                          ),
                           validator: (v) => v == null || v.isEmpty ? "Required" : null,
                         ),
                       ],
@@ -212,11 +218,13 @@ class _CreateJobScreenState extends ConsumerState<CreateJobScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildLabel("Max Salary (₹)"),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 4),
                         TextFormField(
                           controller: _salaryMaxController,
                           keyboardType: TextInputType.number,
-                          decoration: _inputDecoration("1000"),
+                          decoration: AppLayout.commonInputDecoration(hintText: "1000").copyWith(
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                          ),
                           validator: (v) => v == null || v.isEmpty ? "Required" : null,
                         ),
                       ],
@@ -224,17 +232,19 @@ class _CreateJobScreenState extends ConsumerState<CreateJobScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
 
               _buildLabel("Number of Openings"),
-              const SizedBox(height: 8),
+              const SizedBox(height: 4),
               TextFormField(
                 controller: _openingsController,
                 keyboardType: TextInputType.number,
-                decoration: _inputDecoration("1"),
+                decoration: AppLayout.commonInputDecoration(hintText: "1").copyWith(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                ),
                 validator: (v) => v == null || v.isEmpty ? "Required" : null,
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 24),
 
               PrimaryButton(
                 text: "Post Job",
@@ -251,19 +261,5 @@ class _CreateJobScreenState extends ConsumerState<CreateJobScreen> {
 
   Widget _buildLabel(String text) {
     return Text(text, style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold));
-  }
-
-  InputDecoration _inputDecoration(String hint) {
-    return InputDecoration(
-      hintText: hint,
-      hintStyle: AppTextStyles.bodySmall.copyWith(color: AppColors.muted),
-      filled: true,
-      fillColor: AppColors.background,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-    );
   }
 }

@@ -17,4 +17,4 @@ final currentUserProvider = FutureProvider<User>((ref) async {
 
 enum UserRole { hire, work }
 
-final currentRoleProvider = StateProvider<UserRole>((ref) => UserRole.hire);
+final currentRoleProvider = StateProvider<UserRole?>((ref) => null);

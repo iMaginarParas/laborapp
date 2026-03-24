@@ -19,24 +19,24 @@ class BadgePill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(6),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[
-            Icon(icon, size: 14, color: color),
+            Icon(icon, size: 12, color: color),
             const SizedBox(width: 4),
           ],
           Text(
             label,
-            style: AppTextStyles.bodySmall.copyWith(
+            style: AppTextStyles.label.copyWith(
               color: color,
+              fontSize: 10,
               fontWeight: FontWeight.bold,
-              fontSize: 11,
             ),
           ),
         ],

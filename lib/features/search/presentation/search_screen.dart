@@ -12,13 +12,28 @@ import 'package:flutter_app/features/booking/presentation/booking_screen.dart';
 import 'package:flutter_app/features/jobs/presentation/job_detail_screen.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/providers/language_provider.dart';
+import 'package:flutter_app/core/services/voice_service.dart';
 import '../providers/search_providers.dart';
 
-class SearchScreen extends ConsumerWidget {
+class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends ConsumerState<SearchScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  bool _isListening = false;
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final currentRole = ref.watch(currentRoleProvider);
     final selectedFilter = ref.watch(searchFilterProvider);
     final isHireRole = currentRole == UserRole.hire;
@@ -32,8 +47,8 @@ class SearchScreen extends ConsumerWidget {
         child: Column(
           children: [
             _buildHeader(context, isHireRole),
-            _buildSearchBar(context, ref, isHireRole),
-            _buildFilterChips(context, ref, selectedFilter, isHireRole),
+            _buildSearchBar(context, isHireRole),
+            _buildFilterChips(context, selectedFilter, isHireRole),
             Expanded(
               child: isHireRole 
                   ? _buildWorkersList(workersAsync!) 
@@ -74,7 +89,7 @@ class SearchScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildSearchBar(BuildContext context, WidgetRef ref, bool isHireRole) {
+  Widget _buildSearchBar(BuildContext context, bool isHireRole) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Container(
@@ -82,23 +97,61 @@ class SearchScreen extends ConsumerWidget {
         decoration: BoxDecoration(
           color: AppColors.paleBlue,
           borderRadius: BorderRadius.circular(16),
+          border: _isListening ? Border.all(color: AppColors.primaryBlue, width: 2) : null,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
           children: [
-            const Icon(Icons.search, color: AppColors.primaryBlue),
+            Icon(Icons.search, color: _isListening ? AppColors.primaryBlue : AppColors.muted),
             const SizedBox(width: 12),
             Expanded(
               child: TextField(
+                controller: _searchController,
                 onChanged: (val) => ref.read(searchQueryProvider.notifier).state = val,
                 decoration: InputDecoration(
-                  hintText: isHireRole ? Strings.of(context, 'find_workers_hint') : Strings.of(context, 'find_jobs_hint'),
-                  hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted),
+                  hintText: _isListening ? "Listening..." : (isHireRole ? Strings.of(context, 'find_workers_hint') : Strings.of(context, 'find_jobs_hint')),
+                  hintStyle: AppTextStyles.bodyMedium.copyWith(color: _isListening ? AppColors.primaryBlue : AppColors.muted),
                   border: InputBorder.none,
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                   contentPadding: EdgeInsets.zero,
                   filled: false,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                if (_isListening) {
+                  VoiceService.stopListening();
+                  setState(() => _isListening = false);
+                } else {
+                  VoiceService.startListening(
+                    onResult: (text) {
+                      setState(() {
+                        _searchController.text = text;
+                        _searchController.selection = TextSelection.fromPosition(TextPosition(offset: text.length));
+                      });
+                      ref.read(searchQueryProvider.notifier).state = text;
+                    },
+                    onListeningChange: (val) {
+                      setState(() => _isListening = val);
+                    },
+                  );
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: _isListening ? AppColors.primaryBlue : AppColors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    if (_isListening) BoxShadow(color: AppColors.primaryBlue.withOpacity(0.4), blurRadius: 10, spreadRadius: 2),
+                  ],
+                ),
+                child: Icon(
+                  _isListening ? Icons.mic : Icons.mic_none,
+                  color: _isListening ? AppColors.white : AppColors.primaryBlue,
+                  size: 20,
                 ),
               ),
             ),
@@ -108,27 +161,27 @@ class SearchScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildFilterChips(BuildContext context, WidgetRef ref, SearchFilter selected, bool isHireRole) {
+  Widget _buildFilterChips(BuildContext context, SearchFilter selected, bool isHireRole) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       child: Row(
         children: [
-          _buildChip(ref, "All", SearchFilter.all, selected == SearchFilter.all),
+          _buildChip("All", SearchFilter.all, selected == SearchFilter.all),
           if (isHireRole) ...[
-            _buildChip(ref, Strings.of(context, 'available_now'), SearchFilter.availableNow, selected == SearchFilter.availableNow),
-            _buildChip(ref, Strings.of(context, 'top_rated'), SearchFilter.topRated, selected == SearchFilter.topRated),
-            _buildChip(ref, Strings.of(context, 'lowest_price'), SearchFilter.lowestPrice, selected == SearchFilter.lowestPrice),
+            _buildChip(Strings.of(context, 'available_now'), SearchFilter.availableNow, selected == SearchFilter.availableNow),
+            _buildChip(Strings.of(context, 'top_rated'), SearchFilter.topRated, selected == SearchFilter.topRated),
+            _buildChip(Strings.of(context, 'lowest_price'), SearchFilter.lowestPrice, selected == SearchFilter.lowestPrice),
           ] else ...[
-            _buildChip(ref, Strings.of(context, 'highest_paying'), SearchFilter.topRated, selected == SearchFilter.topRated),
-            _buildChip(ref, Strings.of(context, 'latest_posts'), SearchFilter.recentlyPosted, selected == SearchFilter.recentlyPosted),
+            _buildChip(Strings.of(context, 'highest_paying'), SearchFilter.topRated, selected == SearchFilter.topRated),
+            _buildChip(Strings.of(context, 'latest_posts'), SearchFilter.recentlyPosted, selected == SearchFilter.recentlyPosted),
           ],
         ],
       ),
     );
   }
 
-  Widget _buildChip(WidgetRef ref, String label, SearchFilter filter, bool isActive) {
+  Widget _buildChip(String label, SearchFilter filter, bool isActive) {
     return GestureDetector(
       onTap: () => ref.read(searchFilterProvider.notifier).state = filter,
       child: Container(

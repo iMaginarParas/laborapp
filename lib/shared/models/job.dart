@@ -12,6 +12,8 @@ class Job {
   final DateTime createdAt;
   final String? employerId;
   final Category? category;
+  final double? lat;
+  final double? lng;
 
   Job({
     required this.id,
@@ -25,6 +27,8 @@ class Job {
     required this.createdAt,
     this.employerId,
     this.category,
+    this.lat,
+    this.lng,
   });
 
   factory Job.fromJson(Map<String, dynamic> json) {
@@ -40,6 +44,8 @@ class Job {
       createdAt: DateTime.parse(json['created_at']),
       employerId: json['employer_id']?.toString(),
       category: json['category'] != null ? Category.fromJson(json['category']) : null,
+      lat: (json['lat'] as num?)?.toDouble(),
+      lng: (json['lng'] as num?)?.toDouble(),
     );
   }
 }

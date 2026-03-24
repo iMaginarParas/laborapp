@@ -4,9 +4,9 @@ import 'package:flutter_app/core/theme/app_colors.dart';
 import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/shared/models/job.dart';
 import 'package:flutter_app/shared/widgets/primary_button.dart';
-import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/features/home/providers/home_providers.dart';
 import 'package:flutter_app/core/constants/api_constants.dart';
+import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 
 class JobDetailScreen extends ConsumerStatefulWidget {
   final Job job;
@@ -22,8 +22,7 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
   Future<void> _handleApply() async {
     setState(() => _isApplying = true);
     try {
-      final repository = ref.read(authRepositoryProvider);
-      // Using existing updateProfile to simulate application or we can call a direct apply endpoint if implemented
+      // Using existing updateProfile to simulate application
       // For now, let's assume we call the /applications endpoint via raw dio if repo doesn't have it
       final client = ref.read(dioClientProvider);
       await client.post(ApiConstants.applications, data: {'job_id': widget.job.id});
@@ -47,6 +46,9 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userAsync = ref.watch(currentUserProvider);
+    final currentRole = ref.watch(currentRoleProvider);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -100,29 +102,65 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
               widget.job.description,
               style: AppTextStyles.bodyMedium.copyWith(color: AppColors.text, height: 1.5),
             ),
+            const SizedBox(height: 12),
+            // Show message if it's the user's own job
+            userAsync.maybeWhen(
+              data: (user) {
+                if (widget.job.employerId != null && user.id == widget.job.employerId) {
+                  return Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.info_outline, color: Colors.orange, size: 20),
+                        const SizedBox(width: 12),
+                        const Expanded(child: Text("This is your own job posting.")),
+                      ],
+                    ),
+                  );
+                }
+                return const SizedBox();
+              },
+              orElse: () => const SizedBox(),
+            ),
             const SizedBox(height: 100),
           ],
         ),
       ),
-      bottomSheet: Container(
-        padding: const EdgeInsets.all(24),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, -5),
-            ),
-          ],
-        ),
-        child: SafeArea(
-          child: PrimaryButton(
-            text: "Apply for this Job",
-            isLoading: _isApplying,
-            onPressed: _handleApply,
-          ),
-        ),
+      bottomSheet: userAsync.when(
+        data: (user) {
+          final isOwner = widget.job.employerId != null && user.id == widget.job.employerId;
+          final isWorker = currentRole == UserRole.work;
+
+          if (isWorker && !isOwner) {
+            return Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, -5),
+                  ),
+                ],
+              ),
+              child: SafeArea(
+                child: PrimaryButton(
+                  text: "Apply for this Job",
+                  isLoading: _isApplying,
+                  onPressed: _handleApply,
+                ),
+              ),
+            );
+          }
+          return const SizedBox(height: 1);
+        },
+        loading: () => const SizedBox(height: 1),
+        error: (_, __) => const SizedBox(height: 1),
       ),
     );
   }

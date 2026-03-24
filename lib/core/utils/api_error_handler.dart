@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
 
 /// Translates [DioException]s and raw errors into user-friendly messages.

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/core/theme/app_colors.dart';
 import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/shared/models/worker.dart';
-import 'package:flutter_app/shared/widgets/badge_pill.dart';
 import 'package:flutter_app/shared/widgets/primary_button.dart';
 import 'package:flutter_app/features/booking/presentation/booking_screen.dart';
 import 'package:flutter_app/features/reviews/presentation/worker_reviews_screen.dart';

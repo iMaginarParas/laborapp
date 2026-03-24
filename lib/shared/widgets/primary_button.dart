@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_text_styles.dart';
+import 'package:flutter_app/core/theme/app_colors.dart';
+import 'package:flutter_app/core/theme/app_layout.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String text;
@@ -26,12 +26,12 @@ class PrimaryButton extends StatelessWidget {
         side: isSecondary ? const BorderSide(color: AppColors.primaryBlue) : null,
       ),
       child: isLoading
-          ? const SizedBox(
+          ? SizedBox(
               height: 20,
               width: 20,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                color: AppColors.white,
+                color: isSecondary ? AppColors.primaryBlue : AppColors.white,
               ),
             )
           : Text(text),

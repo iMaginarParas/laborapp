@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../features/auth/providers/auth_providers.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../models/job.dart';
 
-class JobCard extends StatelessWidget {
+class JobCard extends ConsumerWidget {
   final Job job;
   final VoidCallback onTap;
 
@@ -14,7 +16,15 @@ class JobCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userAsync = ref.watch(currentUserProvider);
+    final currentRole = ref.watch(currentRoleProvider);
+
+    final showApplyNow = userAsync.maybeWhen(
+      data: (user) => currentRole == UserRole.work && user.id != job.employerId,
+      orElse: () => false,
+    );
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -88,9 +98,13 @@ class JobCard extends StatelessWidget {
                   const SizedBox(width: 12),
                   _buildTag(Icons.access_time, "Posted recently"),
                   const Spacer(),
-                  Text(
-                    "Apply Now →",
-                    style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue, fontWeight: FontWeight.bold),
+                   Text(
+                    showApplyNow ? "Apply Now →" : "View Details →",
+                    style: AppTextStyles.label.copyWith(
+                      color: AppColors.primaryBlue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
                   ),
                 ],
               ),

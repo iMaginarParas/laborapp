@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_layout.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../providers/auth_providers.dart';
 import '../../../core/utils/api_error_handler.dart';
+import '../../../shared/widgets/city_autocomplete_field.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -77,52 +79,55 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           children: [
             _buildHeader(),
             Padding(
-              padding: const EdgeInsets.all(24),
+              padding: AppLayout.screenPaddingAll,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Create Account", style: AppTextStyles.h1),
-                  const SizedBox(height: 8),
+                  AppLayout.height8,
                   Text("Join Laborgro and find the best hyperlocal services.", 
                     style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted)),
-                  const SizedBox(height: 24),
+                  AppLayout.height24,
                   
                   _buildLabel("Full Name"),
-                  const SizedBox(height: 8),
+                  AppLayout.height8,
                   TextField(
                     controller: _nameController,
                     decoration: const InputDecoration(hintText: "Enter your full name"),
                   ),
-                  const SizedBox(height: 16),
+                  AppLayout.height16,
 
                   _buildLabel("Email Address"),
-                  const SizedBox(height: 8),
+                  AppLayout.height8,
                   TextField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(hintText: "Enter your email"),
                   ),
-                  const SizedBox(height: 16),
+                  AppLayout.height16,
 
                   _buildLabel("Phone Number"),
-                  const SizedBox(height: 8),
+                  AppLayout.height8,
                   TextField(
                     controller: _phoneController,
                     keyboardType: TextInputType.phone,
                     decoration: const InputDecoration(hintText: "Enter your phone number"),
                   ),
-                  const SizedBox(height: 16),
+                  AppLayout.height16,
 
                   _buildLabel("City"),
-                  const SizedBox(height: 8),
-                  TextField(
+                  AppLayout.height8,
+                  CityAutocompleteField(
                     controller: _cityController,
-                    decoration: const InputDecoration(hintText: "Enter your city (e.g. Noida)"),
+                    hintText: "Enter your city (e.g. Noida)",
+                    onCitySelected: (city) {
+                      _cityController.text = city;
+                    },
                   ),
-                  const SizedBox(height: 16),
+                  AppLayout.height16,
 
                   _buildLabel("Password"),
-                  const SizedBox(height: 8),
+                  AppLayout.height8,
                   TextField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
@@ -137,9 +142,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
-
-                  const SizedBox(height: 24),
+                  AppLayout.height32,
 
                   PrimaryButton(
                     text: "Register Now", 
@@ -160,7 +163,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     return Container(
       width: double.infinity,
       color: AppColors.primary,
-      padding: const EdgeInsets.only(left: 24, bottom: 24),
+      padding: const EdgeInsets.only(left: AppLayout.space24, bottom: AppLayout.space24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

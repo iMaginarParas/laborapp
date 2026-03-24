@@ -5,7 +5,6 @@ import 'package:flutter_app/core/theme/app_colors.dart';
 import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/shared/models/worker.dart';
 import 'package:flutter_app/shared/widgets/primary_button.dart';
-import 'package:flutter_app/shared/widgets/badge_pill.dart';
 import 'package:flutter_app/features/booking/providers/booking_providers.dart';
 import 'package:flutter_app/features/booking/presentation/booking_success_screen.dart';
 import 'package:flutter_app/core/services/location_service.dart';
@@ -282,7 +281,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
           return GestureDetector(
             onTap: () => setState(() => _selectedDate = date),
             child: Container(
-              width: 54,
+              width: 48,
               margin: const EdgeInsets.only(right: 12),
               decoration: BoxDecoration(
                 color: isSelected ? AppColors.primaryBlue : AppColors.white,
@@ -301,7 +300,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                   Text(DateFormat('d').format(date), 
                     style: AppTextStyles.h3.copyWith(
                       color: isSelected ? AppColors.white : AppColors.text,
-                      fontSize: 18,
+                      fontSize: 16,
                     )),
                 ],
               ),
@@ -317,10 +316,10 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 3.5,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
+        crossAxisCount: 4,
+        childAspectRatio: 2.2,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
       ),
       itemCount: _timeSlots.length,
       itemBuilder: (context, index) {
@@ -341,7 +340,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
               style: AppTextStyles.bodyMedium.copyWith(
                 color: isSelected ? AppColors.white : AppColors.muted,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                fontSize: 13,
+                fontSize: 11,
               ),
             ),
           ),
