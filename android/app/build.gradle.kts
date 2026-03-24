@@ -23,22 +23,22 @@ val googleMapsApiKey: String = localProperties.getProperty("google.maps.api.key"
 
 android {
     namespace = "com.laborgro.laborapp"
-    compileSdk = 36
-    ndkVersion = "27.0.12077973"
+    compileSdk = 35
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+        jvmTarget = "1.8"
     }
 
     defaultConfig {
         applicationId = "com.laborgro.laborapp"
         minSdk = flutter.minSdkVersion
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 3
         versionName = "1.0.2"
         manifestPlaceholders["GOOGLE_MAPS_API_KEY"] = googleMapsApiKey

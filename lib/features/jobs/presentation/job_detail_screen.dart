@@ -34,9 +34,23 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
         Navigator.pop(context);
       }
     } catch (e) {
+      String errorMessage = "Failed to apply.";
+      if (e is DioException) {
+        final data = e.response?.data;
+        if (data is Map && data.containsKey('detail')) {
+          errorMessage = data['detail'].toString();
+        } else if (data is Map && data.containsKey('message')) {
+          errorMessage = data['message'].toString();
+        }
+      }
+      
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Failed to apply. You might have already applied.")),
+          SnackBar(
+            content: Text(errorMessage),
+            backgroundColor: Colors.redAccent,
+            action: SnackBarAction(label: "DISMISS", textColor: Colors.white, onPressed: () {}),
+          ),
         );
       }
     } finally {

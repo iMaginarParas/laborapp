@@ -1,0 +1,41 @@
+
+> build_debug.txt:262:* What 
+went wrong:
+  build_debug.txt:263:Executi
+on failed for task ':s
+  build_debug.txt:264:hared_p
+references_android:com
+  build_debug.txt:265:pileDeb
+ugKotlin'.
+  build_debug.txt:266:> 
+Inconsistent JVM-target 
+  build_debug.txt:267:compati
+bility detected for 
+  build_debug.txt:268:tasks 
+  build_debug.txt:269:'compil
+eDebugJavaWithJavac' 
+  build_debug.txt:270:(17) 
+and 
+  build_debug.txt:271:'compil
+eDebugKotlin' (1.8).
+  build_debug.txt:272:  
+  build_debug.txt:273:  
+Consider using JVM 
+  build_debug.txt:274:Toolcha
+in: https://kotl.in/gr
+  build_debug.txt:275:adle/jv
+m/toolchain
+  build_debug.txt:276:  
+Learn more about 
+  build_debug.txt:277:JVM-tar
+get validation: https:
+  build_debug.txt:278://kotl.
+in/gradle/jvm/target-v
+  build_debug.txt:279:alidati
+on 
+  build_debug.txt:280:
+  build_debug.txt:281:* Try:
+  build_debug.txt:282:> Run 
+with --info or --debug 
+
+

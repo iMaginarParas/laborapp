@@ -1,0 +1,100 @@
+ n::String) [], RemoteExc    
+eption
+    + FullyQualifiedErrorId  
+   : NativeCommandError
+ 
+- geolocator_android 
+compiles against Android SDK 
+36
+- path_provider_android 
+compiles against Android SDK 
+36
+- shared_preferences_android 
+compiles against Android SDK 
+36
+- speech_to_text compiles 
+against Android SDK 36
+Fix this issue by compiling 
+against the highest Android 
+SDK version (they are 
+backward compatible).
+Add the following to C:\Users
+\Sunil\OneDrive\Desktop\labor
+gro\flutter_app\android\app\b
+uild.gradle.kts:
+
+    android {
+        compileSdk = 36
+        ...
+    }
+
+[Incubating] Problems report is available at: file:///C:/Users/Sunil/OneDrive/Desktop/laborgro/flutter_app/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with 
+an exception.
+
+* Where:
+Build file 'C:\Users\Sunil\Ap
+pData\Local\Pub\Cache\hosted\
+pub.dev\shared_preferences_an
+droid-2.4.21\android\build.gr
+adle' line: 26
+
+* What went wrong:
+Could not create task ':share
+d_preferences_android:compile
+DebugJavaWithJavac'.
+> Using '--release' option 
+for JavaCompile is not 
+supported because it 
+prevents the Android Gradle 
+plugin
+  from setting up the 
+bootclasspath for compiling 
+Java source files against 
+Android APIs
+  (see https://issuetracker.g
+oogle.com/278800528).
+  Please use Java toolchain 
+or set 'sourceCompatibility' 
+and 'targetCompatibility' 
+options instead.
+  (see https://developer.andr
+oid.com/build/jdks#source-com
+pat).
+
+* Try:
+> Run with --info or --debug 
+option to get more log 
+output.
+> Run with --scan to get 
+full insights.
+> Get more help at 
+https://help.gradle.org.
+
+* Exception is:
+org.gradle.api.internal.tasks
+.DefaultTaskContainer$TaskCre
+ationException: Could not 
+create task ':shared_preferen
+ces_android:compileDebugJavaW
+ithJavac'.
+	at org.gradle.api.internal.t
+asks.DefaultTaskContainer.tas
+kCreationException(DefaultTas
+kContainer.java:729)
+	at org.gradle.api.internal.t
+asks.DefaultTaskContainer.acc
+ess$600(DefaultTaskContainer.
+java:78)
+	at org.gradle.api.internal.t
+asks.DefaultTaskContainer$Tas
+kCreatingProvider.domainObjec
+tCreationException(DefaultTas
+kContainer.java:721)
+	at org.gradle.api.internal.D
+efaultNamedDomainObjectCollec
+tion$AbstractDomainObjectCrea
+tingProvider.tryCreate(Defaul
+tNamedDomainObjectCollection.
+java:1014)

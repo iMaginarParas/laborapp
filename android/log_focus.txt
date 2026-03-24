@@ -1,0 +1,100 @@
+obsolete options, use 
+-Xlint:-options.
+3 warnings
+
+> Task :geocoding_android:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :geocoding_android:exportReleaseConsumerProguardFiles UP-TO-DATE
+> Task :geolocator_android:generateReleaseResValues UP-TO-DATE
+> Task :geolocator_android:generateReleaseResources UP-TO-DATE
+> Task :geolocator_android:packageReleaseResources UP-TO-DATE
+> Task :geolocator_android:parseReleaseLocalResources UP-TO-DATE
+> Task :geolocator_android:generateReleaseRFile UP-TO-DATE
+> Task :geolocator_android:javaPreCompileRelease UP-TO-DATE
+
+> Task :geolocator_android:compileReleaseJavaWithJavac
+Java compiler version 23 has deprecated support for compiling with source/target version 8.
+Try one of the following options:
+    1. [Recommended] Use Java toolchain with a lower language version
+    2. Set a higher source/target version
+    3. Use a lower version of the JDK running the build (if you're not using Java toolchain)
+For more details on how to configure these settings, see https://developer.android.com/build/jdks.
+To suppress this warning, set android.javaCompile.suppressSourceTargetDeprecationWarning=true in gradle.properties.
+warning: [options] source 
+value 8 is obsolete and will 
+be removed in a future 
+release
+warning: [options] target 
+value 8 is obsolete and will 
+be removed in a future 
+release
+warning: [options] To 
+suppress warnings about 
+obsolete options, use 
+-Xlint:-options.
+3 warnings
+
+> Task :geolocator_android:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :geolocator_android:exportReleaseConsumerProguardFiles UP-TO-DATE
+> Task :path_provider_android:generateReleaseResValues UP-TO-DATE
+> Task :path_provider_android:generateReleaseResources UP-TO-DATE
+> Task :path_provider_android:packageReleaseResources UP-TO-DATE
+> Task :path_provider_android:parseReleaseLocalResources UP-TO-DATE
+> Task :path_provider_android:generateReleaseRFile UP-TO-DATE
+> Task :path_provider_android:javaPreCompileRelease UP-TO-DATE
+> Task :path_provider_android:compileReleaseJavaWithJavac
+> Task :path_provider_android:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :path_provider_android:exportReleaseConsumerProguardFiles UP-TO-DATE
+> Task :permission_handler_android:generateReleaseResValues UP-TO-DATE
+> Task :permission_handler_android:generateReleaseResources UP-TO-DATE
+> Task :permission_handler_android:packageReleaseResources UP-TO-DATE
+> Task :permission_handler_android:parseReleaseLocalResources UP-TO-DATE
+> Task :permission_handler_android:generateReleaseRFile UP-TO-DATE
+> Task :permission_handler_android:javaPreCompileRelease UP-TO-DATE
+> Task :app:mergeReleaseNativeDebugMetadata
+> Task :permission_handler_android:compileReleaseJavaWithJavac
+> Task :permission_handler_android:mergeReleaseGeneratedProguardFiles UP-TO-DATE
+> Task :permission_handler_android:exportReleaseConsumerProguardFiles UP-TO-DATE
+> Task :shared_preferences_android:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared_preferences_android:generateReleaseResValues UP-TO-DATE
+> Task :shared_preferences_android:generateReleaseResources UP-TO-DATE
+> Task :shared_preferences_android:packageReleaseResources UP-TO-DATE
+> Task :shared_preferences_android:parseReleaseLocalResources UP-TO-DATE
+> Task :shared_preferences_android:generateReleaseRFile UP-TO-DATE
+> Task :shared_preferences_android:compileReleaseKotlin FAILED
+
+[Incubating] Problems report is available at: file:///C:/Users/Sunil/OneDrive/Desktop/laborgro/flutter_app/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with 
+an exception.
+
+* What went wrong:
+Execution failed for task ':s
+hared_preferences_android:com
+pileReleaseKotlin'.
+> Inconsistent JVM-target 
+compatibility detected for 
+tasks 'compileReleaseJavaWith
+Javac' (17) and 
+'compileReleaseKotlin' (11).
+  
+  Consider using JVM 
+Toolchain: https://kotl.in/gr
+adle/jvm/toolchain
+  Learn more about 
+JVM-target validation: https:
+//kotl.in/gradle/jvm/target-v
+alidation 
+
+* Try:
+> Run with --info or --debug 
+option to get more log 
+output.
+> Run with --scan to get 
+full insights.
+> Get more help at 
+https://help.gradle.org.
+
+* Exception is:
+org.gradle.api.tasks.TaskExec
+utionException: Execution 
+failed for task ':shared_pref

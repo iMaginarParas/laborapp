@@ -1,0 +1,45 @@
+
+> build_gradle_3.txt:41:* 
+What went wrong:
+  
+build_gradle_3.txt:42:Cannot 
+run Project.afterEvalu
+  build_gradle_3.txt:43:ate(A
+ction) when the project 
+  build_gradle_3.txt:44:is 
+already evaluated.
+  build_gradle_3.txt:45:
+  build_gradle_3.txt:46:* 
+Try:
+  build_gradle_3.txt:47:> 
+Run with --info or --debug 
+  
+build_gradle_3.txt:48:option 
+to get more log 
+  
+build_gradle_3.txt:49:output.
+  build_gradle_3.txt:50:> 
+Run with --scan to get 
+  build_gradle_3.txt:51:full 
+insights.
+  build_gradle_3.txt:52:> 
+Get more help at 
+  build_gradle_3.txt:53:https
+://help.gradle.org.
+  build_gradle_3.txt:54:
+  build_gradle_3.txt:55:* 
+Exception is:
+  build_gradle_3.txt:56:org.g
+radle.api.InvalidUserCod
+  build_gradle_3.txt:57:eExce
+ption: Cannot run Projec
+  build_gradle_3.txt:58:t.aft
+erEvaluate(Action) when 
+  build_gradle_3.txt:59:the 
+project is already 
+  build_gradle_3.txt:60:evalu
+ated.
+  build_gradle_3.txt:61:	at 
+org.gradle.api.internal.p
+
+

@@ -1,0 +1,44 @@
+
+> build_gradle_4.txt:220:* 
+What went wrong:
+  build_gradle_4.txt:221:Exec
+ution failed for task ':s
+  build_gradle_4.txt:222:hare
+d_preferences_android:com
+  build_gradle_4.txt:223:pile
+ReleaseKotlin'.
+  build_gradle_4.txt:224:> 
+Inconsistent JVM-target 
+  build_gradle_4.txt:225:comp
+atibility detected for 
+  
+build_gradle_4.txt:226:tasks 
+'compileReleaseJavaWith
+  build_gradle_4.txt:227:Java
+c' (17) and 
+  build_gradle_4.txt:228:'com
+pileReleaseKotlin' (11).
+  build_gradle_4.txt:229:  
+  build_gradle_4.txt:230:  
+Consider using JVM 
+  build_gradle_4.txt:231:Tool
+chain: https://kotl.in/gr
+  build_gradle_4.txt:232:adle
+/jvm/toolchain
+  build_gradle_4.txt:233:  
+Learn more about 
+  build_gradle_4.txt:234:JVM-
+target validation: https:
+  build_gradle_4.txt:235://ko
+tl.in/gradle/jvm/target-v
+  build_gradle_4.txt:236:alid
+ation 
+  build_gradle_4.txt:237:
+  build_gradle_4.txt:238:* 
+Try:
+  build_gradle_4.txt:239:> 
+Run with --info or --debug 
+  build_gradle_4.txt:240:opti
+on to get more log 
+
+

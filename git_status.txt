@@ -1,0 +1,44 @@
+ M android/app/src/main/AndroidManifest.xml
+ M lib/core/theme/app_theme.dart
+ M lib/core/utils/api_error_handler.dart
+ D lib/core/utils/app_logger.dart
+ M lib/features/auth/presentation/login_screen.dart
+ M lib/features/auth/presentation/register_screen.dart
+ M lib/features/auth/providers/auth_providers.dart
+ M lib/features/booking/presentation/booking_screen.dart
+ M lib/features/booking/presentation/bookings_list_screen.dart
+ M lib/features/hire/presentation/create_job_screen.dart
+ M lib/features/home/presentation/home_screen.dart
+ M lib/features/home/presentation/role_selection_screen.dart
+ M lib/features/home/providers/home_providers.dart
+ M lib/features/jobs/presentation/job_detail_screen.dart
+ M lib/features/jobs/presentation/my_applications_screen.dart
+ M lib/features/main_tabs/presentation/main_tabs_screen.dart
+ M lib/features/post_job/presentation/post_job_screen.dart
+ M lib/features/profile/presentation/edit_profile_screen.dart
+ M lib/features/profile/presentation/profile_screen.dart
+ M lib/features/profile/providers/notification_providers.dart
+ M lib/features/search/presentation/search_screen.dart
+ M lib/features/worker_profile/presentation/worker_profile_screen.dart
+ M lib/main.dart
+ M lib/shared/models/job.dart
+ M lib/shared/models/worker.dart
+ M lib/shared/widgets/badge_pill.dart
+ M lib/shared/widgets/job_card.dart
+ M lib/shared/widgets/primary_button.dart
+ M lib/shared/widgets/worker_card.dart
+ M macos/Flutter/GeneratedPluginRegistrant.swift
+ M pubspec.lock
+ M pubspec.yaml
+ M windows/flutter/generated_plugin_registrant.cc
+ M windows/flutter/generated_plugins.cmake
+?? all_dart_files.txt
+?? final_output.txt
+?? git_status.txt
+?? lib/core/services/voice_service.dart
+?? lib/core/theme/app_layout.dart
+?? lib/features/chat/
+?? lib/features/home/presentation/language_selection_screen.dart
+?? lib/shared/widgets/city_autocomplete_field.dart
+?? output.txt
+?? output_utf8.txt
