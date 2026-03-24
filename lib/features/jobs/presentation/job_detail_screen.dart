@@ -23,14 +23,21 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
   Future<void> _handleApply() async {
     setState(() => _isApplying = true);
     try {
-      // Using existing updateProfile to simulate application
-      // For now, let's assume we call the /applications endpoint via raw dio if repo doesn't have it
+      // Parse job id as integer (the jobs table uses integer PKs)
+      final jobIdInt = int.tryParse(widget.job.id);
+      if (jobIdInt == null) {
+        throw Exception("Invalid job ID: ${widget.job.id}. Cannot apply.");
+      }
+      
       final client = ref.read(dioClientProvider);
-      await client.post(ApiConstants.applications, data: {'job_id': widget.job.id});
+      await client.post(ApiConstants.applications, data: {'job_id': jobIdInt});
       
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Application submitted successfully!")),
+          const SnackBar(
+            content: Text("Application submitted successfully! ✅"),
+            backgroundColor: Colors.green,
+          ),
         );
         Navigator.pop(context);
       }
