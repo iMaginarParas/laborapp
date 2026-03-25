@@ -10,6 +10,7 @@ import 'package:flutter_app/features/main_tabs/providers/navigation_providers.da
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/features/home/providers/home_providers.dart';
 import 'package:flutter_app/core/constants/api_constants.dart';
+import 'package:flutter_app/providers/language_provider.dart';
 import 'package:flutter_app/features/chat/presentation/chat_screen.dart';
 
 class BookingsListScreen extends ConsumerWidget {
@@ -22,7 +23,7 @@ class BookingsListScreen extends ConsumerWidget {
     void showWorkingOnIt() {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text("Working on it..."),
+          content: Text(Strings.of(context, 'working_on_it')),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           backgroundColor: AppColors.primaryColor,

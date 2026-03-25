@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/core/theme/app_colors.dart';
 import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/shared/models/job_application.dart';
+import 'package:flutter_app/providers/language_provider.dart';
 import 'package:flutter_app/shared/widgets/badge_pill.dart';
 import '../providers/job_providers.dart';
 import '../../chat/presentation/chat_screen.dart';
@@ -41,7 +42,7 @@ class MyApplicationsScreen extends ConsumerWidget {
         onRefresh: () async => ref.invalidate(myApplicationsProvider),
         child: appsAsync.when(
           data: (apps) => apps.isEmpty 
-            ? _buildEmptyState()
+            ? _buildEmptyState(context)
             : ListView.builder(
                 padding: const EdgeInsets.all(24),
                 itemCount: apps.length,
@@ -54,7 +55,7 @@ class MyApplicationsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

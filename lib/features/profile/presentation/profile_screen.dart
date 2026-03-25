@@ -62,7 +62,7 @@ class ProfileScreen extends ConsumerWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          _buildHeader(user),
+          _buildHeader(context, user),
           const SizedBox(height: 24),
           if (isWorker) ...[
              _buildAvailabilityToggle(context, ref, user),
@@ -163,7 +163,7 @@ class ProfileScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildHeader(User user) {
+  Widget _buildHeader(BuildContext context, User user) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(24, 60, 24, 40),

@@ -18,6 +18,7 @@ import 'package:flutter_app/features/home/presentation/language_selection_screen
 import 'package:flutter_app/core/services/location_service.dart';
 import 'package:flutter_app/features/main_tabs/providers/navigation_providers.dart';
 import 'package:flutter_app/features/chat/presentation/chat_screen.dart';
+import 'package:flutter_app/features/search/providers/search_providers.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -305,6 +306,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   const SizedBox(width: 12),
                   GestureDetector(
                     onTap: () {
+                      ref.read(autoStartVoiceProvider.notifier).state = true;
                       ref.read(navigationIndexProvider.notifier).state = 1; // Redirect to Search
                     },
                     child: Container(
@@ -771,7 +773,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     child: InkWell(
                       onTap: () {
                         // Switch to Search Tab and trigger voice if possible
-                        // For now just switch tab
+                        ref.read(autoStartVoiceProvider.notifier).state = true;
                         ref.read(navigationIndexProvider.notifier).state = 1;
                       },
                       borderRadius: AppLayout.borderRadius16,

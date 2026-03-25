@@ -34,6 +34,15 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (ref.watch(autoStartVoiceProvider)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          ref.read(autoStartVoiceProvider.notifier).state = false;
+          _triggerVoiceSearch();
+        }
+      });
+    }
+
     void showWorkingOnIt() {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -130,25 +139,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               ),
             ),
             GestureDetector(
-              onTap: () {
-                if (_isListening) {
-                  VoiceService.stopListening();
-                  setState(() => _isListening = false);
-                } else {
-                  VoiceService.startListening(
-                    onResult: (text) {
-                      setState(() {
-                        _searchController.text = text;
-                        _searchController.selection = TextSelection.fromPosition(TextPosition(offset: text.length));
-                      });
-                      ref.read(searchQueryProvider.notifier).state = text;
-                    },
-                    onListeningChange: (val) {
-                      setState(() => _isListening = val);
-                    },
-                  );
-                }
-              },
+              onTap: _triggerVoiceSearch,
               child: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
@@ -261,6 +252,26 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         ],
       ),
     );
+  }
+
+  void _triggerVoiceSearch() {
+    if (_isListening) {
+      VoiceService.stopListening();
+      setState(() => _isListening = false);
+    } else {
+      VoiceService.startListening(
+        onResult: (text) {
+          setState(() {
+            _searchController.text = text;
+            _searchController.selection = TextSelection.fromPosition(TextPosition(offset: text.length));
+          });
+          ref.read(searchQueryProvider.notifier).state = text;
+        },
+        onListeningChange: (val) {
+          if (mounted) setState(() => _isListening = val);
+        },
+      );
+    }
   }
 }
 

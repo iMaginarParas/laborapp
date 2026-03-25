@@ -5,6 +5,8 @@ import '../../../shared/models/job.dart';
 
 final searchQueryProvider = StateProvider<String>((ref) => "");
 
+final autoStartVoiceProvider = StateProvider<bool>((ref) => false);
+
 enum SearchFilter { all, availableNow, topRated, lowestPrice, recentlyPosted }
 
 final searchFilterProvider = StateProvider<SearchFilter>((ref) => SearchFilter.all);

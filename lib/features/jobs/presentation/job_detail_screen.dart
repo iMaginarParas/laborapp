@@ -37,7 +37,6 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
           ),
         );
         Navigator.pop(context);
-      }
     } catch (e) {
       String errorMessage = Strings.of(context, 'apply_failed');
       if (e is DioException) {
