@@ -8,10 +8,10 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       scaffoldBackgroundColor: AppColors.background,
-      primaryColor: AppColors.primaryBlue,
+      primaryColor: AppColors.primaryColor,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.primaryBlue,
-        primary: AppColors.primaryBlue,
+        seedColor: AppColors.primaryColor,
+        primary: AppColors.primaryColor,
         secondary: AppColors.darkBlue,
         surface: AppColors.white,
         background: AppColors.background,
@@ -35,7 +35,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: AppLayout.borderRadius16,
-          borderSide: const BorderSide(color: AppColors.primaryBlue, width: 2),
+          borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: AppLayout.space20,
@@ -44,7 +44,7 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primaryBlue,
+          backgroundColor: AppColors.primaryColor,
           foregroundColor: AppColors.white,
           elevation: 0,
           minimumSize: const Size(double.infinity, 54),

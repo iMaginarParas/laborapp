@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/core/theme/app_theme.dart';
+import 'package:flutter_app/core/theme/app_colors.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/features/auth/presentation/login_screen.dart';
 import 'package:flutter_app/features/main_tabs/presentation/main_tabs_screen.dart';
@@ -39,6 +40,9 @@ class LaborgroApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final token = ref.watch(authStateProvider);
     final locale = ref.watch(localeProvider);
+    
+    // Globally sync AppColors theme mode
+    AppColors.isWorkerTheme = ref.watch(currentRoleProvider) == UserRole.work;
 
     return MaterialApp(
       title: 'Laborgro',

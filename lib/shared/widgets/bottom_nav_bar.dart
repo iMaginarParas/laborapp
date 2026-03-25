@@ -60,7 +60,7 @@ class AppBottomNavBar extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primaryBlue.withOpacity(0.1) : Colors.transparent,
+          color: isSelected ? AppColors.primaryColor.withOpacity(0.1) : Colors.transparent,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
@@ -68,14 +68,14 @@ class AppBottomNavBar extends StatelessWidget {
           children: [
             Icon(
               isSelected ? activeIcon : icon,
-              color: isSelected ? AppColors.primaryBlue : AppColors.muted,
+              color: isSelected ? AppColors.primaryColor : AppColors.muted,
               size: 24,
             ),
             const SizedBox(height: 4),
             Text(
               label,
               style: AppTextStyles.bodySmall.copyWith(
-                color: isSelected ? AppColors.primaryBlue : AppColors.muted,
+                color: isSelected ? AppColors.primaryColor : AppColors.muted,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 fontSize: 10,
               ),

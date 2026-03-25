@@ -81,7 +81,7 @@ class _NotificationItem extends ConsumerWidget {
     switch (notification.type) {
       case 'booking':
         icon = Icons.calendar_today;
-        color = AppColors.primaryBlue;
+        color = AppColors.primaryColor;
         break;
       case 'application':
         icon = Icons.assignment;
@@ -133,8 +133,8 @@ class _NotificationItem extends ConsumerWidget {
                       Container(
                         width: 8,
                         height: 8,
-                        decoration: const BoxDecoration(
-                          color: AppColors.primaryBlue,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
                           shape: BoxShape.circle,
                         ),
                       ),

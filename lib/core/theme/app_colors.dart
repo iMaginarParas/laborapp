@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  // Global theme flag
+  static bool isWorkerTheme = false;
+
+  // Dynamic primary color based on theme
+  static Color get primaryColor => isWorkerTheme ? successGreen : primaryBlue;
+
   static const Color primary = Color(0xFF3D7AB5);
   static const Color primaryBlue = Color(0xFF3D7AB5);
   static const Color darkBlue = Color(0xFF2C5F8A);
@@ -16,15 +22,15 @@ class AppColors {
   static const Color background = Color(0xFFF6F9FC);
   static const Color white = Color(0xFFFFFFFF);
 
-  static const LinearGradient primaryGradient = LinearGradient(
+  static LinearGradient get primaryGradient => LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [primaryBlue, darkBlue],
+    colors: [primaryColor, isWorkerTheme ? successGreen.withOpacity(0.8) : darkBlue],
   );
 
-  static List<BoxShadow> primaryShadow = [
+  static List<BoxShadow> get primaryShadow => [
     BoxShadow(
-      color: primaryBlue.withOpacity(0.12),
+      color: primaryColor.withOpacity(0.12),
       blurRadius: 32,
       offset: const Offset(0, 8),
     ),

@@ -8,11 +8,11 @@ class BadgePill extends StatelessWidget {
   final Color color;
   final Color backgroundColor;
 
-  const BadgePill({
+  BadgePill({
     super.key,
     required this.label,
     this.icon,
-    this.color = AppColors.primaryBlue,
+    this.color = AppColors.primaryColor,
     this.backgroundColor = AppColors.paleBlue,
   });
 

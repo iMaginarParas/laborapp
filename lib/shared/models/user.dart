@@ -9,6 +9,11 @@ class User {
   final String? city;
   final bool isAvailable;
   final String? role;
+  /// Worker-specific details stored as a JSONB column on the backend.
+  /// Contains: bio, category_ids, experience_years, hourly_rate.
+  final Map<String, dynamic>? workDetails;
+  /// Skills list for workers (e.g. ["Interior Painting", "Waterproofing"]).
+  final List<String> skills;
 
   const User({
     required this.id,
@@ -20,9 +25,17 @@ class User {
     this.city,
     this.isAvailable = true,
     this.role,
+    this.workDetails,
+    this.skills = const [],
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
+    // Parse skills: the backend stores them as a JSON array of strings
+    List<String> parsedSkills = [];
+    final rawSkills = json['skills'];
+    if (rawSkills is List) {
+      parsedSkills = rawSkills.map((s) => s.toString()).toList();
+    }
     return User(
       id:            json['id']?.toString()             ?? '',
       name:          json['name']?.toString()           ?? 'User',
@@ -33,6 +46,8 @@ class User {
       city:          json['city'] as String?,
       isAvailable:   json['is_available'] as bool? ?? true,
       role:          json['role'] as String?,
+      workDetails:   json['work_details'] as Map<String, dynamic>?,
+      skills:        parsedSkills,
     );
   }
 
@@ -46,6 +61,8 @@ class User {
     'city':            city,
     'is_available':    isAvailable,
     'role':            role,
+    'work_details':    workDetails,
+    'skills':          skills,
   };
 
   /// Returns a new [User] with the specified fields replaced.
@@ -59,6 +76,8 @@ class User {
     String? city,
     bool? isAvailable,
     String? role,
+    Map<String, dynamic>? workDetails,
+    List<String>? skills,
   }) {
     return User(
       id:            id            ?? this.id,
@@ -70,6 +89,8 @@ class User {
       city:          city          ?? this.city,
       isAvailable:   isAvailable   ?? this.isAvailable,
       role:          role          ?? this.role,
+      workDetails:   workDetails   ?? this.workDetails,
+      skills:        skills        ?? this.skills,
     );
   }
 }

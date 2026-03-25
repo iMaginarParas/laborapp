@@ -161,13 +161,13 @@ class _CreateJobScreenState extends ConsumerState<CreateJobScreen> {
                       label: Text("${cat.emoji} ${cat.name}"),
                       selected: isSelected,
                       onSelected: (_) => setState(() => _selectedCategoryId = cat.id),
-                      selectedColor: AppColors.primaryBlue.withOpacity(0.2),
-                      checkmarkColor: AppColors.primaryBlue,
+                      selectedColor: AppColors.primaryColor.withOpacity(0.2),
+                      checkmarkColor: AppColors.primaryColor,
                     );
                   }).toList(),
                 ),
                 loading: () => const LinearProgressIndicator(),
-                error: (_, __) => const Text("Error loading categories"),
+                error: (_, _) => const Text("Error loading categories"),
               ),
               const SizedBox(height: 12),
 

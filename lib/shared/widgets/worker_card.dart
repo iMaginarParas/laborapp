@@ -106,7 +106,7 @@ class WorkerCard extends StatelessWidget {
                           children: [
                             Text(
                               "₹${worker.hourlyRate.toInt()}/hr",
-                              style: AppTextStyles.h3.copyWith(color: AppColors.primaryBlue, fontSize: 16, fontWeight: FontWeight.bold),
+                              style: AppTextStyles.h3.copyWith(color: AppColors.primaryColor, fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -146,15 +146,15 @@ class WorkerCard extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: AppColors.paleBlue.withOpacity(0.1),
                             borderRadius: AppLayout.borderRadiusMax,
-                            border: Border.all(color: AppColors.primaryBlue.withOpacity(0.1)),
+                            border: Border.all(color: AppColors.primaryColor.withOpacity(0.1)),
                           ),
                           child: Row(
                             children: [
-                              const Icon(Icons.chat_bubble_outline, color: AppColors.primaryBlue, size: 14),
+                              Icon(Icons.chat_bubble_outline, color: AppColors.primaryColor, size: 14),
                               AppLayout.width8,
                               Text(
                                 "Chat",
-                                style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue, fontSize: 12, fontWeight: FontWeight.bold),
+                                style: AppTextStyles.label.copyWith(color: AppColors.primaryColor, fontSize: 12, fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),

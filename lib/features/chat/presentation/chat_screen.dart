@@ -99,7 +99,7 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.phone_outlined, color: AppColors.primaryBlue, size: 22),
+            icon: Icon(Icons.phone_outlined, color: AppColors.primaryColor, size: 22),
             onPressed: () {},
           ),
           const SizedBox(width: 12),
@@ -156,7 +156,7 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             margin: const EdgeInsets.only(bottom: 4),
             decoration: BoxDecoration(
-              color: isMe ? AppColors.primaryBlue : const Color(0xFFF1F5F9),
+              color: isMe ? AppColors.primaryColor : const Color(0xFFF1F5F9),
               borderRadius: BorderRadius.only(
                 topLeft: const Radius.circular(20),
                 topRight: const Radius.circular(20),
@@ -166,7 +166,7 @@ class _ChatScreenState extends State<ChatScreen> {
               boxShadow: [
                 if (isMe) 
                   BoxShadow(
-                    color: AppColors.primaryBlue.withOpacity(0.15),
+                    color: AppColors.primaryColor.withOpacity(0.15),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
                   ),
@@ -215,11 +215,11 @@ class _ChatScreenState extends State<ChatScreen> {
               setState(() {});
             },
             style: OutlinedButton.styleFrom(
-              side: BorderSide(color: AppColors.primaryBlue.withOpacity(0.2)),
+              side: BorderSide(color: AppColors.primaryColor.withOpacity(0.2)),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
               padding: const EdgeInsets.symmetric(horizontal: 16),
             ),
-            child: Text(s, style: const TextStyle(color: AppColors.primaryBlue, fontSize: 13)),
+            child: Text(s, style: TextStyle(color: AppColors.primaryColor, fontSize: 13)),
           ),
         )).toList(),
       ),
@@ -242,7 +242,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 decoration: BoxDecoration(
                   color: const Color(0xFFF8FAFC),
                   borderRadius: BorderRadius.circular(24),
-                  border: _isListening ? Border.all(color: AppColors.primaryBlue, width: 2) : null,
+                  border: _isListening ? Border.all(color: AppColors.primaryColor, width: 2) : null,
                 ),
                 child: TextField(
                   controller: _controller,
@@ -251,7 +251,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     border: InputBorder.none,
                     hintStyle: TextStyle(
                       fontSize: 14, 
-                      color: _isListening ? AppColors.primaryBlue : Colors.grey
+                      color: _isListening ? AppColors.primaryColor : Colors.grey
                     ),
                   ),
                 ),
@@ -271,7 +271,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 }
               },
               icon: _isListening ? Icons.mic : Icons.mic_none,
-              color: _isListening ? AppColors.primaryBlue : const Color(0xFFF1F5F9),
+              color: _isListening ? AppColors.primaryColor : const Color(0xFFF1F5F9),
               iconColor: _isListening ? Colors.white : AppColors.muted,
             ),
             const SizedBox(width: 8),
@@ -290,7 +290,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 }
               },
               icon: Icons.send_rounded,
-              color: AppColors.primaryBlue,
+              color: AppColors.primaryColor,
               iconColor: Colors.white,
             ),
           ],

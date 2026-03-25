@@ -111,7 +111,7 @@ class _ApplicationCard extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               IconButton(
-                icon: const Icon(Icons.chat_outlined, color: AppColors.primaryBlue, size: 20),
+                icon: Icon(Icons.chat_outlined, color: AppColors.primaryColor, size: 20),
                 onPressed: () {
                   Navigator.push(
                     context,

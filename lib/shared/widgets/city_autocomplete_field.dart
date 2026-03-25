@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_text_styles.dart';
 import '../../core/services/location_service.dart';
 import 'package:geocoding/geocoding.dart';
 import '../../core/theme/app_layout.dart';
@@ -225,7 +224,7 @@ class _CityAutocompleteFieldState extends State<CityAutocompleteField> {
                 )
               else
                 IconButton(
-                  icon: const Icon(Icons.my_location, size: 18, color: AppColors.primaryBlue),
+                  icon: Icon(Icons.my_location, size: 18, color: AppColors.primaryColor),
                   onPressed: _handleCurrentLocation,
                   tooltip: "Use current location",
                   padding: EdgeInsets.zero,

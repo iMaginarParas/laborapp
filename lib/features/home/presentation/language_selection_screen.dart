@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_layout.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../providers/language_provider.dart';
 import '../../../core/services/storage_service.dart';
@@ -48,8 +47,8 @@ class _LanguageSelectionScreenState extends ConsumerState<LanguageSelectionScree
           Container(
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(24, 60, 24, 40),
-            decoration: const BoxDecoration(
-              color: AppColors.primaryBlue,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
             ),
             child: Column(
               children: [
@@ -121,16 +120,16 @@ class _LanguageSelectionScreenState extends ConsumerState<LanguageSelectionScree
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 200),
                           decoration: BoxDecoration(
-                            color: isSelected ? AppColors.primaryBlue : const Color(0xFFEBF2F7),
+                            color: isSelected ? AppColors.primaryColor : const Color(0xFFEBF2F7),
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: isSelected ? AppColors.primaryBlue : Colors.blue.withOpacity(0.1),
+                              color: isSelected ? AppColors.primaryColor : Colors.blue.withOpacity(0.1),
                               width: 1.5,
                             ),
                             boxShadow: [
                               if (isSelected)
                                 BoxShadow(
-                                  color: AppColors.primaryBlue.withOpacity(0.3),
+                                  color: AppColors.primaryColor.withOpacity(0.3),
                                   blurRadius: 15,
                                   offset: const Offset(0, 8),
                                 ),
@@ -234,10 +233,10 @@ class _LanguageSelectionScreenState extends ConsumerState<LanguageSelectionScree
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primaryBlue,
+                  backgroundColor: AppColors.primaryColor,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   elevation: 10,
-                  shadowColor: AppColors.primaryBlue.withOpacity(0.5),
+                  shadowColor: AppColors.primaryColor.withOpacity(0.5),
                 ),
                 child: const Text(
                   "Continue →",

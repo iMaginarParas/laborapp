@@ -80,7 +80,7 @@ class JobCard extends ConsumerWidget {
                   ),
                   Text(
                     "₹${job.salaryMin.toInt()} - ₹${job.salaryMax.toInt()}",
-                    style: AppTextStyles.h3.copyWith(color: AppColors.primaryBlue, fontSize: 13, fontWeight: FontWeight.bold),
+                    style: AppTextStyles.h3.copyWith(color: AppColors.primaryColor, fontSize: 13, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -101,7 +101,7 @@ class JobCard extends ConsumerWidget {
                    Text(
                     showApplyNow ? "Apply Now →" : "View Details →",
                     style: AppTextStyles.label.copyWith(
-                      color: AppColors.primaryBlue,
+                      color: AppColors.primaryColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),

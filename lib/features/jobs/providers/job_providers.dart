@@ -35,6 +35,6 @@ final myPostedJobsProvider = FutureProvider<List<Job>>((ref) async {
 
 final jobApplicantsProvider = FutureProvider.family<List<JobApplication>, String>((ref, jobId) async {
   final client = ref.watch(dioClientProvider);
-  final response = await client.get(ApiConstants.applications + '/job/$jobId');
+  final response = await client.get('${ApiConstants.applications}/job/$jobId');
   return (response.data as List).map((e) => JobApplication.fromJson(e)).toList();
 });

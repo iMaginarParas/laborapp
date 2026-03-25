@@ -23,14 +23,9 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
   Future<void> _handleApply() async {
     setState(() => _isApplying = true);
     try {
-      // Parse job id as integer (the jobs table uses integer PKs)
-      final jobIdInt = int.tryParse(widget.job.id);
-      if (jobIdInt == null) {
-        throw Exception("Invalid job ID: ${widget.job.id}. Cannot apply.");
-      }
-      
+      // Jobs use UUID PKs — send the id as-is
       final client = ref.read(dioClientProvider);
-      await client.post(ApiConstants.applications, data: {'job_id': jobIdInt});
+      await client.post(ApiConstants.applications, data: {'job_id': widget.job.id});
       
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -182,7 +177,7 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
           return const SizedBox(height: 1);
         },
         loading: () => const SizedBox(height: 1),
-        error: (_, __) => const SizedBox(height: 1),
+        error: (_, _) => const SizedBox(height: 1),
       ),
     );
   }
@@ -193,7 +188,7 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
       decoration: BoxDecoration(
         color: AppColors.paleBlue.withOpacity(0.1),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.primaryBlue.withOpacity(0.1)),
+        border: Border.all(color: AppColors.primaryColor.withOpacity(0.1)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -209,10 +204,10 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
   Widget _buildInfoItem(IconData icon, String label, String value) {
     return Column(
       children: [
-        Icon(icon, color: AppColors.primaryBlue, size: 24),
+        Icon(icon, color: AppColors.primaryColor, size: 24),
         const SizedBox(height: 8),
         Text(label, style: AppTextStyles.bodySmall.copyWith(color: AppColors.muted, fontSize: 10)),
-        Text(value, style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.primaryBlue)),
+        Text(value, style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.primaryColor)),
       ],
     );
   }

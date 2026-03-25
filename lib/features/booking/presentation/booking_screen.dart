@@ -24,7 +24,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
   DateTime _selectedDate = DateTime.now();
   String? _selectedTime;
   final TextEditingController _addressController = TextEditingController(text: "B-42, Sector 18, Noida, UP 201301");
-  int _hours = 4;
+  final int _hours = 4;
   bool _isSubmitting = false;
   bool _isFetchingLocation = false;
   final LocationService _locationService = LocationService();
@@ -222,9 +222,9 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
           height: 32,
           width: 32,
           decoration: BoxDecoration(
-            color: isCompleted ? AppColors.primaryBlue : AppColors.white,
+            color: isCompleted ? AppColors.primaryColor : AppColors.white,
             shape: BoxShape.circle,
-            border: Border.all(color: isCompleted ? AppColors.primaryBlue : AppColors.border, width: 2),
+            border: Border.all(color: isCompleted ? AppColors.primaryColor : AppColors.border, width: 2),
           ),
           alignment: Alignment.center,
           child: isCheck
@@ -237,7 +237,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
         const SizedBox(height: 6),
         Text(label, style: AppTextStyles.bodySmall.copyWith(
           fontSize: 10, 
-          color: isCurrent ? AppColors.primaryBlue : AppColors.muted,
+          color: isCurrent ? AppColors.primaryColor : AppColors.muted,
           fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal,
         )),
       ],
@@ -249,7 +249,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
       child: Container(
         height: 2,
         margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
-        color: isActive ? AppColors.primaryBlue : AppColors.border,
+        color: isActive ? AppColors.primaryColor : AppColors.border,
       ),
     );
   }
@@ -284,9 +284,9 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
               width: 48,
               margin: const EdgeInsets.only(right: 12),
               decoration: BoxDecoration(
-                color: isSelected ? AppColors.primaryBlue : AppColors.white,
+                color: isSelected ? AppColors.primaryColor : AppColors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: isSelected ? AppColors.primaryBlue : AppColors.border),
+                border: Border.all(color: isSelected ? AppColors.primaryColor : AppColors.border),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -330,9 +330,9 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
           onTap: () => setState(() => _selectedTime = slot),
           child: Container(
             decoration: BoxDecoration(
-              color: isSelected ? AppColors.primaryBlue : AppColors.white,
+              color: isSelected ? AppColors.primaryColor : AppColors.white,
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: isSelected ? AppColors.primaryBlue : AppColors.border),
+              border: Border.all(color: isSelected ? AppColors.primaryColor : AppColors.border),
             ),
             alignment: Alignment.center,
             child: Text(
@@ -377,7 +377,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
       children: [
         Icon(
           _isFetchingLocation ? Icons.hourglass_empty : Icons.explore_outlined,
-          color: AppColors.primaryBlue,
+          color: AppColors.primaryColor,
           size: 16,
         ),
         const SizedBox(width: 8),
@@ -388,7 +388,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
             _isFetchingLocation ? "Fetching location..." : "Use my current location",
             style: AppTextStyles.label.copyWith(
               fontSize: 12,
-              color: _isFetchingLocation ? AppColors.muted : AppColors.primaryBlue,
+              color: _isFetchingLocation ? AppColors.muted : AppColors.primaryColor,
             ),
           ),
         ),
@@ -433,7 +433,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
               color: AppColors.paleBlue,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Text("Change", style: AppTextStyles.bodySmall.copyWith(color: AppColors.primaryBlue, fontWeight: FontWeight.bold)),
+            child: Text("Change", style: AppTextStyles.bodySmall.copyWith(color: AppColors.primaryColor, fontWeight: FontWeight.bold)),
           ),
         ),
       ],

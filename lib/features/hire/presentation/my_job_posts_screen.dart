@@ -43,7 +43,7 @@ class MyJobPostsScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (c) => const CreateJobScreen())),
-        backgroundColor: AppColors.primaryBlue,
+        backgroundColor: AppColors.primaryColor,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );
@@ -105,12 +105,12 @@ class _JobPostCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryBlue.withOpacity(0.1),
+                  color: AppColors.primaryColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
                   job.status.toUpperCase(),
-                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.primaryBlue, fontSize: 10, fontWeight: FontWeight.bold),
+                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.primaryColor, fontSize: 10, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
@@ -135,7 +135,7 @@ class _JobPostCard extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text("Manage →", style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue)),
+                child: Text("Manage →", style: AppTextStyles.label.copyWith(color: AppColors.primaryColor)),
               ),
             ],
           ),

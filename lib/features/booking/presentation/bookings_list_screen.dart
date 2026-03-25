@@ -28,7 +28,7 @@ class BookingsListScreen extends ConsumerWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.chat_bubble_outline, color: AppColors.primaryBlue),
+            icon: Icon(Icons.chat_bubble_outline, color: AppColors.primaryColor),
             onPressed: () {
               // TODO: Navigate to messages screen
             },
@@ -162,7 +162,7 @@ class BookingsListScreen extends ConsumerWidget {
               _buildStatusBadge(booking.status),
               const SizedBox(width: 8),
               IconButton(
-                icon: const Icon(Icons.chat_outlined, color: AppColors.primaryBlue, size: 20),
+                icon: Icon(Icons.chat_outlined, color: AppColors.primaryColor, size: 20),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -196,8 +196,8 @@ class BookingsListScreen extends ConsumerWidget {
                 icon: const Icon(Icons.star_outline, size: 18),
                 label: const Text("Rate Service"),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.primaryBlue,
-                  side: const BorderSide(color: AppColors.primaryBlue),
+                  foregroundColor: AppColors.primaryColor,
+                  side: BorderSide(color: AppColors.primaryColor),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
               ),
@@ -281,7 +281,7 @@ class BookingsListScreen extends ConsumerWidget {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primaryBlue,
+                backgroundColor: AppColors.primaryColor,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               ),
               child: isSubmitting 
@@ -312,7 +312,7 @@ class BookingsListScreen extends ConsumerWidget {
         bgColor = Colors.red.withOpacity(0.1);
         break;
       default:
-        color = AppColors.primaryBlue;
+        color = AppColors.primaryColor;
         bgColor = AppColors.paleBlue;
     }
 

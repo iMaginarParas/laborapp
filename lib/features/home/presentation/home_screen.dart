@@ -8,16 +8,13 @@ import 'package:flutter_app/shared/widgets/category_chip.dart';
 import 'package:flutter_app/shared/widgets/worker_card.dart';
 import 'package:flutter_app/features/home/providers/home_providers.dart';
 import 'package:flutter_app/features/worker_profile/presentation/worker_profile_screen.dart';
-import 'package:flutter_app/features/search/presentation/search_screen.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
-import 'package:flutter_app/core/services/storage_service.dart';
 import 'package:flutter_app/shared/models/job.dart';
 import 'package:flutter_app/shared/models/worker.dart';
 import 'package:flutter_app/shared/widgets/job_card.dart';
 import 'package:flutter_app/features/home/presentation/role_selection_screen.dart';
 import 'package:flutter_app/features/jobs/presentation/job_detail_screen.dart';
 import 'package:flutter_app/features/home/presentation/language_selection_screen.dart';
-import 'package:flutter_app/core/services/voice_service.dart';
 import 'package:flutter_app/core/services/location_service.dart';
 import 'package:flutter_app/features/main_tabs/providers/navigation_providers.dart';
 import 'package:flutter_app/features/chat/presentation/chat_screen.dart';
@@ -38,7 +35,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         content: Text(Strings.of(context, 'working_on_it')),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        backgroundColor: AppColors.primaryBlue,
+        backgroundColor: AppColors.primaryColor,
       ),
     );
   }
@@ -78,7 +75,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             AppLayout.height16,
             _buildLanguageSelector(),
             AppLayout.height24,
-            _buildSectionHeader(Strings.of(context, 'services'), Strings.of(context, 'see_all') + " →"),
+            _buildSectionHeader(Strings.of(context, 'services'), "${Strings.of(context, 'see_all')} →"),
             AppLayout.height8,
             _buildCategories(ref, categoriesAsync, selectedCategory),
             AppLayout.height16,
@@ -105,7 +102,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       height: 180,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.primaryBlue,
+        color: AppColors.primaryColor,
         borderRadius: BorderRadius.circular(32),
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
@@ -114,7 +111,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primaryBlue.withOpacity(0.3),
+            color: AppColors.primaryColor.withOpacity(0.3),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -156,14 +153,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    foregroundColor: AppColors.primaryBlue,
+                    foregroundColor: AppColors.primaryColor,
                     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("Post Job", style: AppTextStyles.label.copyWith(fontWeight: FontWeight.w900, color: AppColors.primaryBlue)),
+                      Text("Post Job", style: AppTextStyles.label.copyWith(fontWeight: FontWeight.w900, color: AppColors.primaryColor)),
                       const SizedBox(width: 8),
                       const Icon(Icons.arrow_forward, size: 16),
                     ],
@@ -364,11 +361,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             orElse: () => const SizedBox(),
           ),
           // User Center Point
-          const Center(
+          Center(
             child: CircleAvatar(
               radius: 12,
               backgroundColor: Colors.white,
-              child: CircleAvatar(radius: 6, backgroundColor: AppColors.primaryBlue),
+              child: CircleAvatar(radius: 6, backgroundColor: AppColors.primaryColor),
             ),
           ),
           Positioned(
@@ -630,7 +627,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.primaryBlue,
+        color: AppColors.primaryColor,
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(AppLayout.space32)),
       ),
       child: SafeArea(
@@ -693,7 +690,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ],
                       ),
                       loading: () => const SizedBox(height: 50, width: 100),
-                      error: (_, __) => Text("WELCOME", style: AppTextStyles.h2.copyWith(color: AppColors.white, fontSize: 18)),
+                      error: (_, _) => Text("WELCOME", style: AppTextStyles.h2.copyWith(color: AppColors.white, fontSize: 18)),
                     ),
                   ),
                   AppLayout.width16,
@@ -838,22 +835,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.primaryBlue.withOpacity(0.05),
+                    color: AppColors.primaryColor.withOpacity(0.05),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppColors.primaryBlue.withOpacity(0.1)),
+                    border: Border.all(color: AppColors.primaryColor.withOpacity(0.1)),
                   ),
                   child: Row(
                     children: [
                       Container(
                         padding: const EdgeInsets.all(6),
                         decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                        child: const Icon(Icons.settings_input_antenna, color: AppColors.primaryBlue, size: 18),
+                        child: Icon(Icons.settings_input_antenna, color: AppColors.primaryColor, size: 18),
                       ),
                       const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("Use My Current Location", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primaryBlue)),
+                          Text("Use My Current Location", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primaryColor)),
                           Text("Auto-detect GPS location", style: AppTextStyles.bodySmall.copyWith(color: AppColors.muted, fontSize: 10)),
                         ],
                       ),
@@ -894,7 +891,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                           decoration: BoxDecoration(
-                            color: isSelected ? AppColors.primaryBlue : Colors.white,
+                            color: isSelected ? AppColors.primaryColor : Colors.white,
                             borderRadius: BorderRadius.circular(30),
                             border: Border.all(color: isSelected ? Colors.transparent : Colors.grey.shade300),
                           ),
@@ -924,7 +921,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
-                        color: isSelected ? AppColors.primaryBlue : Colors.white,
+                        color: isSelected ? AppColors.primaryColor : Colors.white,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: isSelected ? Colors.transparent : Colors.grey.shade200),
                       ),
@@ -956,7 +953,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryBlue,
+                    backgroundColor: AppColors.primaryColor,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   ),
                   child: const Text("Apply Location ✓", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
@@ -990,7 +987,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         child: Row(
           children: [
-            const Icon(Icons.my_location, color: AppColors.primaryBlue, size: 24),
+            Icon(Icons.my_location, color: AppColors.primaryColor, size: 24),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -1016,7 +1013,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             Text(
               "CHANGE →",
-              style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue, fontWeight: FontWeight.w900, fontSize: 11),
+              style: AppTextStyles.label.copyWith(color: AppColors.primaryColor, fontWeight: FontWeight.w900, fontSize: 11),
             ),
           ],
         ),
@@ -1053,7 +1050,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
           child: Row(
             children: [
-              const Icon(Icons.language, color: AppColors.primaryBlue, size: 20),
+              Icon(Icons.language, color: AppColors.primaryColor, size: 20),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -1063,7 +1060,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               Text(
                 "SELECT →",
-                style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue, fontWeight: FontWeight.bold, fontSize: 11),
+                style: AppTextStyles.label.copyWith(color: AppColors.primaryColor, fontWeight: FontWeight.bold, fontSize: 11),
               ),
             ],
           ),
@@ -1095,7 +1092,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: onTap ?? _showWorkingOnIt,
             child: Text(
               link,
-              style: AppTextStyles.label.copyWith(fontSize: 13, color: AppColors.primaryBlue),
+              style: AppTextStyles.label.copyWith(fontSize: 13, color: AppColors.primaryColor),
             ),
           ),
         ],
@@ -1148,7 +1145,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 200),
               style: AppTextStyles.label.copyWith(
-                color: isActive ? AppColors.primaryBlue : Colors.white,
+                color: isActive ? AppColors.primaryColor : Colors.white,
                 fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
                 fontSize: 13,
               ),
@@ -1171,7 +1168,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onTap: _showWorkingOnIt,
             child: Text(
               linkText,
-              style: AppTextStyles.label.copyWith(fontSize: 13, color: AppColors.primaryBlue),
+              style: AppTextStyles.label.copyWith(fontSize: 13, color: AppColors.primaryColor),
             ),
           ),
         ],

@@ -25,7 +25,7 @@ class L10n {
 }
 
 class Strings {
-  static Map<String, Map<String, String>> _localizedValues = {
+  static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'home': 'Home',
       'search': 'Search',

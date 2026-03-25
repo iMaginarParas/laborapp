@@ -182,7 +182,7 @@ class WorkerProfileScreen extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(50),
                 border: Border.all(color: AppColors.border),
               ),
-              child: Text(s.skillName, style: AppTextStyles.bodySmall.copyWith(color: AppColors.primaryBlue)),
+              child: Text(s.skillName, style: AppTextStyles.bodySmall.copyWith(color: AppColors.primaryColor)),
             )).toList(),
           ),
           const SizedBox(height: 32),
@@ -202,7 +202,7 @@ class WorkerProfileScreen extends ConsumerWidget {
                     ),
                   );
                 },
-                child: Text("See all →", style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue)),
+                child: Text("See all →", style: AppTextStyles.label.copyWith(color: AppColors.primaryColor)),
               ),
             ],
           ),

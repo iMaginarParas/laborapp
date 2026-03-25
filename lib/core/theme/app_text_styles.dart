@@ -50,6 +50,6 @@ class AppTextStyles {
   static TextStyle label = GoogleFonts.dmSans(
     fontSize: 14,
     fontWeight: FontWeight.w700,
-    color: AppColors.primaryBlue,
+    color: AppColors.primaryColor,
   );
 }

@@ -97,12 +97,12 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         decoration: BoxDecoration(
           color: AppColors.paleBlue,
           borderRadius: BorderRadius.circular(16),
-          border: _isListening ? Border.all(color: AppColors.primaryBlue, width: 2) : null,
+          border: _isListening ? Border.all(color: AppColors.primaryColor, width: 2) : null,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
           children: [
-            Icon(Icons.search, color: _isListening ? AppColors.primaryBlue : AppColors.muted),
+            Icon(Icons.search, color: _isListening ? AppColors.primaryColor : AppColors.muted),
             const SizedBox(width: 12),
             Expanded(
               child: TextField(
@@ -110,7 +110,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                 onChanged: (val) => ref.read(searchQueryProvider.notifier).state = val,
                 decoration: InputDecoration(
                   hintText: _isListening ? "Listening..." : (isHireRole ? Strings.of(context, 'find_workers_hint') : Strings.of(context, 'find_jobs_hint')),
-                  hintStyle: AppTextStyles.bodyMedium.copyWith(color: _isListening ? AppColors.primaryBlue : AppColors.muted),
+                  hintStyle: AppTextStyles.bodyMedium.copyWith(color: _isListening ? AppColors.primaryColor : AppColors.muted),
                   border: InputBorder.none,
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
@@ -142,15 +142,15 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               child: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: _isListening ? AppColors.primaryBlue : AppColors.white,
+                  color: _isListening ? AppColors.primaryColor : AppColors.white,
                   shape: BoxShape.circle,
                   boxShadow: [
-                    if (_isListening) BoxShadow(color: AppColors.primaryBlue.withOpacity(0.4), blurRadius: 10, spreadRadius: 2),
+                    if (_isListening) BoxShadow(color: AppColors.primaryColor.withOpacity(0.4), blurRadius: 10, spreadRadius: 2),
                   ],
                 ),
                 child: Icon(
                   _isListening ? Icons.mic : Icons.mic_none,
-                  color: _isListening ? AppColors.white : AppColors.primaryBlue,
+                  color: _isListening ? AppColors.white : AppColors.primaryColor,
                   size: 20,
                 ),
               ),
@@ -188,9 +188,9 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         margin: const EdgeInsets.only(right: 12),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: isActive ? AppColors.primaryBlue : AppColors.white,
+          color: isActive ? AppColors.primaryColor : AppColors.white,
           borderRadius: BorderRadius.circular(50),
-          border: Border.all(color: isActive ? AppColors.primaryBlue : AppColors.border),
+          border: Border.all(color: isActive ? AppColors.primaryColor : AppColors.border),
         ),
         child: Text(
           label,
@@ -323,7 +323,7 @@ class _SearchWorkerCard extends StatelessWidget {
                              BadgePill(
                               label: Strings.of(context, 'available_now'), 
                               icon: Icons.bolt, 
-                              color: AppColors.primaryBlue,
+                              color: AppColors.primaryColor,
                               backgroundColor: AppColors.paleBlue,
                             ),
                           ],
@@ -352,7 +352,7 @@ class _SearchWorkerCard extends StatelessWidget {
                     RichText(
                       text: TextSpan(
                         children: [
-                          TextSpan(text: "₹${worker.hourlyRate.toInt()} / ", style: AppTextStyles.h3.copyWith(color: AppColors.primaryBlue)),
+                          TextSpan(text: "₹${worker.hourlyRate.toInt()} / ", style: AppTextStyles.h3.copyWith(color: AppColors.primaryColor)),
                           TextSpan(text: "hr", style: AppTextStyles.bodySmall),
                         ],
                       ),

@@ -16,15 +16,64 @@ class PostJobScreen extends ConsumerStatefulWidget {
 
 class _PostJobScreenState extends ConsumerState<PostJobScreen> {
   final _formKey = GlobalKey<FormState>();
-  
+
   final _aboutController = TextEditingController();
   final _locationController = TextEditingController();
   final _experienceController = TextEditingController();
   final _wageController = TextEditingController();
   final _skillsController = TextEditingController();
-  
+
   List<String> _skills = [];
   final List<int> _selectedCategoryIds = [];
+  bool _prefilled = false;
+
+  /// Pre-fill form fields from the user's existing saved profile data.
+  void _prefillFromUser() {
+    final userAsync = ref.read(currentUserProvider);
+    userAsync.whenData((user) {
+      if (_prefilled) return;
+      _prefilled = true;
+
+      // City
+      if (user.city != null && user.city!.isNotEmpty) {
+        _locationController.text = user.city!;
+      }
+
+      // Skills (stored as plain list of strings on employee table)
+      if (user.skills.isNotEmpty) {
+        setState(() {
+          _skills = List<String>.from(user.skills);
+        });
+      }
+
+      // Work details (bio, categories, experience, hourly_rate)
+      final wd = user.workDetails;
+      if (wd != null) {
+        if (wd['bio'] != null) {
+          _aboutController.text = wd['bio'].toString();
+        }
+        if (wd['experience_years'] != null) {
+          _experienceController.text = wd['experience_years'].toString();
+        }
+        if (wd['hourly_rate'] != null) {
+          final rate = wd['hourly_rate'];
+          // Show as integer if it's a whole number
+          final formatted = (rate is double && rate == rate.truncateToDouble())
+              ? rate.toInt().toString()
+              : rate.toString();
+          _wageController.text = formatted;
+        }
+        final rawCats = wd['category_ids'];
+        if (rawCats is List && rawCats.isNotEmpty) {
+          setState(() {
+            _selectedCategoryIds
+              ..clear()
+              ..addAll(rawCats.map((e) => int.tryParse(e.toString()) ?? 0).where((id) => id > 0));
+          });
+        }
+      }
+    });
+  }
 
   void _toggleCategory(int categoryId) {
     setState(() {
@@ -52,6 +101,13 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // Defer pre-fill to after the first frame so ref.read is safe
+    WidgetsBinding.instance.addPostFrameCallback((_) => _prefillFromUser());
+  }
+
+  @override
   void dispose() {
     _aboutController.dispose();
     _locationController.dispose();
@@ -61,12 +117,26 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
     super.dispose();
   }
 
+  /// Whether the worker already has an existing profile
+  bool get _hasExistingProfile {
+    final userAsync = ref.read(currentUserProvider);
+    return userAsync.maybeWhen(
+      data: (u) => u.workDetails != null && u.workDetails!['bio'] != null && u.workDetails!['bio'].toString().isNotEmpty,
+      orElse: () => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isEdit = _hasExistingProfile;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Create Worker Profile", style: AppTextStyles.h2.copyWith(color: AppColors.primaryBlue, fontSize: 20)),
+        title: Text(
+          isEdit ? "Edit Worker Profile" : "Create Worker Profile",
+          style: AppTextStyles.h2.copyWith(color: AppColors.primaryColor, fontSize: 20),
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
@@ -79,12 +149,14 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Set up your work profile to start receiving bookings. "
-                "Provide details about what services you offer.",
+                isEdit
+                    ? "Update your work profile details below."
+                    : "Set up your work profile to start receiving bookings. "
+                        "Provide details about what services you offer.",
                 style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted),
               ),
               const SizedBox(height: 32),
-              
+
               // 1. About / Summary
               _buildSectionTitle("About You (Summary)"),
               const SizedBox(height: 12),
@@ -109,23 +181,23 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                       label: Text("${cat.emoji} ${cat.name}"),
                       selected: isSelected,
                       onSelected: (_) => _toggleCategory(cat.id),
-                      selectedColor: AppColors.primaryBlue.withOpacity(0.2),
-                      checkmarkColor: AppColors.primaryBlue,
+                      selectedColor: AppColors.primaryColor.withOpacity(0.2),
+                      checkmarkColor: AppColors.primaryColor,
                       labelStyle: AppTextStyles.label.copyWith(
-                        color: isSelected ? AppColors.primaryBlue : AppColors.muted,
+                        color: isSelected ? AppColors.primaryColor : AppColors.muted,
                         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                       ),
                       backgroundColor: AppColors.background,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      side: BorderSide(color: isSelected ? AppColors.primaryBlue : Colors.transparent),
+                      side: BorderSide(color: isSelected ? AppColors.primaryColor : Colors.transparent),
                     );
                   }).toList(),
                 ),
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (_, __) => const Text("Failed to load categories"),
+                error: (_, _) => const Text("Failed to load categories"),
               ),
               const SizedBox(height: 24),
-              
+
               // 3. Skills
               _buildSectionTitle("Skills"),
               const SizedBox(height: 12),
@@ -141,7 +213,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                   const SizedBox(width: 8),
                   IconButton(
                     onPressed: () => _addSkill(_skillsController.text),
-                    icon: const Icon(Icons.add_circle, color: AppColors.primaryBlue, size: 32),
+                    icon: Icon(Icons.add_circle, color: AppColors.primaryColor, size: 32),
                   )
                 ],
               ),
@@ -150,16 +222,16 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                 spacing: 8,
                 runSpacing: 8,
                 children: _skills.map((skill) => Chip(
-                  label: Text(skill, style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue)),
-                  backgroundColor: AppColors.primaryBlue.withOpacity(0.1),
+                  label: Text(skill, style: AppTextStyles.label.copyWith(color: AppColors.primaryColor)),
+                  backgroundColor: AppColors.primaryColor.withOpacity(0.1),
                   side: BorderSide.none,
-                  deleteIcon: const Icon(Icons.close, size: 16, color: AppColors.primaryBlue),
+                  deleteIcon: Icon(Icons.close, size: 16, color: AppColors.primaryColor),
                   onDeleted: () => _removeSkill(skill),
                 )).toList(),
               ),
               const SizedBox(height: 24),
-              
-              // 3. Location
+
+              // 4. Location
               _buildSectionTitle("Location"),
               const SizedBox(height: 12),
               CityAutocompleteField(
@@ -171,10 +243,10 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                 },
               ),
               const SizedBox(height: 24),
-              
+
               Row(
                 children: [
-                   // 4. Experience
+                  // 5. Experience
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,8 +263,8 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  
-                  // 5. Wage Per Hour
+
+                  // 6. Wage Per Hour
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -211,14 +283,14 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                 ],
               ),
               const SizedBox(height: 48),
-              
+
               // Submit Button
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _isLoading ? null : _submitForm,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryBlue,
+                    backgroundColor: AppColors.primaryColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
@@ -228,7 +300,10 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                           width: 20,
                           child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
                         )
-                      : Text("Post Profile & Start Working", style: AppTextStyles.bodyMedium.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+                      : Text(
+                          isEdit ? "Save Changes" : "Post Profile & Start Working",
+                          style: AppTextStyles.bodyMedium.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
                 ),
               ),
               const SizedBox(height: 100),
@@ -256,7 +331,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
         );
         return;
       }
-      
+
       setState(() {
         _isLoading = true;
       });
@@ -273,11 +348,16 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
         });
 
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Profile details saved successfully!")),
-          );
-          // Optional: invalidate currentUserProvider to refresh global user data
+          // Refresh user data so next time this screen opens it pre-fills correctly
           ref.invalidate(currentUserProvider);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(_hasExistingProfile
+                  ? "Profile updated successfully!"
+                  : "Profile saved successfully!"),
+              backgroundColor: AppColors.successGreen,
+            ),
+          );
         }
       } catch (e) {
         if (mounted) {

@@ -25,7 +25,7 @@ class RoleSelectionScreen extends ConsumerWidget {
                     Text(
                       "Laborgro",
                       style: AppTextStyles.h2.copyWith(
-                          color: AppColors.primaryBlue,
+                          color: AppColors.primaryColor,
                           fontWeight: FontWeight.bold,
                           letterSpacing: -0.5),
                     ),
@@ -36,7 +36,7 @@ class RoleSelectionScreen extends ConsumerWidget {
                                 .copyWith(color: Colors.grey.shade600, fontSize: 13),
                           ),
                           loading: () => const SizedBox(),
-                          error: (_, __) => const SizedBox(),
+                          error: (_, _) => const SizedBox(),
                         ),
                   ],
                 ),
@@ -69,7 +69,7 @@ class RoleSelectionScreen extends ConsumerWidget {
                       "Post jobs, book workers instantly, pay securely and get work done.",
                   icon: "🏠",
                   features: ["Post Jobs", "Book Instantly", "Track Worker", "Chat & Call"],
-                  color: AppColors.primaryBlue,
+                  color: AppColors.primaryColor,
                 ),
                 const SizedBox(height: 20),
                 _buildRoleCard(

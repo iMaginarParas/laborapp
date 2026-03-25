@@ -159,7 +159,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Container(
       height: 280,
       width: double.infinity,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: AppColors.primaryGradient,
         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80)),
       ),

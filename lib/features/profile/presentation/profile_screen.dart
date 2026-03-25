@@ -52,7 +52,7 @@ class ProfileScreen extends ConsumerWidget {
           content: Text(Strings.of(context, 'working_on_it')),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          backgroundColor: AppColors.primaryBlue,
+          backgroundColor: AppColors.primaryColor,
         ),
       );
     }
@@ -182,12 +182,12 @@ class ProfileScreen extends ConsumerWidget {
             decoration: BoxDecoration(
               color: AppColors.paleBlue,
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.primaryBlue, width: 2),
+              border: Border.all(color: AppColors.primaryColor, width: 2),
             ),
             padding: const EdgeInsets.all(4),
-            child: const CircleAvatar(
+            child: CircleAvatar(
               backgroundColor: AppColors.white,
-              child: Icon(Icons.person, size: 50, color: AppColors.primaryBlue),
+              child: Icon(Icons.person, size: 50, color: AppColors.primaryColor),
             ),
           ),
           const SizedBox(height: 16),
@@ -204,9 +204,9 @@ class ProfileScreen extends ConsumerWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.location_on, color: AppColors.primaryBlue, size: 14),
+                Icon(Icons.location_on, color: AppColors.primaryColor, size: 14),
                 const SizedBox(width: 4),
-                Text(user.city ?? "Location not set", style: AppTextStyles.bodySmall.copyWith(color: AppColors.primaryBlue, fontWeight: FontWeight.bold)),
+                Text(user.city ?? "Location not set", style: AppTextStyles.bodySmall.copyWith(color: AppColors.primaryColor, fontWeight: FontWeight.bold)),
               ],
             ),
           ),
@@ -248,7 +248,7 @@ class ProfileScreen extends ConsumerWidget {
           ),
           Switch.adaptive(
             value: user.isAvailable, 
-            activeColor: AppColors.primaryBlue,
+            activeColor: AppColors.primaryColor,
             onChanged: (val) async {
               try {
                 await ref.read(authRepositoryProvider).updateProfile({"is_available": val});
@@ -291,10 +291,10 @@ class ProfileScreen extends ConsumerWidget {
       leading: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: (item.color ?? AppColors.primaryBlue).withOpacity(0.1),
+          color: (item.color ?? AppColors.primaryColor).withOpacity(0.1),
           shape: BoxShape.circle,
         ),
-        child: Icon(item.icon, color: item.color ?? AppColors.primaryBlue, size: 20),
+        child: Icon(item.icon, color: item.color ?? AppColors.primaryColor, size: 20),
       ),
       title: Text(item.title, style: AppTextStyles.bodyMedium.copyWith(
         fontWeight: FontWeight.w600,

@@ -118,7 +118,7 @@ class BookingSuccessScreen extends ConsumerWidget {
                   alignment: Alignment.center,
                   child: Text(
                     "Back to Home",
-                    style: AppTextStyles.label.copyWith(color: AppColors.primaryBlue),
+                    style: AppTextStyles.label.copyWith(color: AppColors.primaryColor),
                   ),
                 ),
               ),
