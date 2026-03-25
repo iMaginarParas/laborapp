@@ -28,4 +28,5 @@ class ApiConstants {
   static const String reviews = 'reviews';
   static const String me = 'auth/me';
   static const String notifications = 'notifications';
+  static const String chat = 'chat';
 }

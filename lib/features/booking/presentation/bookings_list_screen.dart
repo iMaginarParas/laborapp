@@ -176,7 +176,10 @@ class BookingsListScreen extends ConsumerWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (c) => ChatScreen(userName: booking.worker.name)),
+                    MaterialPageRoute(builder: (c) => ChatScreen(
+                      userName: booking.worker.name,
+                      receiverId: booking.worker.id,
+                    )),
                   );
                 },
               ),

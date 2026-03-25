@@ -137,7 +137,10 @@ class _ApplicationCard extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (c) => ChatScreen(userName: job.title)), // Use job title or mock employer
+                    MaterialPageRoute(builder: (c) => ChatScreen(
+                      userName: job.title,
+                      receiverId: job.employerId ?? "",
+                    )),
                   );
                 },
               ),

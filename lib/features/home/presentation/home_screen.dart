@@ -19,6 +19,8 @@ import 'package:flutter_app/core/services/location_service.dart';
 import 'package:flutter_app/features/main_tabs/providers/navigation_providers.dart';
 import 'package:flutter_app/features/chat/presentation/chat_screen.dart';
 import 'package:flutter_app/features/search/providers/search_providers.dart';
+import 'package:flutter_app/features/profile/presentation/notification_screen.dart';
+import 'package:flutter_app/features/profile/providers/notification_providers.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -594,7 +596,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Expanded(
                 flex: 1,
                 child: GestureDetector(
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (c) => ChatScreen(userName: "Vikash Mehta"))),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (c) => ChatScreen(
+                    userName: "Vikash Mehta",
+                    receiverId: job.employerId ?? "",
+                  ))),
                   child: Container(
                     height: 48,
                     decoration: const BoxDecoration(
@@ -646,9 +651,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.notifications_none, color: Colors.white, size: 24),
-                    onPressed: _showWorkingOnIt,
+                  Stack(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.notifications_none, color: Colors.white, size: 24),
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const NotificationScreen()),
+                        ),
+                      ),
+                      ref.watch(unreadNotificationsCountProvider) > 0 
+                      ? Positioned(
+                          right: 12,
+                          top: 12,
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            constraints: const BoxConstraints(
+                              minWidth: 12,
+                              minHeight: 12,
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                    ],
                   ),
                   Expanded(
                     child: ref.watch(currentUserProvider).when(

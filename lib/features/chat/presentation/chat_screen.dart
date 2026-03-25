@@ -3,10 +3,14 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/services/voice_service.dart';
 import 'package:flutter_app/providers/language_provider.dart';
+import 'package:flutter_app/core/network/dio_client.dart';
+import 'package:flutter_app/core/constants/api_constants.dart';
+import 'package:dio/dio.dart';
 
 class ChatScreen extends StatefulWidget {
   final String userName;
-  const ChatScreen({super.key, required this.userName});
+  final String receiverId;
+  const ChatScreen({super.key, required this.userName, required this.receiverId});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -16,6 +20,57 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   bool _isListening = false;
   final List<Map<String, dynamic>> _messages = [];
+  final DioClient _dioClient = DioClient();
+  
+  @override
+  void initState() {
+    super.initState();
+    _fetchMessages();
+  }
+
+  Future<void> _fetchMessages() async {
+    try {
+      final res = await _dioClient.get('${ApiConstants.chat}/${widget.receiverId}');
+      if (res.statusCode == 200 && res.data != null) {
+        final List fetched = res.data;
+        setState(() {
+          _messages.clear();
+          for (var item in fetched) {
+            _messages.add({
+              "text": item['content'],
+              "isMe": true, // simplify for now
+              "time": "Just now",
+              "isRead": item['is_read'] ?? false,
+            });
+          }
+        });
+      }
+    } catch (e) {
+      debugPrint("Failed to fetch messages: $e");
+    }
+  }
+
+  Future<void> _sendMessage(String text) async {
+    try {
+      final res = await _dioClient.post(ApiConstants.chat, data: {
+        "receiver_id": widget.receiverId,
+        "content": text
+      });
+      // Pop up a notification inside the app (SnackBar)
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Message delivered!"),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: AppColors.successGreen,
+            duration: const Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint("Failed to send message: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -243,17 +298,19 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
             const SizedBox(width: 8),
             _buildCircleButton(
-              onTap: () {
-                if (_controller.text.isNotEmpty) {
+              onTap: () async {
+                final text = _controller.text;
+                if (text.isNotEmpty) {
                   setState(() {
                     _messages.add({
-                      "text": _controller.text,
+                      "text": text,
                       "isMe": true,
                       "time": Strings.of(context, 'just_now'),
                       "isRead": false,
                     });
                     _controller.clear();
                   });
+                  await _sendMessage(text);
                 }
               },
               icon: Icons.send_rounded,
