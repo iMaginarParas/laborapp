@@ -98,6 +98,11 @@ class Strings {
       'apply_hint': 'Apply for jobs to see them here',
       'applied_on': 'Applied on',
       'withdraw': 'Withdraw',
+      'online': 'Online',
+      'privacy_msg': 'Phone numbers are hidden. All communication is through Laborgro.',
+      'listening': 'Listening...',
+      'type_msg': 'Type a message...',
+      'just_now': 'Just now',
     },
     'hi': {
       'home': 'मुखपृष्ठ (Home)',
@@ -171,6 +176,11 @@ class Strings {
       'apply_hint': 'उन्हें यहां देखने के लिए नौकरियों के लिए आवेदन करें',
       'applied_on': 'को आवेदन किया',
       'withdraw': 'वापस लें',
+      'online': 'ऑनलाइन',
+      'privacy_msg': 'फोन नंबर छिपे हुए हैं। सभी संचार Laborgro के माध्यम से होते हैं।',
+      'listening': 'सुन रहा हूँ...',
+      'type_msg': 'संदेश लिखें...',
+      'just_now': 'अभी',
     },
   };
 

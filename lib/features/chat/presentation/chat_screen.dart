@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/services/voice_service.dart';
+import 'package:flutter_app/providers/language_provider.dart';
 
 class ChatScreen extends StatefulWidget {
   final String userName;
@@ -14,41 +15,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   bool _isListening = false;
-  final List<Map<String, dynamic>> _messages = [
-    {
-      "text": "Hello! I saw your job post for interior painting. I'm available tomorrow from 10 AM.",
-      "isMe": false,
-      "time": "9:32 AM",
-    },
-    {
-      "text": "Great! How many rooms can you finish in a day? It's a 2BHK.",
-      "isMe": true,
-      "time": "9:34 AM",
-      "isRead": true,
-    },
-    {
-      "text": "A 2BHK usually takes 2 full days. I charge ₹450/hr and bring my own materials.",
-      "isMe": false,
-      "time": "9:36 AM",
-    },
-    {
-      "text": "That works! Can you come at 10 AM tomorrow to my address in Sector 18 Noida?",
-      "isMe": true,
-      "time": "9:38 AM",
-      "isRead": true,
-    },
-    {
-      "text": "Yes! I'll be there. Please share the exact building name.",
-      "isMe": false,
-      "time": "9:39 AM",
-    },
-    {
-      "text": "B-42, Stellar Apartment, near City Centre Mall. See you tomorrow! 👍",
-      "isMe": true,
-      "time": "9:41 AM",
-      "isRead": true,
-    },
-  ];
+  final List<Map<String, dynamic>> _messages = [];
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(widget.userName, style: AppTextStyles.h3.copyWith(fontSize: 16)),
-                const Text("Online", style: TextStyle(color: AppColors.muted, fontSize: 11)),
+                Text(Strings.of(context, 'online'), style: const TextStyle(color: AppColors.muted, fontSize: 11)),
               ],
             ),
           ],
@@ -118,7 +85,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    "Phone numbers are hidden. All communication is through Laborgro.",
+                    Strings.of(context, 'privacy_msg'),
                     style: TextStyle(fontSize: 11, color: Colors.yellow.shade900, fontWeight: FontWeight.w500),
                   ),
                 ),
@@ -247,7 +214,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: TextField(
                   controller: _controller,
                   decoration: InputDecoration(
-                    hintText: _isListening ? "Listening..." : "Type a message...",
+                    hintText: _isListening ? Strings.of(context, 'listening') : Strings.of(context, 'type_msg'),
                     border: InputBorder.none,
                     hintStyle: TextStyle(
                       fontSize: 14, 
@@ -282,7 +249,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     _messages.add({
                       "text": _controller.text,
                       "isMe": true,
-                      "time": "Just now",
+                      "time": Strings.of(context, 'just_now'),
                       "isRead": false,
                     });
                     _controller.clear();
