@@ -18,6 +18,17 @@ class BookingsListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookingsAsync = ref.watch(bookingsProvider);
+    
+    void showWorkingOnIt() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text("Working on it..."),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+    }
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -29,9 +40,7 @@ class BookingsListScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.chat_bubble_outline, color: AppColors.primaryColor),
-            onPressed: () {
-              // TODO: Navigate to messages screen
-            },
+            onPressed: showWorkingOnIt,
           ),
           const SizedBox(width: 8),
         ],

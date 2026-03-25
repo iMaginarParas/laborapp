@@ -34,6 +34,16 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    void showWorkingOnIt() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(Strings.of(context, 'working_on_it')),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+    }
     final currentRole = ref.watch(currentRoleProvider);
     final selectedFilter = ref.watch(searchFilterProvider);
     final isHireRole = currentRole == UserRole.hire;

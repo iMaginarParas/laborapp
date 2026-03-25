@@ -13,6 +13,17 @@ class MyApplicationsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appsAsync = ref.watch(myApplicationsProvider);
+    
+    void showWorkingOnIt() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(Strings.of(context, 'working_on_it')),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+    }
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -65,6 +76,16 @@ class _ApplicationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void showWorkingOnIt() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(Strings.of(context, 'working_on_it')),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          backgroundColor: AppColors.primaryColor,
+        ),
+      );
+    }
     final job = application.job;
     if (job == null) return const SizedBox.shrink();
 
@@ -139,9 +160,12 @@ class _ApplicationCard extends StatelessWidget {
               ),
               const Spacer(),
               if (application.status.toLowerCase() == 'pending')
-                Text(
-                  Strings.of(context, 'withdraw'),
-                  style: AppTextStyles.label.copyWith(color: Colors.red, fontSize: 11),
+                GestureDetector(
+                  onTap: showWorkingOnIt,
+                  child: Text(
+                    Strings.of(context, 'withdraw'),
+                    style: AppTextStyles.label.copyWith(color: Colors.red, fontSize: 11),
+                  ),
                 ),
             ],
           ),

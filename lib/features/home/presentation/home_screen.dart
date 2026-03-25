@@ -75,7 +75,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             AppLayout.height16,
             _buildLanguageSelector(),
             AppLayout.height24,
-            _buildSectionHeader(Strings.of(context, 'services'), "${Strings.of(context, 'see_all')} →"),
+            _buildSectionHeader(
+              Strings.of(context, 'services'), 
+              "${Strings.of(context, 'see_all')} →",
+              onTap: _showWorkingOnIt,
+            ),
             AppLayout.height8,
             _buildCategories(ref, categoriesAsync, selectedCategory),
             AppLayout.height16,
@@ -640,6 +644,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  IconButton(
+                    icon: const Icon(Icons.notifications_none, color: Colors.white, size: 24),
+                    onPressed: _showWorkingOnIt,
+                  ),
                   Expanded(
                     child: ref.watch(currentUserProvider).when(
                       data: (user) => Column(
@@ -1157,7 +1165,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildSectionHeader(String title, String linkText) {
+  Widget _buildSectionHeader(String title, String linkText, {VoidCallback? onTap}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppLayout.space24),
       child: Row(
@@ -1165,7 +1173,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         children: [
           Text(title, style: AppTextStyles.h3.copyWith(fontSize: 18)),
           GestureDetector(
-            onTap: _showWorkingOnIt,
+            onTap: onTap ?? _showWorkingOnIt,
             child: Text(
               linkText,
               style: AppTextStyles.label.copyWith(fontSize: 13, color: AppColors.primaryColor),
