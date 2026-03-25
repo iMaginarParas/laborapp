@@ -32,11 +32,11 @@ class ProfileScreen extends ConsumerWidget {
             children: [
               const Icon(Icons.person_off_outlined, size: 60, color: AppColors.muted),
               const SizedBox(height: 16),
-              const Text("Could not load profile"),
+              Text(Strings.of(context, 'could_not_load_profile')),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () => ref.invalidate(currentUserProvider),
-                child: const Text("Retry"),
+                child: Text(Strings.of(context, 'retry')),
               ),
             ],
           ),
@@ -71,7 +71,7 @@ class ProfileScreen extends ConsumerWidget {
           _buildMenuSection([
             _MenuItem(
               Icons.person_outline, 
-              "Edit Profile",
+              Strings.of(context, 'edit_profile_short'),
               onTap: () {
                 Navigator.push(
                   context,
@@ -82,7 +82,7 @@ class ProfileScreen extends ConsumerWidget {
             if (isWorker)
               _MenuItem(
                 Icons.work_outline, 
-                "Professional Profile",
+                Strings.of(context, 'professional_profile'),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -141,8 +141,8 @@ class ProfileScreen extends ConsumerWidget {
           ]),
           const SizedBox(height: 16),
           _buildMenuSection([
-            _MenuItem(Icons.help_outline, "Help Center", onTap: showWorkingOnIt),
-            _MenuItem(Icons.privacy_tip_outlined, "Privacy Policy", onTap: showWorkingOnIt),
+            _MenuItem(Icons.help_outline, Strings.of(context, 'help_center'), onTap: showWorkingOnIt),
+            _MenuItem(Icons.privacy_tip_outlined, Strings.of(context, 'privacy_policy'), onTap: showWorkingOnIt),
           ]),
           const SizedBox(height: 16),
           _buildMenuSection([
@@ -206,7 +206,7 @@ class ProfileScreen extends ConsumerWidget {
               children: [
                 Icon(Icons.location_on, color: AppColors.primaryColor, size: 14),
                 const SizedBox(width: 4),
-                Text(user.city ?? "Location not set", style: AppTextStyles.bodySmall.copyWith(color: AppColors.primaryColor, fontWeight: FontWeight.bold)),
+                Text(user.city ?? Strings.of(context, 'location_not_set'), style: AppTextStyles.bodySmall.copyWith(color: AppColors.primaryColor, fontWeight: FontWeight.bold)),
               ],
             ),
           ),
@@ -241,7 +241,7 @@ class ProfileScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(Strings.of(context, 'available_now'), style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold)),
-                  Text("Visible to employers", style: AppTextStyles.bodySmall.copyWith(color: AppColors.muted)),
+                  Text(Strings.of(context, 'visible_to_employers'), style: AppTextStyles.bodySmall.copyWith(color: AppColors.muted)),
                 ],
               ),
             ],
@@ -255,13 +255,13 @@ class ProfileScreen extends ConsumerWidget {
                 ref.invalidate(currentUserProvider);
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(val ? "You are now available" : "You are now unavailable")),
+                    SnackBar(content: Text(val ? Strings.of(context, 'now_available') : Strings.of(context, 'now_unavailable'))),
                   );
                 }
               } catch (e) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Failed to update status")),
+                    SnackBar(content: Text(Strings.of(context, 'failed_update_status'))),
                   );
                 }
               }

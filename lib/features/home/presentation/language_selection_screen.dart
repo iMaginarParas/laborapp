@@ -67,7 +67,7 @@ class _LanguageSelectionScreenState extends ConsumerState<LanguageSelectionScree
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Your trusted work partner",
+                      Strings.of(context, 'trusted_partner'),
                       style: AppTextStyles.bodyMedium.copyWith(color: Colors.white.withOpacity(0.9)),
                     ),
                     const SizedBox(width: 6),
@@ -83,9 +83,9 @@ class _LanguageSelectionScreenState extends ConsumerState<LanguageSelectionScree
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
               child: Column(
                 children: [
-                  const Text(
-                    "Choose Your Language",
-                    style: TextStyle(
+                  Text(
+                    Strings.of(context, 'choose_language'),
+                    style: const TextStyle(
                       fontSize: 28, 
                       fontWeight: FontWeight.bold, 
                       color: AppColors.text,
@@ -163,7 +163,6 @@ class _LanguageSelectionScreenState extends ConsumerState<LanguageSelectionScree
                   
                   const SizedBox(height: 32),
                   
-                  // Voice Assistance Banner
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
@@ -187,9 +186,9 @@ class _LanguageSelectionScreenState extends ConsumerState<LanguageSelectionScree
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                "Can't read? Use Voice!",
-                                style: TextStyle(
+                              Text(
+                                Strings.of(context, 'cant_read_voice'),
+                                style: const TextStyle(
                                   color: Color(0xFFF14646), 
                                   fontSize: 16, 
                                   fontWeight: FontWeight.bold
@@ -197,7 +196,7 @@ class _LanguageSelectionScreenState extends ConsumerState<LanguageSelectionScree
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                "Tap the 🎙️ mic button on any screen and speak in your language",
+                                Strings.of(context, 'mic_hint'),
                                 style: TextStyle(
                                   color: Colors.grey.shade600, 
                                   fontSize: 13,
@@ -227,8 +226,9 @@ class _LanguageSelectionScreenState extends ConsumerState<LanguageSelectionScree
                   if (_selectedLang != null) {
                     final newLocale = Locale(_selectedLang!);
                     ref.read(localeProvider.notifier).state = newLocale;
-                    final langName = _languages.firstWhere((l) => l['code'] == _selectedLang)['name']!;
-                    StorageService.setLanguage(langName);
+                    final langMapping = _languages.firstWhere((l) => l['code'] == _selectedLang);
+                    StorageService.setLanguageCode(_selectedLang!);
+                    StorageService.setLanguage(langMapping['native']!);
                     Navigator.pop(context);
                   }
                 },
@@ -238,9 +238,9 @@ class _LanguageSelectionScreenState extends ConsumerState<LanguageSelectionScree
                   elevation: 10,
                   shadowColor: AppColors.primaryColor.withOpacity(0.5),
                 ),
-                child: const Text(
-                  "Continue →",
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                child: Text(
+                  Strings.of(context, 'continue'),
+                  style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
             ),

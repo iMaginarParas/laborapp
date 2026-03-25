@@ -6,6 +6,7 @@ import 'package:flutter_app/core/theme/app_text_styles.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/features/home/providers/home_providers.dart';
 import 'package:flutter_app/shared/widgets/city_autocomplete_field.dart';
+import 'package:flutter_app/providers/language_provider.dart';
 
 class PostJobScreen extends ConsumerStatefulWidget {
   const PostJobScreen({super.key});
@@ -134,7 +135,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          isEdit ? "Edit Worker Profile" : "Create Worker Profile",
+          isEdit ? Strings.of(context, 'edit_profile') : Strings.of(context, 'create_profile'),
           style: AppTextStyles.h2.copyWith(color: AppColors.primaryColor, fontSize: 20),
         ),
         backgroundColor: Colors.white,
@@ -158,7 +159,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
               const SizedBox(height: 32),
 
               // 1. About / Summary
-              _buildSectionTitle("About You (Summary)"),
+              _buildSectionTitle(Strings.of(context, 'description')),
               const SizedBox(height: 12),
               TextFormField(
                 controller: _aboutController,
@@ -169,7 +170,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
               const SizedBox(height: 24),
 
               // 2. Categories
-              _buildSectionTitle("Which category of work do you do?"),
+              _buildSectionTitle(Strings.of(context, 'category')),
               const SizedBox(height: 12),
               ref.watch(categoriesProvider).when(
                 data: (categories) => Wrap(
@@ -199,7 +200,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
               const SizedBox(height: 24),
 
               // 3. Skills
-              _buildSectionTitle("Skills"),
+              _buildSectionTitle(Strings.of(context, 'skills')),
               const SizedBox(height: 12),
               Row(
                 children: [
@@ -232,7 +233,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
               const SizedBox(height: 24),
 
               // 4. Location
-              _buildSectionTitle("Location"),
+              _buildSectionTitle(Strings.of(context, 'location')),
               const SizedBox(height: 12),
               CityAutocompleteField(
                 controller: _locationController,
@@ -251,7 +252,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildSectionTitle("Experience"),
+                        _buildSectionTitle(Strings.of(context, 'experience')),
                         const SizedBox(height: 12),
                         TextFormField(
                           controller: _experienceController,
@@ -269,7 +270,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildSectionTitle("Hourly Wage (₹)"),
+                        _buildSectionTitle(Strings.of(context, 'hourly_rate')),
                         const SizedBox(height: 12),
                         TextFormField(
                           controller: _wageController,
@@ -301,7 +302,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                           child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
                         )
                       : Text(
-                          isEdit ? "Save Changes" : "Post Profile & Start Working",
+                          Strings.of(context, 'save_changes'),
                           style: AppTextStyles.bodyMedium.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                 ),

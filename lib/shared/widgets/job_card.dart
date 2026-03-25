@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/auth/providers/auth_providers.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../models/job.dart';
+import 'package:flutter_app/providers/language_provider.dart';
 
 class JobCard extends ConsumerWidget {
   final Job job;
@@ -94,12 +95,12 @@ class JobCard extends ConsumerWidget {
               const SizedBox(height: 16),
               Row(
                 children: [
-                  _buildTag(Icons.people_outline, "${job.openings} Openings"),
+                  _buildTag(Icons.people_outline, "${job.openings} ${Strings.of(context, 'openings')}"),
                   const SizedBox(width: 12),
-                  _buildTag(Icons.access_time, "Posted recently"),
+                  _buildTag(Icons.access_time, Strings.of(context, 'posted_recently')),
                   const Spacer(),
                    Text(
-                    showApplyNow ? "Apply Now →" : "View Details →",
+                    showApplyNow ? Strings.of(context, 'apply_now_arrow') : Strings.of(context, 'view_details_arrow'),
                     style: AppTextStyles.label.copyWith(
                       color: AppColors.primaryColor,
                       fontWeight: FontWeight.bold,

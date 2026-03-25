@@ -4,7 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Centralising keys prevents typo-driven bugs across the codebase.
 abstract class _StorageKeys {
   static const String authToken = 'auth_token';
-  static const String language  = 'language';
+  static const String language     = 'language';
+  static const String languageCode = 'language_code';
 }
 
 /// Thin, statically-accessible wrapper around [SharedPreferences].
@@ -35,6 +36,12 @@ class StorageService {
 
   static String getLanguage() =>
       _prefs.getString(_StorageKeys.language) ?? 'English';
+
+  static Future<void> setLanguageCode(String code) =>
+      _prefs.setString(_StorageKeys.languageCode, code);
+
+  static String? getLanguageCode() =>
+      _prefs.getString(_StorageKeys.languageCode);
 
   // ── Utility ───────────────────────────────────────────────────────────────
 

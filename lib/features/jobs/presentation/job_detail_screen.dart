@@ -8,6 +8,7 @@ import 'package:flutter_app/shared/widgets/primary_button.dart';
 import 'package:flutter_app/features/home/providers/home_providers.dart';
 import 'package:flutter_app/core/constants/api_constants.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
+import 'package:flutter_app/providers/language_provider.dart';
 
 class JobDetailScreen extends ConsumerStatefulWidget {
   final Job job;
@@ -29,15 +30,15 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
       
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Application submitted successfully! ✅"),
+          SnackBar(
+            content: Text(Strings.of(context, 'apply_success')),
             backgroundColor: Colors.green,
           ),
         );
         Navigator.pop(context);
       }
     } catch (e) {
-      String errorMessage = "Failed to apply.";
+      String errorMessage = Strings.of(context, 'apply_failed');
       if (e is DioException) {
         final data = e.response?.data;
         if (data is Map && data.containsKey('detail')) {
@@ -52,7 +53,10 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
           SnackBar(
             content: Text(errorMessage),
             backgroundColor: Colors.redAccent,
-            action: SnackBarAction(label: "DISMISS", textColor: Colors.white, onPressed: () {}),
+            action: SnackBarAction(
+              label: Strings.of(context, 'dismiss'), 
+              textColor: Colors.white, 
+              onPressed: () {}),
           ),
         );
       }
@@ -75,7 +79,7 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
           icon: const Icon(Icons.arrow_back, color: AppColors.text),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text("Job Details", style: AppTextStyles.h3),
+        title: Text(Strings.of(context, 'job_details'), style: AppTextStyles.h3),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -111,9 +115,9 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
               ],
             ),
             const SizedBox(height: 32),
-            _buildInfoCard(),
+            _buildInfoCard(context),
             const SizedBox(height: 32),
-            Text("Description", style: AppTextStyles.h3),
+            Text(Strings.of(context, 'description'), style: AppTextStyles.h3),
             const SizedBox(height: 12),
             Text(
               widget.job.description,
@@ -134,7 +138,7 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
                       children: [
                         const Icon(Icons.info_outline, color: Colors.orange, size: 20),
                         const SizedBox(width: 12),
-                        const Expanded(child: Text("This is your own job posting.")),
+                        Expanded(child: Text(Strings.of(context, 'own_job_msg'))),
                       ],
                     ),
                   );
@@ -167,7 +171,7 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
               ),
               child: SafeArea(
                 child: PrimaryButton(
-                  text: "Apply for this Job",
+                  text: Strings.of(context, 'apply_now'),
                   isLoading: _isApplying,
                   onPressed: _handleApply,
                 ),
@@ -182,7 +186,7 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
     );
   }
 
-  Widget _buildInfoCard() {
+  Widget _buildInfoCard(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -193,9 +197,9 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildInfoItem(Icons.payments_outlined, "Salary", "₹${widget.job.salaryMin.toInt()}"),
-          _buildInfoItem(Icons.people_outline, "Openings", "${widget.job.openings}"),
-          _buildInfoItem(Icons.location_on_outlined, "Type", "Full-time"),
+          _buildInfoItem(Icons.payments_outlined, Strings.of(context, 'salary'), "₹${widget.job.salaryMin.toInt()}"),
+          _buildInfoItem(Icons.people_outline, Strings.of(context, 'openings'), "${widget.job.openings}"),
+          _buildInfoItem(Icons.location_on_outlined, Strings.of(context, 'type'), Strings.of(context, 'full_time')),
         ],
       ),
     );
