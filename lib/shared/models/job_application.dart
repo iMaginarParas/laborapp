@@ -22,9 +22,9 @@ class JobApplication {
 
   factory JobApplication.fromJson(Map<String, dynamic> json) {
     return JobApplication(
-      id: json['id'],
-      jobId: json['job_id'],
-      workerId: json['worker_id'],
+      id: json['id'].toString(),
+      jobId: json['job_id'].toString(),
+      workerId: json['worker_id'].toString(),
       status: json['status'] ?? 'pending',
       createdAt: DateTime.parse(json['created_at']),
       job: json['job'] != null ? Job.fromJson(json['job']) : null,

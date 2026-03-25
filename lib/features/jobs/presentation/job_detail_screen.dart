@@ -9,6 +9,7 @@ import 'package:flutter_app/features/home/providers/home_providers.dart';
 import 'package:flutter_app/core/constants/api_constants.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/providers/language_provider.dart';
+import 'package:flutter_app/features/jobs/providers/job_providers.dart';
 
 class JobDetailScreen extends ConsumerStatefulWidget {
   final Job job;
@@ -28,7 +29,7 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
       final client = ref.read(dioClientProvider);
       await client.post(ApiConstants.applications, data: {'job_id': widget.job.id});
       
-      if (mounted) {
+        ref.invalidate(myApplicationsProvider);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(Strings.of(context, 'apply_success')),

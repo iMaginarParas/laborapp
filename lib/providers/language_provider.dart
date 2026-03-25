@@ -94,6 +94,10 @@ class Strings {
       'apply_now_arrow': 'Apply Now →',
       'view_details_arrow': 'View Details →',
       'posted_recently': 'Posted recently',
+      'no_applications': 'No applications yet',
+      'apply_hint': 'Apply for jobs to see them here',
+      'applied_on': 'Applied on',
+      'withdraw': 'Withdraw',
     },
     'hi': {
       'home': 'मुखपृष्ठ (Home)',
@@ -163,6 +167,10 @@ class Strings {
       'apply_now_arrow': 'अभी आवेदन करें →',
       'view_details_arrow': 'विवरण देखें →',
       'posted_recently': 'हाल ही में पोस्ट किया गया',
+      'no_applications': 'अभी तक कोई आवेदन नहीं',
+      'apply_hint': 'उन्हें यहां देखने के लिए नौकरियों के लिए आवेदन करें',
+      'applied_on': 'को आवेदन किया',
+      'withdraw': 'वापस लें',
     },
   };
 

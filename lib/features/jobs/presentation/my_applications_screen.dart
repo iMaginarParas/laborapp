@@ -17,7 +17,7 @@ class MyApplicationsScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Text("My Applications", style: AppTextStyles.h3),
+        title: Text(Strings.of(context, 'my_applications'), style: AppTextStyles.h3),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
@@ -50,9 +50,9 @@ class MyApplicationsScreen extends ConsumerWidget {
         children: [
           const Icon(Icons.assignment_outlined, size: 64, color: AppColors.border),
           const SizedBox(height: 16),
-          Text("No applications yet", style: AppTextStyles.h3),
+          Text(Strings.of(context, 'no_applications'), style: AppTextStyles.h3),
           const SizedBox(height: 8),
-          Text("Apply for jobs to see them here", style: AppTextStyles.bodySmall),
+          Text(Strings.of(context, 'apply_hint'), style: AppTextStyles.bodySmall),
         ],
       ),
     );
@@ -134,13 +134,13 @@ class _ApplicationCard extends StatelessWidget {
               const Icon(Icons.calendar_today, size: 14, color: AppColors.muted),
               const SizedBox(width: 8),
               Text(
-                "Applied on ${_formatDate(application.createdAt)}",
+                "${Strings.of(context, 'applied_on')} ${_formatDate(application.createdAt)}",
                 style: AppTextStyles.bodySmall.copyWith(fontSize: 11),
               ),
               const Spacer(),
               if (application.status.toLowerCase() == 'pending')
                 Text(
-                  "Withdraw",
+                  Strings.of(context, 'withdraw'),
                   style: AppTextStyles.label.copyWith(color: Colors.red, fontSize: 11),
                 ),
             ],
