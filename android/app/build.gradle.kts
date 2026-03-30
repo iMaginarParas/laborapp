@@ -38,9 +38,9 @@ android {
     defaultConfig {
         applicationId = "com.laborgro.laborapp"
         minSdk = flutter.minSdkVersion
-        targetSdk = 36
-        versionCode = 3
-        versionName = "1.0.2"
+        targetSdk = 35
+        versionCode = 7
+        versionName = "1.0.6"
         manifestPlaceholders["GOOGLE_MAPS_API_KEY"] = googleMapsApiKey
     }
 
