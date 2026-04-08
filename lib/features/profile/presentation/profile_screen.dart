@@ -14,6 +14,7 @@ import 'package:flutter_app/features/profile/presentation/edit_profile_screen.da
 import 'package:flutter_app/features/profile/presentation/notification_screen.dart';
 import 'package:flutter_app/features/profile/presentation/help_center_screen.dart';
 import 'package:flutter_app/features/profile/presentation/terms_conditions_screen.dart';
+import 'package:flutter_app/features/profile/providers/notification_providers.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
