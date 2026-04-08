@@ -1,0 +1,47 @@
+﻿Running Gradle task 'bundleRelease'...                          
+flutter : 
+At line:1 char:1
++ flutter build appbundle --release > 
+build_log_4.txt 2>&1 ; Get-Conten ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (:String) [], RemoteExceptio  
+  n
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+FAILURE: Build failed with an 
+exception.
+
+* Where:
+Build file 'C:\Users\Sunil\OneDrive\Des
+ktop\laborgro\flutter_app\android\app\b
+uild.gradle.kts' line: 4
+
+* What went wrong:
+An exception occurred applying plugin 
+request [id: 'com.android.application']
+> Failed to apply plugin 
+'com.android.internal.version-check'.
+   > Minimum supported Gradle version 
+is 8.11.1. Current version is 8.7. If 
+using the gradle wrapper, try editing 
+the distributionUrl in C:\Users\Sunil\O
+neDrive\Desktop\laborgro\flutter_app\an
+droid\gradle\wrapper\gradle-wrapper.pro
+perties to gradle-8.11.1-all.zip
+
+* Try:
+> Run with --stacktrace option to get 
+the stack trace.
+> Run with --info or --debug option to 
+get more log output.
+> Run with --scan to get full insights.
+> Get more help at 
+https://help.gradle.org.
+
+BUILD FAILED in 1s
+Running Gradle task 'bundleRelease'...                           2,438ms
+Gradle task bundleRelease failed with 
+exit code 1
