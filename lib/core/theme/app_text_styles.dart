@@ -22,6 +22,12 @@ class AppTextStyles {
     color: AppColors.text,
   );
 
+  static TextStyle h4 = GoogleFonts.fraunces(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: AppColors.text,
+  );
+
   // Body using DM Sans
   static TextStyle bodyLarge = GoogleFonts.dmSans(
     fontSize: 16,
