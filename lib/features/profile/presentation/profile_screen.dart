@@ -12,7 +12,8 @@ import 'package:flutter_app/features/hire/presentation/my_job_posts_screen.dart'
 import 'package:flutter_app/features/hire/presentation/create_job_screen.dart';
 import 'package:flutter_app/features/profile/presentation/edit_profile_screen.dart';
 import 'package:flutter_app/features/profile/presentation/notification_screen.dart';
-import 'package:flutter_app/features/profile/providers/notification_providers.dart';
+import 'package:flutter_app/features/profile/presentation/help_center_screen.dart';
+import 'package:flutter_app/features/profile/presentation/terms_conditions_screen.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -141,8 +142,26 @@ class ProfileScreen extends ConsumerWidget {
           ]),
           const SizedBox(height: 16),
           _buildMenuSection([
-            _MenuItem(Icons.help_outline, Strings.of(context, 'help_center'), onTap: showWorkingOnIt),
-            _MenuItem(Icons.privacy_tip_outlined, Strings.of(context, 'privacy_policy'), onTap: showWorkingOnIt),
+            _MenuItem(
+              Icons.help_outline, 
+              Strings.of(context, 'help_center'), 
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (c) => const HelpCenterScreen()),
+                );
+              },
+            ),
+            _MenuItem(
+              Icons.privacy_tip_outlined, 
+              Strings.of(context, 'privacy_policy'), 
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (c) => const TermsConditionsScreen()),
+                );
+              },
+            ),
           ]),
           const SizedBox(height: 16),
           _buildMenuSection([
