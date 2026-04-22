@@ -21,6 +21,7 @@ import 'package:flutter_app/features/chat/presentation/chat_screen.dart';
 import 'package:flutter_app/features/search/providers/search_providers.dart';
 import 'package:flutter_app/features/profile/presentation/notification_screen.dart';
 import 'package:flutter_app/features/profile/providers/notification_providers.dart';
+import 'package:flutter_app/shared/widgets/shimmer_skeleton.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -500,7 +501,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         itemCount: jobs.length,
         itemBuilder: (context, index) => _buildWorkerJobCard(context, jobs[index]),
       ),
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => ListView.builder(
+        shrinkWrap: true,
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: 3,
+        itemBuilder: (context, index) => const WorkerCardSkeleton(),
+      ),
       error: (e, s) => Center(child: Text("Error: $e")),
     );
   }
@@ -1268,7 +1275,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 },
               ),
             ),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => ListView.builder(
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 2,
+          itemBuilder: (context, index) => const WorkerCardSkeleton(),
+        ),
         error: (e, s) => Center(child: Text("Error: $e")),
       ),
     );
@@ -1295,7 +1308,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 },
               ),
             ),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => ListView.builder(
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 3,
+          itemBuilder: (context, index) => const WorkerCardSkeleton(),
+        ),
         error: (e, s) => Center(child: Text("Error: $e")),
       ),
     );
