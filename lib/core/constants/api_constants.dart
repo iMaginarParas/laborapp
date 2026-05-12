@@ -29,4 +29,5 @@ class ApiConstants {
   static const String me = 'auth/me';
   static const String notifications = 'notifications';
   static const String chat = 'chat';
+  static const String googleAuth = 'auth/google';
 }

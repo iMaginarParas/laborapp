@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_layout.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -19,6 +20,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _phoneController = TextEditingController(); // Cleared initial value
   final _passwordController = TextEditingController(); // Cleared initial value
   bool _isLoading = false;
+  bool _isGoogleLoading = false;
   bool _obscurePassword = true; // Added for eye toggle
 
   Future<void> _handleLogin() async {
@@ -47,6 +49,47 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _handleGoogleSignIn() async {
+    setState(() => _isGoogleLoading = true);
+    try {
+      final googleSignIn = GoogleSignIn(
+        serverClientId: '257460994920-oe4o0s30oigen7irlfqpc8dciluruk0k.apps.googleusercontent.com',
+        scopes: ['email', 'profile'],
+      );
+      final account = await googleSignIn.signIn();
+
+      if (account == null) {
+        // User cancelled the sign-in
+        if (mounted) setState(() => _isGoogleLoading = false);
+        return;
+      }
+
+      final auth = await account.authentication;
+      final idToken = auth.idToken;
+
+      if (idToken == null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Failed to get Google credentials. Please try again.")),
+          );
+        }
+        return;
+      }
+
+      // Send the ID token to our backend for verification
+      final token = await ref.read(authRepositoryProvider).loginWithGoogle(idToken);
+      ref.read(authStateProvider.notifier).state = token;
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(ApiErrorHandler.getErrorMessage(e))),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isGoogleLoading = false);
     }
   }
 
@@ -126,6 +169,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       onPressed: _handleLogin,
                     ),
                     AppLayout.height24,
+                    _buildDividerWithText("or"),
+                    AppLayout.height24,
+                    _buildGoogleButton(),
+                    AppLayout.height24,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -181,5 +228,87 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Widget _buildLabel(String text) {
     return Text(text, style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold));
+  }
+
+  Widget _buildDividerWithText(String text) {
+    return Row(
+      children: [
+        Expanded(child: Divider(color: AppColors.border, thickness: 1)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            text,
+            style: AppTextStyles.bodySmall.copyWith(color: AppColors.muted),
+          ),
+        ),
+        Expanded(child: Divider(color: AppColors.border, thickness: 1)),
+      ],
+    );
+  }
+
+  Widget _buildGoogleButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 52,
+      child: OutlinedButton(
+        onPressed: _isGoogleLoading ? null : _handleGoogleSignIn,
+        style: OutlinedButton.styleFrom(
+          side: BorderSide(color: AppColors.border, width: 1.5),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppLayout.radius12),
+          ),
+          backgroundColor: AppColors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+        ),
+        child: _isGoogleLoading
+            ? const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Google "G" logo using a simple container with text
+                  Container(
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "G",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          foreground: Paint()
+                            ..shader = const LinearGradient(
+                              colors: [
+                                Color(0xFF4285F4), // Google Blue
+                                Color(0xFF34A853), // Google Green
+                                Color(0xFFFBBC05), // Google Yellow
+                                Color(0xFFEA4335), // Google Red
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ).createShader(const Rect.fromLTWH(0, 0, 24, 24)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    "Continue with Google",
+                    style: AppTextStyles.bodyLarge.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.text,
+                    ),
+                  ),
+                ],
+              ),
+      ),
+    );
   }
 }

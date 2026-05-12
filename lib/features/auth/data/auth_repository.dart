@@ -54,4 +54,19 @@ class AuthRepository {
     final response = await _client.put(ApiConstants.me, data: updates);
     return User.fromJson(response.data as Map<String, dynamic>);
   }
+
+  /// Authenticates a user with a Google ID token.
+  /// Sends the token to the backend for server-side verification.
+  /// Returns the access token on success.
+  Future<String> loginWithGoogle(String idToken, {String role = 'employer'}) async {
+    final response = await _client.post(ApiConstants.googleAuth, data: {
+      'id_token': idToken,
+      'role': role,
+    });
+
+    final token = response.data['access_token'] as String;
+    DioClient.setToken(token);
+    await StorageService.setToken(token);
+    return token;
+  }
 }
