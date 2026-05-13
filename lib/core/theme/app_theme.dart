@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'app_colors.dart';
 import 'app_layout.dart';
 import 'app_text_styles.dart';
@@ -21,6 +22,12 @@ class AppTheme {
         elevation: 0,
         centerTitle: false,
         iconTheme: IconThemeData(color: AppColors.text),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+          systemNavigationBarColor: Colors.transparent,
+          systemNavigationBarIconBrightness: Brightness.dark,
+        ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,

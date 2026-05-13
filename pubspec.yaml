@@ -2,7 +2,7 @@ name: flutter_app
 description: "LaborGrow Platform - Connecting workers and clients."
 publish_to: 'none'
 
-version: 1.0.10+15
+version: 1.0.12+18
 
 environment:
   sdk: ^3.11.1
@@ -44,4 +44,5 @@ flutter:
   uses-material-design: true
   assets:
     - .env
+    - assets/google_logo.png
 

@@ -274,33 +274,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  // Official Google logo asset
+                  Image.asset(
+                    'assets/google_logo.png',
                     width: 24,
                     height: 24,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "G",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          foreground: Paint()
-                            ..shader = const LinearGradient(
-                              colors: [
-                                Color(0xFF4285F4),
-                                Color(0xFF34A853),
-                                Color(0xFFFBBC05),
-                                Color(0xFFEA4335),
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ).createShader(const Rect.fromLTWH(0, 0, 24, 24)),
-                        ),
-                      ),
-                    ),
                   ),
                   const SizedBox(width: 12),
                   Text(
