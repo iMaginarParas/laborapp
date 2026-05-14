@@ -7,6 +7,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../providers/auth_providers.dart';
 import '../../../core/utils/api_error_handler.dart';
+import '../../../core/utils/snackbar_utils.dart';
 import '../../../shared/widgets/city_autocomplete_field.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
@@ -31,9 +32,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     if (_nameController.text.isEmpty || _emailController.text.isEmpty || 
         _phoneController.text.isEmpty || _passwordController.text.isEmpty ||
         _cityController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please fill all fields")),
-      );
+      SnackBarUtils.showError(context, "Please fill all fields");
       return;
     }
 
@@ -49,16 +48,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       );
       
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Registration successful! Please login.")),
-        );
+        SnackBarUtils.showSuccess(context, "Registration successful! Please login.");
         Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(ApiErrorHandler.getErrorMessage(e))),
-        );
+        SnackBarUtils.showError(context, ApiErrorHandler.getErrorMessage(e));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -85,9 +80,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
       if (idToken == null) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Failed to get Google credentials. Please try again.")),
-          );
+          SnackBarUtils.showError(context, "Failed to get Google credentials. Please try again.");
         }
         return;
       }
@@ -105,9 +98,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(ApiErrorHandler.getErrorMessage(e))),
-        );
+        SnackBarUtils.showError(context, ApiErrorHandler.getErrorMessage(e));
       }
     } finally {
       if (mounted) setState(() => _isGoogleLoading = false);

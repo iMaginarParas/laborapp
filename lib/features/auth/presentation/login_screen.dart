@@ -7,6 +7,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../providers/auth_providers.dart';
 import '../../../core/utils/api_error_handler.dart';
+import '../../../core/utils/snackbar_utils.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -25,9 +26,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _handleLogin() async {
     if (_phoneController.text.trim().isEmpty || _passwordController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please enter both phone/email and password")),
-      );
+      SnackBarUtils.showError(context, "Please enter both phone/email and password");
       return;
     }
     
@@ -43,9 +42,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(ApiErrorHandler.getErrorMessage(e))),
-        );
+        SnackBarUtils.showError(context, ApiErrorHandler.getErrorMessage(e));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -72,9 +69,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       if (idToken == null) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Failed to get Google credentials. Please try again.")),
-          );
+          SnackBarUtils.showError(context, "Failed to get Google credentials. Please try again.");
         }
         return;
       }
@@ -84,9 +79,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       ref.read(authStateProvider.notifier).state = token;
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(ApiErrorHandler.getErrorMessage(e))),
-        );
+        SnackBarUtils.showError(context, ApiErrorHandler.getErrorMessage(e));
       }
     } finally {
       if (mounted) setState(() => _isGoogleLoading = false);

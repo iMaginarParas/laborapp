@@ -21,6 +21,11 @@ class AppColors {
   static const Color orangeBG = Color(0xFFFDF0E8);
   static const Color background = Color(0xFFF6F9FC);
   static const Color white = Color(0xFFFFFFFF);
+  
+  // Semantic Colors
+  static const Color error = Color(0xFFD32F2F);
+  static const Color success = successGreen;
+  static const Color warning = orangeWarning;
 
   static LinearGradient get primaryGradient => LinearGradient(
     begin: Alignment.topLeft,

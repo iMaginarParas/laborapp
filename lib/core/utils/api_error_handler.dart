@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
+
 
 
 /// Translates [DioException]s and raw errors into user-friendly messages.
@@ -50,10 +52,42 @@ class ApiErrorHandler {
             msg += '\n(Target: ${error.requestOptions.baseUrl}${error.requestOptions.path})';
           }
           return msg;
-        default:
-          return 'Something went wrong. Please try again.';
       }
     }
+
+    if (error is PlatformException) {
+      // Common Google Sign-In error codes
+      // 10: DEVELOPER_ERROR (usually SHA-1 mismatch or misconfiguration)
+      // 7: NETWORK_ERROR
+      // 12501: sign_in_canceled
+      
+      String message = error.message ?? '';
+      
+      switch (error.code) {
+        case 'sign_in_failed':
+          if (message.contains('10')) {
+            return 'Google sign-in is temporarily unavailable. Please try again later or use email login.';
+          }
+          return 'Google sign-in failed. Please ensure your account is active and try again.';
+        case 'sign_in_canceled':
+        case '12501':
+          return 'Sign-in was cancelled.';
+        case 'network_error':
+        case '7':
+          return 'A network error occurred. Please check your internet connection.';
+        case 'INVALID_PARAMETERS':
+          return 'Invalid sign-in parameters. Please update the app.';
+        default:
+          return 'An error occurred during sign-in (${error.code}).';
+      }
+    }
+
+    // Handle generic Firebase or other common errors
+    final errorStr = error.toString().toLowerCase();
+    if (errorStr.contains('user-not-found')) return 'No account found with this email.';
+    if (errorStr.contains('wrong-password')) return 'Incorrect password. Please try again.';
+    if (errorStr.contains('network-request-failed')) return 'Network error. Please check your connection.';
+
     return error.toString();
   }
 
@@ -64,6 +98,7 @@ class ApiErrorHandler {
       case 403: return 'You do not have permission to perform this action.';
       case 404: return 'The requested resource was not found.';
       case 408: return 'Request timed out. Please try again.';
+      case 409: return 'This account already exists. Please sign in instead.';
       case 429: return 'Too many requests. Please wait a moment and retry.';
       case 500: return 'Server error. Our team has been notified.';
       case 503: return 'Service is temporarily unavailable. Try again later.';
