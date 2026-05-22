@@ -9,11 +9,12 @@ import '../constants/api_constants.dart';
 class DioClient {
   late final Dio _dio;
   static String? _token;
+  final VoidCallback? onUnauthorized;
 
   /// Stores the session token used for authenticated requests.
   static void setToken(String? token) => _token = token;
 
-  DioClient() {
+  DioClient({this.onUnauthorized}) {
     _dio = Dio(
       BaseOptions(
         baseUrl: ApiConstants.baseUrl,
@@ -37,6 +38,11 @@ class DioClient {
           return handler.next(options);
         },
         onError: (e, handler) {
+          // Trigger logout if 401 Unauthorized is received
+          if (e.response?.statusCode == 401 && onUnauthorized != null) {
+            onUnauthorized!();
+          }
+
           // Only log in debug mode — no sensitive data leaks in production
           if (kDebugMode) {
             debugPrint(

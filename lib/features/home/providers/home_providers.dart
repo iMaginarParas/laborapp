@@ -4,8 +4,20 @@ import 'package:flutter_app/features/home/data/home_repository.dart';
 import 'package:flutter_app/shared/models/job.dart';
 import 'package:flutter_app/features/auth/providers/auth_providers.dart';
 import 'package:flutter_app/shared/models/worker.dart';
+import 'package:flutter_app/core/services/storage_service.dart';
 
-final dioClientProvider = Provider((ref) => DioClient());
+final dioClientProvider = Provider((ref) {
+  return DioClient(
+    onUnauthorized: () {
+      Future.microtask(() {
+        DioClient.setToken(null);
+        StorageService.removeToken();
+        // Clearing this provider logs the user out globally
+        ref.read(authStateProvider.notifier).state = null;
+      });
+    },
+  );
+});
 
 final homeRepositoryProvider = Provider((ref) {
   final client = ref.watch(dioClientProvider);
