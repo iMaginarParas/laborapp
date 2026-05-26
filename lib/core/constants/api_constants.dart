@@ -4,8 +4,8 @@ import 'dart:io' show Platform;
 
 class ApiConstants {
   static String get baseUrl {
-    // We default to Railway for production.
-    String url = dotenv.get('API_BASE_URL', fallback: 'https://laborgrow-production.up.railway.app/api/v1');
+    // We default to the custom domain for production to avoid ISP blocks.
+    String url = dotenv.get('API_BASE_URL', fallback: 'https://api.laborgro.com/api/v1');
     
     // Auto-fix for Android Emulator
     if (!kIsWeb && Platform.isAndroid) {
