@@ -144,17 +144,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       ),
                     ),
-                    AppLayout.height8,
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          minimumSize: const Size(0, AppLayout.touchTargetSize),
-                        ),
-                        child: Text("Forgot Password?", style: AppTextStyles.label.copyWith(fontSize: 12)),
-                      ),
-                    ),
                     AppLayout.height24,
                     PrimaryButton(
                       text: "Sign In", 

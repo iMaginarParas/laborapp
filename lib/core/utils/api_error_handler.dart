@@ -52,6 +52,8 @@ class ApiErrorHandler {
             msg += '\n(Target: ${error.requestOptions.baseUrl}${error.requestOptions.path})';
           }
           return msg;
+        default:
+          return 'An unexpected network error occurred.';
       }
     }
 
