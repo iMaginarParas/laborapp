@@ -18,22 +18,22 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  final _phoneController = TextEditingController(); // Cleared initial value
+  final _emailController = TextEditingController(); // Cleared initial value
   final _passwordController = TextEditingController(); // Cleared initial value
   bool _isLoading = false;
   bool _isGoogleLoading = false;
   bool _obscurePassword = true; // Added for eye toggle
 
   Future<void> _handleLogin() async {
-    if (_phoneController.text.trim().isEmpty || _passwordController.text.trim().isEmpty) {
-      SnackBarUtils.showError(context, "Please enter both phone/email and password");
+    if (_emailController.text.trim().isEmpty || _passwordController.text.trim().isEmpty) {
+      SnackBarUtils.showError(context, "Please enter both email and password");
       return;
     }
     
     setState(() => _isLoading = true);
     try {
       final token = await ref.read(authRepositoryProvider).login(
-        _phoneController.text,
+        _emailController.text,
         _passwordController.text,
       );
       ref.read(authStateProvider.notifier).state = token;
@@ -117,13 +117,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     Text("Sign in to continue booking your favorite services.", 
                       style: AppTextStyles.bodyMedium.copyWith(color: AppColors.muted)),
                     AppLayout.height32,
-                    _buildLabel("Phone Number or Email"),
+                    _buildLabel("Email Address"),
                     AppLayout.height8,
                     TextField(
-                      controller: _phoneController,
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
-                        hintText: "Enter your phone or email",
-                        prefixIcon: Icon(Icons.phone_outlined, size: 20),
+                        hintText: "Enter your email address",
+                        prefixIcon: Icon(Icons.email_outlined, size: 20),
                       ),
                     ),
                     AppLayout.height24,

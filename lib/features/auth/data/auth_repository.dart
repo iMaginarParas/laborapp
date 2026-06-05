@@ -9,11 +9,11 @@ class AuthRepository {
 
   AuthRepository(this._client);
 
-  /// Authenticates [login] (email or phone) + [password].
+  /// Authenticates [email] + [password].
   /// Persists the returned token both in-memory and on disk.
-  Future<String> login(String login, String password) async {
+  Future<String> login(String email, String password) async {
     final response = await _client.post(ApiConstants.login, data: {
-      'phone_or_email': login,
+      'email': email,
       'password': password,
     });
     
