@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/providers/language_provider.dart';
 import 'package:flutter_app/core/theme/app_colors.dart';
@@ -564,9 +565,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       const SizedBox(height: 12),
                       Row(
                         children: [
-                          _buildMiniTag(context, Icons.location_on, "1.8 km", Colors.redAccent),
+                          _buildMiniTag(context, Icons.location_on, job.jobCity.isNotEmpty ? job.jobCity : "Local", Colors.redAccent),
                           const SizedBox(width: 8),
-                          _buildMiniTag(context, Icons.access_time_filled, "Tomorrow 10 AM", Colors.orange),
+                          _buildMiniTag(context, Icons.access_time_filled, DateFormat('MMM d').format(job.createdAt), Colors.orange),
                           const SizedBox(width: 8),
                           _buildMiniTag(context, Icons.payments, "₹${job.salaryMin.toInt()}", Colors.orange),
                         ],
